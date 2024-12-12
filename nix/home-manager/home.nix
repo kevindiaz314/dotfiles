@@ -221,7 +221,7 @@
 
   programs.git = {
     enable = true;
-    userEmail = "kevindiaz3.141@gmail.com";
+    userEmail = "kevin@kev314.dev";
     userName = "kevindiaz314";
   };
 

@@ -40,7 +40,6 @@
       };
 
       NSGlobalDomain = {
-        AppleInterfaceStyle = "Dark";
         _HIHideMenuBar = true;
       };
 

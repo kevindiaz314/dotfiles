@@ -53,5 +53,10 @@
       "wezterm@nightly"
     ];
 
+    masApps = {
+      "WhatsApp" = 310633997;
+      "Tailscale" = 1475387142;
+    };
+
   };
 }

@@ -1,0 +1,23 @@
+font-family = MonoLisa
+font-size = 15
+
+theme = tokyonight
+
+mouse-hide-while-typing = true
+macos-titlebar-style = hidden
+
+window-padding-balance = true
+window-padding-x = 6
+window-padding-y = 6
+
+# Keybinds
+keybind = super+x=close_surface
+keybind = ctrl+super+j=goto_split:bottom
+keybind = ctrl+super+k=goto_split:top
+keybind = ctrl+super+h=goto_split:left
+keybind = ctrl+super+l=goto_split:right
+
+
+quit-after-last-window-closed = true
+shell-integration = fish
+copy-on-select = true

@@ -154,6 +154,7 @@
     theme = {
       flavor = {
         use = "catppuccin-mocha";
+        dark = "catppuccin-mocha";
       };
     };
     flavors = {

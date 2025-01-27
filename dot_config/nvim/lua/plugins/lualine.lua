@@ -4,7 +4,7 @@ return {
   opts = {
     options = {
       theme = 'auto',
-      disabled_filetypes = { statusline = { "alpha", "Avante" } }, -- disable lualine for alpha buffer
+      disabled_filetypes = { statusline = { "alpha", "Avante", "AvanteSelectedFiles", "AvanteInput" } },
     },
     sections = {
       lualine_x = { 'copilot' ,'encoding', 'fileformat', 'filetype' },

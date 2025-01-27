@@ -11,8 +11,8 @@ return {
     windows = {
       width = 40,
       input = {
-	prefix = " ",
-	height = 15,
+        prefix = " ",
+        height = 15,
       },
     },
   },

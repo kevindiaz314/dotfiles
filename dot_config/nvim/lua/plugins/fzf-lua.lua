@@ -15,9 +15,6 @@ return {
     { "<leader>:", "<cmd>FzfLua command_history<cr>", desc = "Command History" },
     { "<leader>sk", "<cmd>FzfLua keymaps<cr>", desc = "Key Maps" },
     { "<leader>fc", "<cmd>lua require('fzf-lua').files({ cwd = vim.fn.stdpath('config') })<cr>", desc = "Lists config files" },
+    { "<leader>fz", "<cmd>lua require('fzf-lua').files({ cwd = '~/.local/share/chezmoi' })<cr>", desc = "Lists Chezmoi files" },
   },
-  -- config = function()
-  --   -- calling `setup` is optional for customization
-  --   require("fzf-lua").setup({})
-  -- end
 }

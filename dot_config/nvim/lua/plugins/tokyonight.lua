@@ -2,8 +2,12 @@ return {
   "folke/tokyonight.nvim",
   lazy = false,
   priority = 1000,
-  config = function()
-    -- load the colorscheme here
-    vim.cmd([[colorscheme tokyonight-night]])
+  opts = {
+    transparent = true,    -- Enable transparency
+    style = "night",        -- Set the theme variant
+  },
+  init = function()
+    -- Load the colorscheme
+    vim.cmd[[colorscheme tokyonight]]
   end,
 }

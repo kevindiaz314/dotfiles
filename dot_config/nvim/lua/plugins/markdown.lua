@@ -1,9 +1,8 @@
 return {
-  -- Make sure to set this up properly if you have lazy=true
   'MeanderingProgrammer/render-markdown.nvim',
   dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' },
   opts = {
-    file_types = { "markdown", "Avante" },
+    file_types = { "markdown", "Avante", },
     heading = {
       width = 'block',
       left_pad = 2,
@@ -14,5 +13,4 @@ return {
       sign = false,
     }
   },
-  ft = { "markdown", "Avante" },
 }

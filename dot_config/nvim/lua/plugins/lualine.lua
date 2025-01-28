@@ -4,7 +4,7 @@ return {
   opts = {
     options = {
       theme = 'auto',
-      disabled_filetypes = { statusline = { "alpha", "Avante", "AvanteSelectedFiles", "AvanteInput" } },
+      disabled_filetypes = { statusline = { "snacks_dashboard", "Avante", "AvanteSelectedFiles", } },
     },
     sections = {
       lualine_x = { 'copilot' ,'encoding', 'fileformat', 'filetype' },

@@ -6,7 +6,7 @@ return {
   },
   config = true,
   keys = {
-    { "<leader>cc", ":CodeCompanionChat<CR>", desc = "Open CodeCompanion" },
+    { "<leader>cc", ":CodeCompanionChat Toggle<CR>", desc = "Open CodeCompanion" },
     { "<leader>ca", ":CodeCompanionAction<CR>", desc = "Perform CodeCompanion Action" },
   },
 }

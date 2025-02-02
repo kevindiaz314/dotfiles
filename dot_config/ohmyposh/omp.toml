@@ -16,6 +16,9 @@ final_space = true
   wight = '#FFFFFF'
   light = '#3d59a1'
   yellow = '#ffc777'
+  terminal-blue = '#7aa2f7'
+  main-bg = '#24283b'
+  t-background = 'p:main-bg'
 
 [secondary_prompt]
   template = '<p:yellow,transparent></><,p:yellow> > </><p:yellow,transparent></> '
@@ -23,9 +26,9 @@ final_space = true
   background = 'transparent'
 
 [transient_prompt]
-  template = "{{ .Folder }} "
-  foreground = 'p:yellow'
-  style = 'plain'
+  template = '➜ '
+  foreground = 'p:terminal-blue'
+  background = 'p:t-background'
 
 [[blocks]]
   type = 'prompt'
@@ -156,7 +159,7 @@ final_space = true
   newline = true
 
   [[blocks.segments]]
-    template = ''
+    template = ' '
     foreground = '#ff007c'
     type = 'text'
     style = 'plain'

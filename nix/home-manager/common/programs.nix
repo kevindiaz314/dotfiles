@@ -33,14 +33,8 @@
     defaultKeymap = "viins";
     initExtra = ''
 
-      export PATH="/opt/homebrew/bin:$PATH"
-
-      # if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then #eval "$(oh-my-posh init zsh --config 'https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/powerlevel10k_rainbow.omp.json')" 
-      #   eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/omp.toml)" 
-      # fi
-
       if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then #eval "$(oh-my-posh init zsh)" 
-        eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/omp.toml)" 
+        eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/omp.json)" 
       fi
       
       # Setup fzf keybindings and fuzzy completion
@@ -57,6 +51,11 @@
         fi
         NVIM_APPNAME=$config nvim "$@"
       }
+
+      if [[ $(ps -o command= -p "$PPID" | awk '{print $1}') != 'fish' ]]
+      then
+        exec fish -l
+      fi
       
     '';
   };
@@ -124,9 +123,26 @@
     enable = true;
     userEmail = "kevin@kev314.dev";
     userName = "kevindiaz314";
-    extraConfig = { init.defaultBranch = "main"; };
+    extraConfig = {
+      init.defaultBranch = "main";
+    };
+    includes = [
+      {
+        # Apply college config to any repo inside ~/college/
+        condition = "gitdir:~/college/";
+        path = config.home.homeDirectory + "/.config/git/.college";
+      }
+    ];
   };
 
+  # Create the college-specific Git config file
+  home.file.".config/git/.college".text = ''
+    [user]
+      email = "kdiazcac@asu.edu"
+      name = "kdiazcac"
+    [core]
+      sshCommand = "ssh -i ~/.ssh/kdiazcac_ed25519"
+  '';
   programs.lazygit = {
     enable = true;
   };
@@ -153,7 +169,6 @@
     };
     theme = {
       flavor = {
-        use = "catppuccin-mocha";
         dark = "catppuccin-mocha";
       };
     };

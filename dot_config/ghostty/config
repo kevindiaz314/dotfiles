@@ -11,13 +11,22 @@ window-padding-x = 6
 window-padding-y = 6
 
 # Keybinds
-keybind = super+x=close_surface
-keybind = ctrl+super+j=goto_split:bottom
-keybind = ctrl+super+k=goto_split:top
-keybind = ctrl+super+h=goto_split:left
-keybind = ctrl+super+l=goto_split:right
+keybind = super+w=close_surface
+keybind = super+j=goto_split:bottom
+keybind = super+k=goto_split:top
+keybind = super+h=goto_split:left
+keybind = super+l=goto_split:right
+keybind = global:cmd+'=toggle_quick_terminal
 
 
 quit-after-last-window-closed = true
 shell-integration = fish
 copy-on-select = true
+
+# Opacity 
+background-opacity = 0.9
+background-blur-radius = 20
+
+window-height = 160
+window-width = 55
+

@@ -36,3 +36,7 @@ end)
 hs.hotkey.bind({"shift", "alt"}, "L", function ()
   os.execute("/opt/homebrew/bin/yabai -m window --display east; /opt/homebrew/bin/yabai -m display --focus east")
 end)
+
+hs.hotkey.bind({"shift", "alt"}, "J", function ()
+  os.execute("/opt/homebrew/bin/yabai -m window --display south; /opt/homebrew/bin/yabai -m display --focus east")
+end)

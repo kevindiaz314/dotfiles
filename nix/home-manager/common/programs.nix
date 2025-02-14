@@ -13,7 +13,7 @@
           owner = "z-shell";
           repo = "F-Sy-H";
           rev = "v1.67";
-          sha256 = "sha256-zhaXjrNL0amxexbZm4Kr5Y/feq1+2zW0O6eo9iZhmi0=";
+          sha256 = "0bcsc4kgda577fs3bnvymmxdz3z5mf19pn8ngfqsklabnf79f5nf";
         };
       }
     ];
@@ -24,8 +24,8 @@
       iin = "nvim $(fzf --preview 'bat --color=always {}')";
       ff = "fastfetch";
       lc = "eza -la --no-user --icons --no-time --no-permissions --no-filesize"; # ls clean
-      l = "eza --long -bF --icons"; # Extended details with binary sizes and type indicators
-      ll = "eza --long -a --icons"; # Long format, including hidden files
+      l = "eza --long --total-size -h -bF --icons"; # Extended details with binary sizes and type indicators
+      ll = "eza --long --total-size -ha --icons"; # Long format, including hidden files
       ls = "eza --icons";
       n = "nvim";
       lg = "lazygit";
@@ -94,11 +94,12 @@
 
       # ----- Neovim isolated configurations -----
       nvim-lazy="NVIM_APPNAME=LazyVim nvim";
+      nvim-test="NVIM_APPNAME=NvimTest nvim";
       nvim-astro="NVIM_APPNAME=AstroNvim nvim";
       nvim-chad="NVIM_APPNAME=NvChad nvim";
       lc = "eza -la --no-user --icons --no-time --no-permissions --no-filesize"; # ls clean
-      l = "eza --long -bF --icons"; # Extended details with binary sizes and type indicators
-      ll = "eza --long -a --icons"; # Long format, including hidden files
+      l = "eza --long --total-size -h -bF --icons"; # Extended details with binary sizes and type indicators
+      ll = "eza --long --total-size -ha --icons"; # Long format, including hidden files
       ls = "eza --icons";
       n = "nvim";
       ff = "fastfetch";

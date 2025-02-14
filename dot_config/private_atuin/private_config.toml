@@ -104,22 +104,34 @@ history_filter = [
   "^exec zsh",
   "^exec fish",
   "^clear",
-  "^exit",
-  "^fish",
-  "^n",
-  "^iin",
-  "^cd",
+  "^exit$",
+  "^fish$",
+
+  # This rule works the same as the 'z' rule below, but for 'nvim (alias n)' instead
+  "^n ",
+  "^n$",
+
+  "^iin$",
+  "^cd$",
   "^nvim",
-  "^nano",
-  "^lg",
-  "^ff",
-  "^lc",
-  "^l",
-  "^ll",
-  "^ls",
-  "^y",
-  "^z",
-  "^pwd",
+  "^vim",
+  "^nano ",
+  "^lg$",
+  "^ff$",
+  "^lc$",
+  "^l$",
+  "^ll$",
+  "^ls$",
+  "^y$",
+  "^zi$",
+
+  # This rule ignores commands that start with 'z ' (e.g. 'z config'), ensuring that
+  # commands such as 'zoxide' are not mistakenly filtered.
+  "^z ",
+
+  # This rule ignores the bare 'z' command, which is used to navigate to the home directory,
+  "^z$",
+  "^pwd$",
 ]
 
 ## prevent commands run with cwd matching any of these regexes from being written

@@ -20,16 +20,14 @@
     # bc coreutils gawk gh glab gnused jq
 
     # Nerd Fonts
-    nerd-fonts.monaspace
-    nerd-fonts.jetbrains-mono
-    atkinson-hyperlegible
+    # nerd-fonts.jetbrains-mono
 
+    atkinson-hyperlegible
     wget
     chezmoi
     cargo
     btop
     nodejs_22
-    # yarn
     bat
     eza
     fd
@@ -37,10 +35,10 @@
     gnumake
     neovim
     ripgrep
-    # stow
     tmux
     fastfetch
     oh-my-posh
-    tre-command
+    git-filter-repo
+    bws
   ];
 }

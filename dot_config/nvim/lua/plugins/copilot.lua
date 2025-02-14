@@ -10,7 +10,10 @@ return {
           accept_word = "<M-tab>",
         },
       },
-      filetypes = { markdown = true }
+      filetypes = {
+        markdown = true,
+        yaml = true,
+      }
     },
   },
   { 'AndreM222/copilot-lualine' },

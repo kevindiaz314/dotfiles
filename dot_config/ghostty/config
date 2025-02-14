@@ -1,4 +1,4 @@
-font-family = MonoLisa
+font-family = MonoLisa Preview Variable
 font-size = 15
 
 theme = tokyonight
@@ -27,6 +27,6 @@ copy-on-select = true
 background-opacity = 0.9
 background-blur-radius = 20
 
-window-height = 160
-window-width = 55
+window-height = 55
+window-width = 160
 

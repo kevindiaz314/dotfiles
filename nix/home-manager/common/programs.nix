@@ -121,8 +121,8 @@
 
   programs.git = {
     enable = true;
-    userEmail = "kevin@kev314.dev";
-    userName = "kevindiaz314";
+    userEmail = "github@kev314.dev";
+    userName = "Kevin Diaz";
     extraConfig = {
       init.defaultBranch = "main";
     };
@@ -139,7 +139,7 @@
   home.file.".config/git/.college".text = ''
     [user]
       email = "kdiazcac@asu.edu"
-      name = "kdiazcac"
+      name = "Kevin Diaz"
     [core]
       sshCommand = "ssh -i ~/.ssh/kdiazcac_ed25519"
   '';

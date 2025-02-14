@@ -16,16 +16,25 @@
     
     # Homebrew packages
     brews = [
+      "bitwarden-cli"
       "borders"
       "switchaudio-osx" # Sketchybar
       "luarocks"
       "lua"
       "sketchybar"  
       "koekeishiya/formulae/yabai"
+      "gradle@7"
+      "mysql"
     ];
 
     # Homebrew casks
     casks = [
+      "forklift"
+      "lm-studio"
+      "leader-key"
+      "todoist"
+      "bitwarden"
+      "keyclu"
       "claude"
       "itsycal"
       "cursor"
@@ -39,8 +48,8 @@
       "sf-symbols"   # Sketchybar
       "font-sf-mono" # Sketchybar
       "font-sf-pro"  # Sketchybar
-      "ollama"
-      "docker"
+      # "ollama"
+      # "docker"
       "zoho-mail"
       "jetbrains-toolbox"
       # "utm"
@@ -56,8 +65,8 @@
       "slack"
       "spotify"
       "wezterm@nightly"
-      "WhatsApp"
-      "Tailscale"
+      "whatsapp"
+      "tailscale"
     ];
 
     masApps = {

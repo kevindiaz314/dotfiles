@@ -4,7 +4,7 @@ local wezterm = require("wezterm")
 -- This will hold the configuration
 local config = wezterm.config_builder()
 
-config.font = wezterm.font "MonoLisa"
+config.font = wezterm.font "MonoLisa Preview Variable"
 config.font_size = 15
 
 config.window_decorations = "RESIZE"
@@ -16,8 +16,8 @@ config.hide_tab_bar_if_only_one_tab = true
 config.color_scheme = 'tokyonight_night'
 
 -- Opacity
-config.window_background_opacity = 0.9
-config.macos_window_background_blur = 0
+config.window_background_opacity = 0.90
+config.macos_window_background_blur = 10
 
 -- Limits the maximum number of frames per second
 config.max_fps = 120

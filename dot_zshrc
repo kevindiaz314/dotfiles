@@ -1,0 +1,2 @@
+export SSH_AUTH_SOCK=/Users/kevin/.bitwarden-ssh-agent.sock
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"

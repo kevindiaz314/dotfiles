@@ -29,14 +29,14 @@ hs.hotkey.bind({"shift", "alt"}, "M", function ()
   os.execute("/opt/homebrew/bin/yabai -m window --toggle zoom-fullscreen")
 end)
 
-hs.hotkey.bind({"shift", "alt"}, "H", function ()
+hs.hotkey.bind({"shift", "alt"}, "W", function ()
   os.execute("/opt/homebrew/bin/yabai -m window --display west; /opt/homebrew/bin/yabai -m display --focus west")
 end)
 
-hs.hotkey.bind({"shift", "alt"}, "L", function ()
+hs.hotkey.bind({"shift", "alt"}, "E", function ()
   os.execute("/opt/homebrew/bin/yabai -m window --display east; /opt/homebrew/bin/yabai -m display --focus east")
 end)
 
-hs.hotkey.bind({"shift", "alt"}, "J", function ()
-  os.execute("/opt/homebrew/bin/yabai -m window --display south; /opt/homebrew/bin/yabai -m display --focus east")
+hs.hotkey.bind({"shift", "alt"}, "S", function ()
+  os.execute("/opt/homebrew/bin/yabai -m window --display south; /opt/homebrew/bin/yabai -m display --focus south")
 end)

@@ -60,66 +60,6 @@
     '';
   };
 
-  # programs.bash.enable = true;
-
-  programs.fish = {
-    enable = true;
-    functions = {  
-      nvims = ''
-        set -l items Default LazyVim
-        set -l config (printf "%s\n" $items | fzf --prompt=" Neovim Config   " --height=~50% --layout=reverse --border --exit-0)
-
-        if test -z "$config"
-            echo "Nothing selected"
-            return 0
-        else if test "$config" = Default
-            set config ""
-        end
-
-        env NVIM_APPNAME=$config nvim $argv
-      '';
-
-      iin = ''
-        # Select a file with fzf and preview it using bat, then open it in Neovim
-        set selected_file (fzf --preview 'bat --style numbers --color always --line-range :300 {}')
-
-        if test -n "$selected_file"
-          nvim $selected_file
-        end
-      '';
-
-    };
-      
-    shellAliases = {
-
-      # ----- Neovim isolated configurations -----
-      nvim-lazy="NVIM_APPNAME=LazyVim nvim";
-      nvim-test="NVIM_APPNAME=NvimTest nvim";
-      nvim-astro="NVIM_APPNAME=AstroNvim nvim";
-      nvim-chad="NVIM_APPNAME=NvChad nvim";
-      lc = "eza -la --no-user --icons --no-time --no-permissions --no-filesize"; # ls clean
-      l = "eza --long --total-size -h -bF --icons"; # Extended details with binary sizes and type indicators
-      ll = "eza --long --total-size -ha --icons"; # Long format, including hidden files
-      ls = "eza --icons";
-      n = "nvim";
-      ff = "fastfetch";
-      lg = "lazygit";
-    };
-
-    interactiveShellInit = ''
-
-      # Overwrite fish_greeting
-      set fish_greeting
-
-      # Initialize Oh My Posh
-      oh-my-posh init fish --config ~/.config/ohmyposh/omp.toml | source
-
-      # Set up fzf key bindings
-      fzf --fish | source;
-
-    '';
-  };
-
   programs.git = {
     enable = true;
     userEmail = "github@kev314.dev";
@@ -144,45 +84,6 @@
     [core]
       sshCommand = "ssh -i ~/.ssh/kdiazcac_ed25519"
   '';
-  programs.lazygit = {
-    enable = true;
-  };
-
-  programs.atuin = {
-    enable = true;
-    enableZshIntegration = true;
-    enableFishIntegration = true;
-  };
-
-  programs.zellij = {
-    enable = true;
-  };
-
-  programs.yazi = {
-    enable = true;
-    shellWrapperName = "y";
-    enableZshIntegration = true;
-    enableFishIntegration = true;
-    settings = {
-      manager = {
-        show_hidden = true;
-      };
-    };
-    theme = {
-      flavor = {
-        dark = "catppuccin-mocha";
-      };
-    };
-    flavors = {
-      catppuccin-mocha = "${yazi-flavor}/catppuccin-mocha.yazi";
-    };
-  };
-
-  programs.zoxide = {
-    enable = true;
-    enableZshIntegration = true;
-    enableFishIntegration = true;
-  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

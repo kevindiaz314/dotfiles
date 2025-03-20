@@ -22,23 +22,5 @@
     # Nerd Fonts
     # nerd-fonts.jetbrains-mono
 
-    atkinson-hyperlegible
-    wget
-    chezmoi
-    cargo
-    btop
-    nodejs_22
-    bat
-    eza
-    fd
-    fzf
-    gnumake
-    neovim
-    ripgrep
-    tmux
-    fastfetch
-    oh-my-posh
-    git-filter-repo
-    bws
   ];
 }

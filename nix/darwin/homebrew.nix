@@ -1,4 +1,5 @@
-{ config, pkgs, ... }: {
+{ pkgs, self, ... }: {
+
   homebrew = {
     enable = true;
 
@@ -12,39 +13,70 @@
     # Homebrew taps
     taps = [
       "FelixKratz/formulae"
+      "koekeishiya/formulae"
     ];
     
     # Homebrew packages
     brews = [
       "bitwarden-cli"
       "borders"
+      "superfile"
       "switchaudio-osx" # Sketchybar
       "luarocks"
       "lua"
       "sketchybar"  
-      "koekeishiya/formulae/yabai"
-      "gradle@7"
-      "mysql"
+      "yabai"
+      "neovim"
+      "ansible"
+      "gradle"
+      "wget"
+      "openjdk"
+      "chezmoi"
+      "iperf3"
+      "git"
+      "node"
+      "lazygit"
+      "atuin"
+      "fzf"
+      "zellij"
+      "fish"
+      "fd"
+      "zoxide"
+      "ripgrep"
+      "yazi"
+      "oh-my-posh"
+      "eza"
+      "fastfetch"
+      "git-filter-repo"
+      "bat"
+      "btop"
+      "rustup"
+      "tmux"
     ];
 
     # Homebrew casks
     casks = [
+      "font-atkinson-hyperlegible"
       "forklift"
-      "lm-studio"
+      # "lm-studio"
       "leader-key"
       "todoist"
       "bitwarden"
       "keyclu"
       "claude"
+      "localsend"
+      "balenaetcher"
       "itsycal"
       "cursor"
+      "visual-studio-code@insiders"
       "ghostty"
       "hammerspoon"
       "syncthing"
-      # "duet"
+      "duet"
       "MonitorControl"
       # "nikitabobko/tap/aerospace"
       "arc"
+      "zen-browser"
       "sf-symbols"   # Sketchybar
       "font-sf-mono" # Sketchybar
       "font-sf-pro"  # Sketchybar
@@ -52,7 +84,7 @@
       # "docker"
       "zoho-mail"
       "jetbrains-toolbox"
-      # "utm"
+      "utm"
       "nextcloud"
       "karabiner-elements"
       "chatgpt"

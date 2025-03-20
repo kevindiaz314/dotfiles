@@ -124,6 +124,9 @@ history_filter = [
   "^ls$",
   "^y$",
   "^zi$",
+  "yabai --start-service",
+  "yabai --stop-service",
+  "yabai --restart-service",
 
   # This rule ignores commands that start with 'z ' (e.g. 'z config'), ensuring that
   # commands such as 'zoxide' are not mistakenly filtered.

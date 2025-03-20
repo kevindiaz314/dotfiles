@@ -21,9 +21,12 @@ return {
     -- See the full "keymap" documentation for information on defining your own keymap.
     keymap = {
       preset = 'enter',
-      cmdline = {
+    },
+
+    cmdline = {
+      keymap = {
         preset = "super-tab",
-      },
+      }
     },
 
     appearance = {

@@ -5,7 +5,7 @@ return {
   opts = {
     provider = "copilot",
     copilot = {
-      model = "o3-mini",
+      model = "claude-3.7-sonnet",
     },
     windows = {
       width = 40,

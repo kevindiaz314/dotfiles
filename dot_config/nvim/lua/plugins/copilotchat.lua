@@ -7,7 +7,7 @@ return {
     },
     build = "make tiktoken", -- Only on MacOS or Linux
     opts = {
-      model = "o3-mini", -- Check documentation for available models https://github.com/CopilotC-Nvim/CopilotChat.nvim?tab=readme-ov-file#models
+      model = "claude-3.7-sonnet", -- Check documentation for available models https://github.com/CopilotC-Nvim/CopilotChat.nvim?tab=readme-ov-file#models
       question_header = "  " .. (vim.env.USER:sub(1,1):upper() .. vim.env.USER:sub(2)) .. " ",
       answer_header = "  Copilot ",
       window = {

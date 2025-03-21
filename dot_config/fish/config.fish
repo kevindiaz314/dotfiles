@@ -49,7 +49,7 @@ if status is-interactive
         yazi $argv --cwd-file="$tmp"
         if set cwd (command cat -- "$tmp"); and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
             builtin cd -- "$cwd"
-	end
+    end
         rm -f -- "$tmp"
     end
 
@@ -99,12 +99,17 @@ if status is-interactive
     set -g fish_pager_color_progress $comment
     set -g fish_pager_color_prefix $cyan
     set -g fish_pager_color_completion $foreground
-    set -g fish_pager_color_description $comment
+    set -g fish_pager_color_description $yellow
     set -g fish_pager_color_selected_background --background=$selection
 
     # Set the EDITOR and VISUAL environment variables
     set -gx EDITOR nvim
     set -gx VISUAL cursor
+    
+    # Set SSH_AUTH_SOCK only on Linux systems
+    if test (uname) = "Linux"
+        set -gx SSH_AUTH_SOCK /home/kevin/.bitwarden-ssh-agent.sock
+    end
 
 end
 

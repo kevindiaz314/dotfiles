@@ -1,2 +1,9 @@
 export SSH_AUTH_SOCK=/Users/kevin/.bitwarden-ssh-agent.sock
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+
+# Drop into fish shell if parent process is not fish
+if [[ "$(ps -p $PPID -o comm=)" != *"fish"* ]]; then
+  # Preserve login shell status
+  [[ -o login ]] && LOGIN_OPTION='--login' || LOGIN_OPTION=''
+  exec fish $LOGIN_OPTION
+fi

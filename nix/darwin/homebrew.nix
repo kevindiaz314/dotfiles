@@ -18,6 +18,7 @@
     
     # Homebrew packages
     brews = [
+      "sevenzip"
       "bitwarden-cli"
       "borders"
       "superfile"

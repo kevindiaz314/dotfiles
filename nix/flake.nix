@@ -16,7 +16,7 @@
 
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs, home-manager, ... }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, ... }:
   let
 
     darwinSystem = "aarch64-darwin";

@@ -4,7 +4,7 @@ local wezterm = require("wezterm")
 -- This will hold the configuration
 local config = wezterm.config_builder()
 
-config.font = wezterm.font "MonoLisa Preview Variable"
+config.font = wezterm.font "MonoLisa Variable"
 config.font_size = 15
 
 config.window_decorations = "RESIZE"

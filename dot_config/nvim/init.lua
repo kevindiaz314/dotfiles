@@ -1,5 +1,7 @@
 if vim.g.vscode then
   -- VSCode extension
+  require('config.vs-code')
+
 else
 
   require('config.options')

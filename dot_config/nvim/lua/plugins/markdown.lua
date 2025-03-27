@@ -2,7 +2,7 @@ return {
   'MeanderingProgrammer/render-markdown.nvim',
   dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' },
   opts = {
-    file_types = { "markdown", "Avante", },
+    file_types = { "markdown", },
     heading = {
       width = 'block',
       left_pad = 2,

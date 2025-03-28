@@ -5,6 +5,10 @@ if test (uname) = "Linux"
     source /usr/share/cachyos-fish-config/cachyos-config.fish
 end
 
+if test (uname) = "Darwin"
+    fastfetch
+end
+
 # Set vi mode
 set -g fish_key_bindings fish_vi_key_bindings
 

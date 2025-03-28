@@ -23,15 +23,11 @@
       "borders"
       "superfile"
       "switchaudio-osx" # Sketchybar
-      "luarocks"
-      "lua"
       "sketchybar"  
       "yabai"
+      "ant"
       "neovim"
-      "ansible"
-      "gradle"
       "wget"
-      "openjdk"
       "chezmoi"
       "iperf3"
       "git"
@@ -52,11 +48,13 @@
       "bat"
       "btop"
       "rustup"
-      "tmux"
+      "openjdk"
+      "gradle"
     ];
 
     # Homebrew casks
     casks = [
+      "wireshark"
       "font-atkinson-hyperlegible"
       "forklift"
       # "lm-studio"

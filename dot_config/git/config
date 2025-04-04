@@ -6,4 +6,6 @@
   email = github@kev314.dev
 [commit]
   gpgsign = true
+[init]
+  defaultBranch = main
 

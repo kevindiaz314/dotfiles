@@ -27,7 +27,7 @@ fzf --fish | source;
 # Shell plugin
 atuin init fish | source
 
-
+# Interactive Neovim search
 function nvims
     set -l items Default LazyVim
     set -l config (printf "%s\n" $items | fzf --prompt=" Neovim Config   " --height=~50% --layout=reverse --border --exit-0)
@@ -42,8 +42,8 @@ function nvims
     env NVIM_APPNAME=$config nvim $argv
 end
 
+# Select a file with fzf and preview it using bat, then open it in Neovim
 function in
-    # Select a file with fzf and preview it using bat, then open it in Neovim
     set selected_file (fzf --preview 'bat --style numbers --color always --line-range :300 {}')
 
     if test -n "$selected_file"
@@ -61,7 +61,7 @@ function y
     rm -f -- "$tmp"
 end
 
-alias nvim-lazy="NVIM_APPNAME=LazyVim nvim"
+alias laz="NVIM_APPNAME=LazyVim nvim"
 alias nvim-test="NVIM_APPNAME=NvimTest nvim"
 alias lc="eza -la --no-user --icons --no-time --no-permissions --no-filesize" # ls clean
 alias l="eza --long --total-size -h -F --icons" # Extended details with type indicators

@@ -29,4 +29,3 @@ opt.formatoptions = "jqlnt" -- tcqj
 opt.splitright = true -- Split new windows right of current
 opt.splitkeep = "screen"
 opt.smoothscroll = true
-opt.conceallevel = 2

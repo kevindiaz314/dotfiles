@@ -14,27 +14,13 @@ return {
     keymap = { preset = 'super-tab' },
     cmdline = {
       keymap = {
-        ['<Tab>'] = { 'show', 'accept' }
+        ['<Tab>'] = { 'accept' },
+        ['<CR>'] = { 'accept_and_enter', 'fallback' },
       },
       completion = {
         ghost_text = { enabled = false },
+        menu = { auto_show = true },
       }
-    },
-
-    -- Default list of enabled providers defined so that you can extend it
-    -- elsewhere in your config, without redefining it, due to `opts_extend`
-    sources = {
-      default = { 'lsp', 'path', 'snippets', 'buffer', 'markdown' },
-      providers = {
-        markdown = {
-          name = 'RenderMarkdown',
-          module = 'render-markdown.integ.blink',
-          fallbacks = { 'lsp' },
-        },
-      },
-      per_filetype = {
-        codecompanion = { "codecompanion" },
-      },
     },
   },
   opts_extend = { "sources.default" }

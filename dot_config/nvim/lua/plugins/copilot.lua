@@ -3,17 +3,29 @@ return {
     cmd = "Copilot",
     event = "InsertEnter",
     opts = {
-      suggestion = {
-        auto_trigger = true,
-        keymap = {
-          accept = "<tab>",
-          accept_word = "<M-tab>",
-        },
-      },
+      suggestion = { enabled = false },
+      panel = { enabled = false },
       filetypes = {
         markdown = true,
         yaml = true,
       }
+    },
+  },
+  { "saghen/blink.cmp",
+    optional = true,
+    dependencies = { "fang2hou/blink-copilot" },
+    opts = {
+      sources = {
+        default = { "copilot" },
+        providers = {
+          copilot = {
+            name = "copilot",
+            module = "blink-copilot",
+            score_offset = 100,
+            async = true,
+          },
+        },
+      },
     },
   },
   { 'AndreM222/copilot-lualine' },

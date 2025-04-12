@@ -5,7 +5,7 @@ return {
   dependencies = {
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
-    "nvim-java/nvim-java",
+    -- "nvim-java/nvim-java",
     "saghen/blink.cmp",
   },
 
@@ -40,7 +40,7 @@ return {
     })
 
     -- Setup nvim-java plugin
-    require("java").setup{}
+    -- require("java").setup{}
 
     -- Setup handlers for mason-lspconfig
     -- From :h mason-lspconfig-automatic-server-setup

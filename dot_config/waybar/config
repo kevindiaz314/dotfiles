@@ -1,0 +1,144 @@
+// -*- mode: jsonc -*-
+{
+    // -------------------------------------------------------------------------
+    // Global configuration
+    // -------------------------------------------------------------------------
+
+    "spacing": 4, // Gaps between modules (4px)
+    // Choose the order of the modules
+    "modules-left": [
+        "hyprland/workspaces",
+        "hyprland/submap",
+        "hyprland/window"
+    ],
+    "modules-center": [
+        "custom/spotify"
+    ],
+    "modules-right": [
+        "network",
+        "bluetooth",
+        "cpu",
+        "memory",
+        "wireplumber",
+        "clock",
+        "tray",
+        "custom/power"
+    ],
+
+    "cpu": {
+        "format": "󰻠  {usage}%",
+        "tooltip": true,
+        "interval": 1,
+        "on-click": "hyprctl dispatch exec 'kitty -e btop'"
+    },
+
+    "memory": {
+        "interval": 5,
+        "format": "󰍛  {used:0.2f} GB",
+        "tooltip-format": "{used:0.1f}GB used out of {total:0.1f}GB ({percentage}%)",
+        "on-click": "hyprctl dispatch exec 'kitty -e btop'"
+    },
+
+    "bluetooth": {
+        "format": "󰂯 {status}",
+        "format-connected": "󰂱 {device_alias}",
+        "format-connected-battery": "󰂱 {device_alias} {device_battery_percentage}%",
+        "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+        "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
+        "on-click": "blueman-manager"
+    },
+
+    "network": {
+        "format": "{icon} ↑ {bandwidthUpBytes} ↓ {bandwidthDownBytes}",
+        "format-wifi": "{icon} ↑ {bandwidthUpBytes} ↓ {bandwidthDownBytes}",
+        "format-ethernet": "{icon} ↑ {bandwidthUpBytes} ↓ {bandwidthDownBytes}",
+        "format-disconnected": "󰤮 Disconnected",
+        "format-icons": {
+            "wifi": ["󰤟 ", "󰤢 ", "󰤥 ", "󰤨 "],
+            "ethernet": "󰈀 ",
+            "disconnected": "󰤮 "
+        },
+        "tooltip-format": "{ifname}: {ipaddr}/{cidr}",
+        "tooltip-format-wifi": "{essid} ({signalStrength}%): {ipaddr}/{cidr}",
+        "interval": 1,
+        "units": true,
+        "on-click": "nm-connection-editor"
+    },
+
+    "wireplumber": {
+        "format": "{icon} {volume}%",
+        "format-muted": "󰝟 Muted",
+        "format-icons": ["󰕿", "󰖀", "󰕾"],
+        "on-click": "pavucontrol",
+        "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+",
+        "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-",
+        "max-volume": 100
+    },
+
+    "custom/spotify": {
+        "exec": "python ~/.config/waybar/scripts/mediaplayer.py --player spotify",
+        "format": "󰓇 {}",
+        "return-type": "json",
+        "on-click": "playerctl play-pause --player=spotify",
+        "on-right-click": "spotify-launcher",
+        "on-scroll-up": "playerctl next --player=spotify",
+        "on-scroll-down": "playerctl previous --player=spotify",
+        "escape": true,
+        "max-length": 40
+    },
+
+    "clock": {
+        "format": "{:%H:%M}",
+        "format-alt": "{:%Y-%m-%d %H:%M:%S}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode": "month",
+            "on-scroll": 1,
+            "format": {
+                "months": "<span color='#ffead3'><b>{}</b></span>",
+                "days": "<span color='#ecc6d9'><b>{}</b></span>",
+                "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+                "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+            }
+        },
+        "actions": {
+            "on-click-right": "mode",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        },
+        "on-click": "mode"
+    },
+
+    "tray": {
+        "icon-size": 17,
+        "spacing": 7,
+        "show-passive-items": true,
+        "reverse-direction": true,
+        "smooth-scrolling-threshold": 30
+    },
+
+    "custom/power": {
+        "format": " 󰐥 ",
+        "tooltip": false,
+        "on-click": "wlogout"
+    },
+
+    "hyprland/workspaces": {
+        "format": "{name}",
+        "on-click": "activate",
+        "sort-by-number": true,
+        "on-scroll-up": "hyprctl dispatch workspace -1",
+        "on-scroll-down": "hyprctl dispatch workspace +1",
+        "all-outputs": true,
+        "active-only": false,
+        "show-special": false
+    },
+    
+    "hyprland/window": {
+        "format": "{}",
+        "max-length": 30,
+        "separate-outputs": true
+    }
+}

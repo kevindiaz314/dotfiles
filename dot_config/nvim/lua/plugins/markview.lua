@@ -5,13 +5,14 @@ return {
   -- For blink.cmp's completion source
   dependencies = {
       "saghen/blink.cmp"
+
   },
 
   config = function()
-    local presets = require("markview.presets");
+    local preset = require("markview.presets").headings;
     require("markview").setup {
       markdown = {
-        headings = presets.headings.glow_center
+        headings = preset.glow
       }
     }
   end

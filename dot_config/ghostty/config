@@ -1,5 +1,5 @@
 font-family = MonoLisa Variable
-font-size = 15
+font-size = 11
 
 theme = tokyonight
 
@@ -11,20 +11,19 @@ window-padding-x = 6
 window-padding-y = 6
 
 # Keybinds
-keybind = super+w=close_surface
-keybind = super+j=goto_split:bottom
-keybind = super+k=goto_split:top
-keybind = super+h=goto_split:left
-keybind = super+l=goto_split:right
-keybind = global:cmd+'=toggle_quick_terminal
+keybind = ctrl+shift+w=close_surface
+keybind = ctrl+alt+j=goto_split:bottom
+keybind = ctrl+alt+k=goto_split:top
+keybind = ctrl+alt+h=goto_split:left
+keybind = ctrl+alt+l=goto_split:right
+keybind = global:super+'=toggle_quick_terminal
 
 
 quit-after-last-window-closed = true
 shell-integration = fish
-copy-on-select = true
 
 # Opacity 
-background-opacity = 0.9
+background-opacity = 0.97
 background-blur-radius = 20
 
 window-height = 55

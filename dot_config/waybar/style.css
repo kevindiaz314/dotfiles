@@ -23,7 +23,6 @@
 @define-color red #f7768e;     /* Tokyo Night red */
 @define-color orange #ff9e64;  /* Tokyo Night orange */
 @define-color spotify #1db954;
-@define-color dark-blue #292e42; /* Dark blue for tray background */
 
 /* The whole bar */
 #waybar {
@@ -110,7 +109,7 @@
 }
 
 #tray {
-    background-color: @dark-blue;
+    background-color: @background;
     color: @foreground;
     border-radius: 14px;
     padding: 6px;
@@ -127,6 +126,7 @@
 #custom-power {
     color: @background;
     background-color: @red;
+    margin-right: 12px;
 }
 
 #custom-spotify {

@@ -12,12 +12,18 @@
 @define-color background #24283b;
 @define-color background-alt #1a1b26;
 @define-color active #9ece6a;
-@define-color hover #7aa2f7;
+@define-color hover #c3e88d;
 @define-color urgent #f7768e;
-@define-color yellow #eed49f;
+@define-color yellow #e0af68;  /* Tokyo Night yellow/orange */
 @define-color purple #bb9af7;
 @define-color blue #7dcfff;
+@define-color cyan #7aa2f7;   /* Tokyo Night cyan/blue */
+@define-color magenta #ad8ee6; /* Unique color for magenta different from purple and red */
+@define-color green #9ece6a;   /* Tokyo Night green */
+@define-color red #f7768e;     /* Tokyo Night red */
+@define-color orange #ff9e64;  /* Tokyo Night orange */
 @define-color spotify #1db954;
+@define-color dark-blue #292e42; /* Dark blue for tray background */
 
 /* The whole bar */
 #waybar {
@@ -27,7 +33,7 @@
 
 /* Common module styling */
 .modules-right > widget > * {
-    background-color: @background-alt;
+    background-color: @background;  /* Default solid background */
     color: @foreground;
     border-radius: 14px;
     padding: 6px 10px;
@@ -48,7 +54,7 @@
 
 #workspaces button.active {
     color: @background;
-    background-color: @active;
+    background-color: #7aa2f7;
     border-radius: 7px;
 }
 
@@ -64,40 +70,48 @@
 }
 
 #network {
-    color: @blue;
+    color: @background;
+    background-color: @blue;
 }
 
 #bluetooth {
-    color: @hover;
+    color: @background;
+    background-color: @cyan;
 }
 
 #bluetooth.connected {
-    color: @active;
+    color: @background;
+    background-color: @green;
 }
 
 #bluetooth.disabled {
-    color: @urgent;
+    color: @background;
+    background-color: @red;
 }
 
 #cpu {
-    color: @yellow;
+    color: @background;
+    background-color: @yellow;
 }
 
 #memory {
-    color: @active;
+    color: @background;
+    background-color: @orange;
 }
 
 #wireplumber {
-    color: @purple;
+    color: @background;
+    background-color: @purple;
 }
 
 #wireplumber.muted {
-    color: @urgent;
-    background-color: @background-alt;
+    color: @background;
+    background-color: @red;
 }
 
 #tray {
-    background-color: @background-alt;
+    background-color: @dark-blue;
+    color: @foreground;
     border-radius: 14px;
     padding: 6px;
 }
@@ -111,7 +125,8 @@
 }
 
 #custom-power {
-    color: @urgent;
+    color: @background;
+    background-color: @red;
 }
 
 #custom-spotify {
@@ -155,8 +170,9 @@
 
 /* Clock styling */
 #clock {
-    color: @active;
+    color: @background;
     font-weight: bold;
+    background-color: @green;
 }
 
 /* Workspace with app icons */

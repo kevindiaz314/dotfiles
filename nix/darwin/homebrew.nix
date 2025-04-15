@@ -18,86 +18,103 @@
     
     # Homebrew packages
     brews = [
-      "sevenzip"
-      "bitwarden-cli"
-      "borders"
-      "superfile"
-      "switchaudio-osx" # Sketchybar
-      "sketchybar"  
-      "yabai"
-      "ant"
-      "neovim"
-      "wget"
-      "chezmoi"
-      "iperf3"
-      "git"
-      "node"
-      "lazygit"
-      "atuin"
-      "fzf"
-      "zellij"
-      "fish"
-      "fd"
-      "zoxide"
-      "ripgrep"
-      "yazi"
-      "oh-my-posh"
-      "eza"
-      "fastfetch"
-      "git-filter-repo"
-      "bat"
-      "btop"
-      "rustup"
-      "openjdk"
-      "gradle"
+      # CLI tools
+      "atuin"         # Shell history
+      "bat"           # Cat with syntax highlighting
+      "btop"          # System monitor
+      "chezmoi"       # Dotfiles manager
+      "eza"           # ls replacement
+      "fastfetch"     # System info
+      "fd"            # Find replacement
+      "fish"          # Shell
+      "fzf"           # Fuzzy finder
+      "git"           # Version control
+      "git-filter-repo" # Git history filtering
+      "iperf3"        # Network speed test
+      "lazygit"       # Git TUI
+      "oh-my-posh"    # Prompt customization
+      "ripgrep"       # Grep replacement
+      "sevenzip"      # Archive utility
+      "superfile"     # File manager
+      "wget"          # Download utility
+      "yazi"          # File manager
+      "zellij"        # Terminal multiplexer
+      "zoxide"        # Directory jumper
+      
+      # Development
+      "gradle"        # Build tool
+      "neovim"        # Text editor
+      "node"          # JavaScript runtime
+      "openjdk"       # Java SDK
+      "rustup"        # Rust installer
+      
+      # macOS UI enhancements
+      "borders"       # Window borders
+      "sketchybar"    # Menu bar customization
+      "switchaudio-osx" # Audio device switcher (for Sketchybar)
+      "yabai"         # Window manager
+      
+      # Commented out
+      # "ant"
+      # "bitwarden-cli"
     ];
 
     # Homebrew casks
     casks = [
-      "wireshark"
-      "font-atkinson-hyperlegible"
-      "forklift"
-      # "lm-studio"
-      "leader-key"
-      "todoist"
-      "bitwarden"
-      "keyclu"
-      "claude"
-      "localsend"
-      "balenaetcher"
-      "itsycal"
+      # Browsers
+      "arc"
+      # "zen-browser"
+      
+      # Development and coding
       "cursor"
       "visual-studio-code@insiders"
       "ghostty"
+      "kitty"
+      
+      # Security and networking
+      "bitwarden"
+      "tailscale"
+      "wireshark"
+      
+      # Productivity and organization
+      "cleanshot"
+      "itsycal"
+      "obsidian"
+      "raycast"
       "hammerspoon"
+      # "todoist"
+      # "chatgpt"
+      "claude"
+      "leader-key"
+      "keyclu"
+      
+      # File management and sync
+      "forklift"
+      "nextcloud"
       "syncthing"
-      "duet"
+
+      # Communication
+      "discord"
+      "slack"
+      "whatsapp"
+      "spotify"
+      
+      # System utilities
       "MonitorControl"
-      # "nikitabobko/tap/aerospace"
-      "arc"
-      "zen-browser"
+      "karabiner-elements"
+      "duet"
+      "balenaetcher"
+      "localsend"
+      # "zoho-mail"
+      # "jetbrains-toolbox"
+      # "utm"
+      "logi-options+"
+      
+      # Fonts and design
+      "font-atkinson-hyperlegible"
       "sf-symbols"   # Sketchybar
       "font-sf-mono" # Sketchybar
       "font-sf-pro"  # Sketchybar
-      # "ollama"
-      # "docker"
-      "zoho-mail"
-      "jetbrains-toolbox"
-      "utm"
-      "nextcloud"
-      "karabiner-elements"
-      "chatgpt"
-      "cleanshot"
-      "discord"
-      "logi-options+"
-      "marta"
-      "obsidian"
-      "raycast"
-      "slack"
-      "spotify"
-      "wezterm@nightly"
-      "whatsapp"
-      "tailscale"
     ];
 
     masApps = {

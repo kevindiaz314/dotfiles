@@ -1,0 +1,25 @@
+# Platform-specific ignores
+# Ignore Linux-specific configs on macOS
+{{ if eq .chezmoi.os "darwin" }}
+dot_config/hypr/
+dot_config/waybar/
+dot_config/wofi/
+dot_config/uwsm/
+dot_config/wezterm/
+{{ end }}
+
+# Ignore macOS-specific configs on Linux
+{{ if eq .chezmoi.os "linux" }}
+dot_config/karabiner/
+dot_config/borders/
+dot_config/leader-key/
+dot_config/sketchybar/
+dot_config/yabai/
+dot_config/wezterm/
+dot_hammerspoon/
+nix/
+dot_zshrc
+{{ end }}
+
+# Common ignores
+LICENSE

@@ -20,8 +20,8 @@
         "cpu",
         "memory",
         "wireplumber",
-        "clock",
         "tray",
+        "clock",
         "custom/power"
     ],
 
@@ -113,10 +113,8 @@
 
     "tray": {
         "icon-size": 17,
-        "spacing": 7,
-        "show-passive-items": true,
+        "spacing": 5,
         "reverse-direction": true,
-        "smooth-scrolling-threshold": 30
     },
 
     "custom/power": {

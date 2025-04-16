@@ -34,9 +34,9 @@
 .modules-right > widget > * {
     background-color: @background;  /* Default solid background */
     color: @foreground;
-    border-radius: 14px;
+    border-radius: 12px;
     padding: 6px 10px;
-    margin: 6px 2px;
+    margin: 6px 3px;
 }
 
 #workspaces {

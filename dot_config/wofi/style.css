@@ -1,75 +1,93 @@
-* {
-    font-family: "Adwaita Sans";
-    font-size: 14px;
-}
+/* Tokyo Night Theme for Wofi */
 
 window {
-    background-color: rgba(26, 27, 38, 0.95);
+    background-color: #1a1b26;
     border-radius: 12px;
-    border: 2px solid #414868;
+    border: 2px solid #7aa2f7;
+    font-family: "Adwaita Sans";
 }
 
 #input {
-    margin: 12px;
+    margin: 8px;
     padding: 8px 12px;
     border-radius: 8px;
     border: none;
     background-color: #24283b;
     color: #c0caf5;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
 }
 
-#inner-box {
-    background-color: transparent;
-    margin: 0px 12px 12px 12px;
-    border-radius: 8px;
+#input:focus {
+    border: none;
+    box-shadow: 0 0 5px #7aa2f7;
 }
 
 #outer-box {
-    margin: 0;
-    padding: 0;
-    background-color: transparent;
+    margin: 10px;
 }
 
 #scroll {
-    margin: 0;
+    margin: 5px 0px;
     border-radius: 8px;
+    background-color: #1a1b26;
 }
 
-#text {
-    padding: 8px;
-    color: #c0caf5;
-}
-
-#img {
-    margin-right: 12px;
-    border-radius: 4px;
+#inner-box {
+    margin: 5px;
+    background-color: #1a1b26;
 }
 
 #entry {
     padding: 8px;
-    margin: 0 0 2px 0;
     border-radius: 8px;
-}
-
-#entry:nth-child(even) {
-    background-color: #24283b;
-}
-
-#entry:nth-child(odd) {
-    background-color: #1a1b26;
 }
 
 #entry:selected {
     background-color: #414868;
 }
 
+#text {
+    margin: 5px;
+    color: #c0caf5;
+    font-size: 14px;
+}
+
 #text:selected {
-    background-color: transparent;
+    color: #7dcfff;
+}
+
+#img {
+    margin: 5px;
+}
+
+#unselected {
     color: #c0caf5;
 }
 
-/* Remove hover effect */
-#entry:hover {
+#selected {
+    color: #7dcfff;
+}
+
+/* Scrollbar styling */
+scrollbar {
     background-color: transparent;
+    border-radius: 8px;
+}
+
+scrollbar slider {
+    background-color: #414868;
+    border-radius: 8px;
+    margin: 2px;
+}
+
+scrollbar slider:hover {
+    background-color: #7aa2f7;
+}
+
+/* Prompt styling */
+#prompt {
+    margin: 0px 8px;
+    color: #bb9af7;
+    font-size: 14px;
+    font-weight: bold;
 }

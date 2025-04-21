@@ -102,10 +102,10 @@ keybinds clear-defaults=true {
         }
     }
     shared_among "normal" "locked" {
-        bind "Ctrl Alt Shift h" { MoveFocusOrTab "left"; }
-        bind "Ctrl Alt Shift j" { MoveFocus "down"; }
-        bind "Ctrl Alt Shift k" { MoveFocus "up"; }
-        bind "Ctrl Alt Shift l" { MoveFocusOrTab "right"; }
+        bind "Ctrl Super h" { MoveFocusOrTab "left"; }
+        bind "Ctrl Super j" { MoveFocus "down"; }
+        bind "Ctrl Super k" { MoveFocus "up"; }
+        bind "Ctrl Super l" { MoveFocusOrTab "right"; }
         bind "Alt -" { Resize "Decrease"; }
         bind "Alt =" { Resize "Increase"; }
         bind "Alt [" { PreviousSwapLayout; }

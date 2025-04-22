@@ -1,26 +1,27 @@
 # Platform-specific ignores
-# Ignore Linux-specific configs on macOS
+
+# Ignore Linux-specific files when on macOS
 {{ if eq .chezmoi.os "darwin" }}
-dot_config/hypr/
-dot_config/waybar/
-dot_config/wofi/
-dot_config/uwsm/
-dot_config/wezterm/
+.config/hypr
+.config/waybar
+.config/wofi
+.config/uwsm
 {{ end }}
 
-# Ignore macOS-specific configs on Linux
+# Ignore macOS-specific files when on Linux
 {{ if eq .chezmoi.os "linux" }}
-dot_config/karabiner/
-dot_config/borders/
-dot_config/leader-key/
-dot_config/sketchybar/
-dot_config/yabai/
-dot_config/wezterm/
-dot_hammerspoon/
-nix/
-dot_zshrc
+.config/karabiner
+.config/borders
+.config/leader-key
+.config/sketchybar
+.config/yabai
+.config/wezterm
+.hammerspoon
+nix
+.zshrc
 {{ end }}
 
+.config/wezterm
 # Common ignores
 LICENSE
 README.md

@@ -3,9 +3,11 @@
 # Ignore Linux-specific files when on macOS
 {{ if eq .chezmoi.os "darwin" }}
 .config/hypr
-.config/waybar
-.config/wofi
 .config/uwsm
+.config/walker
+.config/waybar
+.config/wlogout
+.config/wofi
 .config/xdg-desktop-portal
 {{ end }}
 
@@ -16,7 +18,6 @@
 .config/leader-key
 .config/sketchybar
 .config/yabai
-.config/wezterm
 .hammerspoon
 nix
 .zshrc

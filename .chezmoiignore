@@ -6,6 +6,7 @@
 .config/waybar
 .config/wofi
 .config/uwsm
+.config/xdg-desktop-portal
 {{ end }}
 
 # Ignore macOS-specific files when on Linux

@@ -67,7 +67,7 @@
       
       # Development and coding
       "cursor"
-      "visual-studio-code@insiders"
+      "visual-studio-code"
       "ghostty"
       "kitty"
       

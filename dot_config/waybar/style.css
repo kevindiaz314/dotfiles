@@ -33,6 +33,7 @@ window#waybar {
 #memory,
 #wireplumber,
 #clock,
+#custom-notification,
 #custom-power,
 #tray {
     padding: 4px 10px;
@@ -142,6 +143,16 @@ window#waybar {
 #clock {
     color: @tokyo-night-text-highlight;
     font-weight: bold;
+}
+
+/* Notification module styling */
+#custom-notification {
+    color: @tokyo-night-yellow;
+}
+
+#custom-notification:hover {
+    background-color: rgba(224, 175, 104, 0.2);
+    color: @tokyo-night-text-highlight;
 }
 
 /* Power button styling */

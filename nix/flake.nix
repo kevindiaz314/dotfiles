@@ -30,7 +30,8 @@
     # Build darwin flake using:
     # $ darwin-rebuild build --flake .#kevmbp
     darwinConfigurations."kevmbp" = nix-darwin.lib.darwinSystem {
-      specialArgs = { inherit self; };
+      system = darwinSystem;
+      specialArgs = { inherit self darwinSystem; };
       modules = [ ./darwin ];
     };
 

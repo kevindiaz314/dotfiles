@@ -1,17 +1,13 @@
-{ pkgs, self, ... }: {
+{ pkgs, self, darwinSystem, ... }: {
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [ 
-    gnumake
-    bws
   ];
 
   # Necessary for using flakes on this system.
   nix.settings.experimental-features = "nix-command flakes";
   
-  nix.enable = false;
-
   # Enable alternative shell support in nix-darwin.
   # programs.fish.enable = true;
 
@@ -31,8 +27,8 @@
         StandardHideDesktopIcons = true;
       };
 
-      # Disable animation when switching screens or opening apps
-      universalaccess.reduceMotion = true;
+      # Comment out problematic universal access settings
+      # universalaccess.reduceMotion = true;
 
       dock = {
         orientation = "right";
@@ -41,9 +37,8 @@
         show-recents = false;
         mru-spaces = false;
         persistent-apps = [
-          "/Applications/WezTerm.app"
           "/Applications/Ghostty.app"
-          "/Applications/Arc.app"
+          "/Applications/Zen.app"
         ];
         persistent-others = [];
       };
@@ -72,5 +67,5 @@
   nixpkgs.config.allowUnfree = true;
 
   # The platform the configuration will be used on.
-  nixpkgs.hostPlatform = "aarch64-darwin";
+  nixpkgs.hostPlatform = darwinSystem;
 }

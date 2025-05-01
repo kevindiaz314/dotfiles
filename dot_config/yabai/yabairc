@@ -1,9 +1,8 @@
 # global settings
 yabai -m config                                                  \
     external_bar all:0:0                                        \
-    menubar_opacity              1.0                             \
     mouse_follows_focus          on                              \
-    focus_follows_mouse          autoraise                       \
+    focus_follows_mouse          autofocus                       \
     display_arrangement_order    default                         \
     window_origin_display        default                         \
     window_placement             second_child                    \

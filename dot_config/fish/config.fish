@@ -10,6 +10,7 @@ end
 
 if test (uname) = "Darwin"
     fastfetch
+    fish_add_path /opt/homebrew/opt/openjdk@21/bin
 end
 
 # Set vi mode
@@ -29,6 +30,9 @@ fzf --fish | source;
 
 # Shell plugin
 atuin init fish | source
+
+# Set up Zoxide
+zoxide init fish | source
 
 # Interactive Neovim search
 function nvims
@@ -75,8 +79,6 @@ alias ff="fastfetch"
 alias lg="lazygit"
 alias sp="spf"
 
-zoxide init fish | source
-
 # TokyoNight Color Palette
 set -l foreground c0caf5
 set -l selection 283457
@@ -113,6 +115,6 @@ set -g fish_pager_color_completion $foreground
 set -g fish_pager_color_description $yellow
 set -g fish_pager_color_selected_background --background=$selection
 
-# Set the EDITOR and VISUAL environment variables
+# Set the EDITOR environment variable
 set -gx EDITOR nvim
 

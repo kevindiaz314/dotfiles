@@ -1,12 +1,8 @@
 {
     "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
     "logo": {
-    	"source": "~/.local/share/fastfetch/hypr.png",
-    	"type": "kitty",
-    	"height": 18,
-    	"padding": {
-    	    "top": 0
-    	}
+    	"source": "~/.local/share/fastfetch/hypr2.png",
+    	"type": "kitty-direct"
     },
     "display": {
         "separator": " "
@@ -53,15 +49,15 @@
         },
         {
             "type": "cpu",
-            "key": " "
+            "key": " "
         },
         {
             "type": "gpu",
-            "key": "󰢮 "
+            "key": "󰾲 "
         },
         {
             "type": "memory",
-            "key": "󰍛 "
+            "key": " "
         },
         {
             "type": "disk",

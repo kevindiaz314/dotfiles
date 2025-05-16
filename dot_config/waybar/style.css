@@ -20,184 +20,197 @@
 @define-color tokyo-night-red #f7768e;
 @define-color tokyo-night-yellow #e0af68;
 
-/* Base window styling */
 window#waybar {
     background-color: transparent;
     color: @tokyo-night-text;
 }
 
-/* General module styling */
-#workspaces,
-#network,
-#cpu,
-#memory,
-#wireplumber,
-#clock,
-#custom-notification,
-#custom-power,
-#tray {
-    padding: 4px 10px;
-    margin: 5px 3px;
-    border-radius: 12px;
+/* Add rounded corners to the waybar */
+.modules-left, .modules-right {
+    border-radius: 8px;
+    margin-top: 3px;
+}
+
+#workspaces {
     background-color: @tokyo-night-bg;
-    border: 1px solid @tokyo-night-border;
-    transition: all 0.3s ease;
+    margin: 0 4px;
 }
 
-/* Hover state for modules */
-#workspaces:hover,
-#network:hover,
-#cpu:hover,
-#memory:hover,
-#wireplumber:hover,
-#custom-power:hover {
-    background-color: rgba(67, 73, 104, 0.6);
-    border-color: @tokyo-night-cyan;
-}
-
-/* Workspaces module */
 #workspaces button {
+    padding: 0 9px;
     color: @tokyo-night-text;
-    background: transparent;
-    padding: 0 5px;
-    border-radius: 5px;
-    border: none;
-    margin: 0 2px;
-    transition: all 0.3s ease;
+    border-radius: 4px;
 }
 
 #workspaces button:hover {
-    background: rgba(122, 162, 247, 0.2);
+    box-shadow: inherit;
+    text-shadow: inherit;
+    background: @tokyo-night-bg-highlight;
     color: @tokyo-night-text-highlight;
-    box-shadow: inset 0 -2px @tokyo-night-blue;
 }
 
 #workspaces button.active {
-    background: rgba(122, 162, 247, 0.3);
-    color: @tokyo-night-text-highlight;
-    box-shadow: inset 0 -2px @tokyo-night-blue;
+    background-color: @tokyo-night-bg-highlight;
+    color: @tokyo-night-blue;
+    border-bottom: 2px solid @tokyo-night-blue;
 }
 
 #workspaces button.urgent {
-    background: rgba(247, 118, 142, 0.3);
-    color: @tokyo-night-red;
-    box-shadow: inset 0 -2px @tokyo-night-red;
+    background-color: @tokyo-night-red;
+    color: @tokyo-night-bg;
 }
 
-/* Window title module */
-#window {
-    color: @tokyo-night-text-highlight;
-    font-weight: bold;
-    padding-left: 15px;
-    padding-right: 15px;
+#tray {
+    background-color: @tokyo-night-bg;
+    margin: 0 4px;
+    padding: 0 8px;
+    border-radius: 4px;
 }
 
-/* Network module styling */
 #network {
+    background-color: @tokyo-night-bg-highlight;
     color: @tokyo-night-cyan;
+    margin: 0 2px;
+    padding: 0 8px;
+    border-radius: 4px;
 }
 
 #network.disconnected {
+    background-color: @tokyo-night-bg-highlight;
     color: @tokyo-night-red;
 }
 
-/* CPU module styling */
 #cpu {
+    background-color: @tokyo-night-bg-highlight;
+    color: @tokyo-night-green;
+    margin: 0 2px;
+    padding: 0 8px;
+    border-radius: 4px;
+}
+
+#memory {
+    background-color: @tokyo-night-bg-highlight;
+    color: @tokyo-night-purple;
+    margin: 0 2px;
+    padding: 0 8px;
+    border-radius: 4px;
+}
+
+#battery {
+    background-color: @tokyo-night-bg-highlight;
+    color: @tokyo-night-yellow;
+    margin: 0 2px;
+    padding: 0 8px;
+    border-radius: 4px;
+}
+
+#battery.charging, #battery.plugged {
     color: @tokyo-night-green;
 }
 
-#cpu.warning {
-    color: @tokyo-night-yellow;
+#battery.warning:not(.charging) {
+    background-color: @tokyo-night-yellow;
+    color: @tokyo-night-bg;
 }
 
-#cpu.critical {
-    color: @tokyo-night-red;
-    animation: blink 1s infinite alternate;
+#battery.critical:not(.charging) {
+    background-color: @tokyo-night-red;
+    color: @tokyo-night-bg;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
 }
 
-/* Memory module styling */
-#memory {
-    color: @tokyo-night-purple;
+@keyframes blink {
+    to {
+        background-color: @tokyo-night-bg;
+        color: @tokyo-night-red;
+    }
 }
 
-#memory.warning {
-    color: @tokyo-night-yellow;
-}
-
-#memory.critical {
-    color: @tokyo-night-red;
-    animation: blink 1s infinite alternate;
-}
-
-/* Volume module styling */
 #wireplumber {
+    background-color: @tokyo-night-bg-highlight;
     color: @tokyo-night-blue;
+    margin: 0 2px;
+    padding: 0 8px;
+    border-radius: 4px;
 }
 
 #wireplumber.muted {
+    background-color: @tokyo-night-bg-highlight;
     color: @tokyo-night-red;
-    text-decoration: line-through;
 }
 
-/* Clock module styling */
 #clock {
+    background-color: @tokyo-night-bg-highlight;
+    color: @tokyo-night-text-highlight;
+    margin: 0 2px;
+    padding: 0 8px;
+    border-radius: 4px;
+}
+
+#custom-notification {
+    background-color: @tokyo-night-bg-highlight;
+    color: @tokyo-night-yellow;
+    margin: 0 2px;
+    padding: 0 8px;
+    border-radius: 4px;
+}
+
+#custom-power {
+    background-color: @tokyo-night-bg-highlight;
+    color: @tokyo-night-red;
+    margin: 0 2px;
+    padding: 0 10px;
+    border-radius: 4px;
+}
+
+#custom-power:hover {
+    background-color: @tokyo-night-red;
+    color: @tokyo-night-bg;
+}
+
+tooltip {
+    background-color: @tokyo-night-bg;
+    border: 1px solid @tokyo-night-border;
+    border-radius: 4px;
+}
+
+tooltip label {
+    color: @tokyo-night-text-highlight;
+}
+
+/* Calendar styling */
+calendar {
+    background-color: @tokyo-night-bg;
+    color: @tokyo-night-text;
+    border: 1px solid @tokyo-night-border;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+calendar:selected {
+    background-color: @tokyo-night-blue;
+    color: @tokyo-night-bg;
+}
+
+calendar.header {
     color: @tokyo-night-text-highlight;
     font-weight: bold;
 }
 
-/* Notification module styling */
-#custom-notification {
-    color: @tokyo-night-yellow;
+calendar.button {
+    color: @tokyo-night-cyan;
 }
 
-#custom-notification:hover {
-    background-color: rgba(224, 175, 104, 0.2);
+calendar.button:hover {
+    background-color: @tokyo-night-bg-highlight;
     color: @tokyo-night-text-highlight;
 }
 
-/* Power button styling */
-#custom-power {
-    color: @tokyo-night-red;
-    font-size: 16px;
-    margin-right: 8px;
-    padding: 0 12px;
+calendar:indeterminate {
+    color: rgba(169, 177, 214, 0.5);
 }
 
-#custom-power:hover {
-    background-color: rgba(247, 118, 142, 0.2);
-    color: @tokyo-night-text-highlight;
-}
-
-/* Tray module styling */
-#tray {
-    margin-left: 8px;
-    padding: 0 10px;
-}
-
-#tray menu {
-    background-color: @tokyo-night-bg;
-    border: 1px solid @tokyo-night-border;
-    border-radius: 8px;
-}
-
-/* Animation for critical status */
-@keyframes blink {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0.6;
-    }
-}
-
-/* Additional states that might be useful */
-tooltip {
-    background-color: @tokyo-night-bg;
-    border: 1px solid @tokyo-night-border;
-    border-radius: 8px;
-}
-
-tooltip label {
-    color: @tokyo-night-text;
-    padding: 5px;
-}

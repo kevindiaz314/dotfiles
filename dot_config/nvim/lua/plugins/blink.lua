@@ -1,27 +1,17 @@
 return {
-  'saghen/blink.cmp',
+  "saghen/blink.cmp",
   -- optional: provides snippets for the snippet source
   dependencies = {
-    'rafamadriz/friendly-snippets',
+    "rafamadriz/friendly-snippets",
   },
 
   -- Release tag downloads pre-built binaries
-  version = '*',
+  version = "*",
 
   ---@module 'blink.cmp'
   ---@type blink.cmp.Config
   opts = {
-    keymap = { preset = 'super-tab' },
-    cmdline = {
-      keymap = {
-        ['<Tab>'] = { 'accept' },
-        ['<CR>'] = { 'accept_and_enter', 'fallback' },
-      },
-      completion = {
-        ghost_text = { enabled = false },
-        menu = { auto_show = true },
-      }
-    },
+    keymap = { preset = "super-tab" }
   },
   opts_extend = { "sources.default" }
 }

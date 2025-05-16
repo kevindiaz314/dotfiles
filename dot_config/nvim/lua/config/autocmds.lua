@@ -3,6 +3,14 @@ vim.api.nvim_create_autocmd("FileType", {
   command = "set formatoptions-=cro",
 })
 
+-- Enable line wrapping for markdown files
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "markdown" },
+  callback = function()
+    vim.opt.wrap = true
+  end,
+})
+
 -- -- Set per-filetype indentation rules
 -- local indent_settings = {
 --   lua = 2,

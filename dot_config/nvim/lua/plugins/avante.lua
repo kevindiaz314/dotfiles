@@ -1,11 +1,11 @@
 return {
   "yetone/avante.nvim",
   event = "VeryLazy",
-  version = false, -- set this to "*" if you want to always pull the latest change, false to update on release
+  version = false, -- Never set this value to "*"!
   opts = {
     provider = "copilot",
     copilot = {
-      model = "claude-3.7-sonnet",
+      model = "gemini-2.5-pro",
       max_tokens = 8192,
     },
     windows = {
@@ -29,11 +29,11 @@ return {
     "echasnovski/mini.icons",
     "zbirenbaum/copilot.lua", -- for providers='copilot'
     {
-      -- support for image pasting
+      -- Support for image pasting
       "HakonHarnes/img-clip.nvim",
       event = "VeryLazy",
       opts = {
-        -- recommended settings
+        -- Recommended settings
         default = {
           embed_image_as_base64 = false,
           prompt_for_file_name = false,

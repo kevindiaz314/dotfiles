@@ -15,6 +15,9 @@ return {
         height = 15,
       },
     },
+    file_selector = {
+      provider = "snacks"
+    }
   },
   keys = {
     {"<space>aC", "<cmd>AvanteClear<cr>", desc = "avante: clear"}
@@ -38,10 +41,10 @@ return {
           embed_image_as_base64 = false,
           prompt_for_file_name = false,
           drag_and_drop = {
-            insert_mode = true,
-          },
-        },
-      },
-    },
-  },
+            insert_mode = true
+          }
+        }
+      }
+    }
+  }
 }

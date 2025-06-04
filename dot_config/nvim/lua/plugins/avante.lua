@@ -5,7 +5,7 @@ return {
   opts = {
     provider = "copilot",
     copilot = {
-      model = "gemini-2.5-pro",
+      model = "claude-sonnet-4",
       max_tokens = 8192,
     },
     windows = {

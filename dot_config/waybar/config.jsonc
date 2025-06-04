@@ -14,7 +14,7 @@
         "network",
         "cpu",
         "memory",
-	"battery",
+        "battery",
         "wireplumber",
         "clock",
         "custom/notification",
@@ -69,7 +69,7 @@
     },
 
     "clock": {
-        "format": "{:%b %d, %H:%M}",
+        "format": "<b>{:%b %d, %H:%M}</b>",
         "tooltip-format": "<tt><small>{calendar}</small></tt>",
         "calendar": {
             "mode": "month",

@@ -4,9 +4,10 @@ return {
   version = false, -- Never set this value to "*"!
   opts = {
     provider = "copilot",
-    copilot = {
-      model = "claude-sonnet-4",
-      max_tokens = 8192,
+    providers = {
+      copilot = {
+        model = "claude-sonnet-4",
+      }
     },
     windows = {
       width = 40,

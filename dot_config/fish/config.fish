@@ -1,9 +1,6 @@
 # Set SSH_AUTH_SOCK only on Linux systems
 # Source CachyOS config
 if test (uname) = "Linux"
-    # Setup Bitwarden SSH agent socket
-    set -gx SSH_AUTH_SOCK /home/kevin/.bitwarden-ssh-agent.sock
-
     # Load CachyOS fish configuration
     source /usr/share/cachyos-fish-config/cachyos-config.fish
 end

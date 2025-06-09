@@ -18,17 +18,16 @@
   # $ darwin-rebuild changelog
 
   system = {
+    primaryUser = "kevin";
     startup.chime = false;
     stateVersion = 6;
     defaults = {
       trackpad.Clicking = true;
+      universalaccess.reduceMotion = true;
       WindowManager = {
         EnableStandardClickToShowDesktop = false;
         StandardHideDesktopIcons = true;
       };
-
-      # Comment out problematic universal access settings
-      # universalaccess.reduceMotion = true;
 
       dock = {
         orientation = "right";
@@ -49,6 +48,7 @@
         KeyRepeat = 1;
         "com.apple.trackpad.scaling" = 2.6;
         AppleEnableSwipeNavigateWithScrolls = true;
+        NSAutomaticWindowAnimationsEnabled = false;
       };
 
       finder = {

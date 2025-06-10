@@ -2,69 +2,28 @@
   "actions" : [
     {
       "key" : "t",
-      "label" : "",
       "type" : "application",
       "value" : "/Applications/Ghostty.app"
     },
     {
       "key" : "b",
-      "label" : "",
       "type" : "application",
-      "value" : "/Applications/Arc.app"
-    },
-    {
-      "key" : "w",
-      "label" : "",
-      "type" : "application",
-      "value" : "/Applications/WhatsApp.app"
-    },
-    {
-      "key" : "a",
-      "label" : "",
-      "type" : "application",
-      "value" : "/Applications/Claude.app"
-    },
-    {
-      "key" : "v",
-      "label" : "",
-      "type" : "application",
-      "value" : "/Applications/Visual Studio Code - Insiders.app"
+      "value" : "/Applications/Zen.app"
     },
     {
       "key" : "c",
-      "label" : "",
       "type" : "application",
       "value" : "/Applications/Cursor.app"
     },
     {
-      "key" : "o",
-      "label" : "",
+      "key" : "v",
       "type" : "application",
-      "value" : "/Applications/Obsidian.app"
+      "value" : "/Applications/Visual Studio Code.app"
     },
     {
       "key" : "e",
-      "label" : "",
       "type" : "application",
       "value" : "/Applications/ForkLift.app"
-    },
-    {
-      "key" : "5",
-      "label" : "",
-      "type" : "application",
-      "value" : "/Applications/Spotify.app"
-    },
-    {
-      "key" : "s",
-      "label" : "",
-      "type" : "application",
-      "value" : "/Applications/Slack.app"
-    },
-    {
-      "key" : "d",
-      "label" : "",
-      "type" : "application",
-      "value" : "/Applications/Discord.app"
     }
   ],
   "type" : "group"

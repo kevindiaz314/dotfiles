@@ -23,7 +23,6 @@ nix
 .zshrc
 {{ end }}
 
-.config/wezterm
 # Common ignores
 LICENSE
 README.md

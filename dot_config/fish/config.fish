@@ -112,6 +112,9 @@ set -g fish_pager_color_completion $foreground
 set -g fish_pager_color_description $yellow
 set -g fish_pager_color_selected_background --background=$selection
 
-# Set the EDITOR environment variable
+# Set the EDITOR and VISUAL environment variable
 set -gx EDITOR nvim
+set -gx VISUAL cursor
 
+# Set the TERMINAL environment variable
+set -gx TERMINAL ghostty

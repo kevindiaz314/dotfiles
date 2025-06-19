@@ -30,3 +30,6 @@ keymap.set('n', '<leader>D', ':t.<CR>', { noremap = true, desc = "Duplicate line
 
 -- Yank to clipboard
 keymap.set("v", "<leader>y", '"+y', { desc = "Yank to clipboard" })
+
+-- Paste from clipboard
+keymap.set("n", "<leader>p", '"+p', { desc = "Paste from clipboard" })

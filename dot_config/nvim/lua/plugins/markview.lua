@@ -13,6 +13,14 @@ return {
     require("markview").setup {
       markdown = {
         headings = preset.glow
+      },
+      preview = {
+        filetypes = {
+          "md",
+          "markdown",
+          "Avante"
+        },
+        ignore_buftypes = {}
       }
     }
   end

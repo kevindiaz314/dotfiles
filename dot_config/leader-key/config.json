@@ -24,6 +24,11 @@
       "key" : "e",
       "type" : "application",
       "value" : "/Applications/ForkLift.app"
+    },
+    {
+      "key" : "d",
+      "type" : "application",
+      "value" : "/Applications/Dia.app"
     }
   ],
   "type" : "group"

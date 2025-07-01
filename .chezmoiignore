@@ -7,22 +7,23 @@
 .config/walker
 .config/waybar
 .config/wlogout
-.config/wofi
-.config/xdg-desktop-portal
 {{ end }}
 
 # Ignore macOS-specific files when on Linux
 {{ if eq .chezmoi.os "linux" }}
-.config/karabiner
 .config/borders
 .config/leader-key
 .config/sketchybar
 .config/yabai
 .hammerspoon
-nix
 .zshrc
 {{ end }}
 
 # Common ignores
 LICENSE
 README.md
+
+# Other ignores
+nix
+.config/wofi
+.ideavimrc

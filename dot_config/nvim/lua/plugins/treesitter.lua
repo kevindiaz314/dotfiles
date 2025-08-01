@@ -1,10 +1,11 @@
 return {
   "nvim-treesitter/nvim-treesitter",
-  event = { "BufReadPre", "BufReadPre" },
+  lazy = false,
   build = ":TSUpdate",
   dependencies = {
     "windwp/nvim-ts-autotag",
     "nvim-treesitter/nvim-treesitter-textobjects",
+    "OXY2DEV/markview.nvim",
   },
   main = "nvim-treesitter.configs",
   opts = {

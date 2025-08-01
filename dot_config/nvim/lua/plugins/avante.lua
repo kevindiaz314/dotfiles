@@ -13,12 +13,10 @@ return {
       width = 40,
       input = {
         prefix = " ",
+        height = 10,
       },
-      ask = {
-        start_insert = false
-      }
-    },
-    file_selector = {
+   },
+    selector = {
       provider = "snacks"
     }
   },

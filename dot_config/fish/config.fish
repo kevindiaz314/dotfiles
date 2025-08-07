@@ -1,15 +1,3 @@
-# Set SSH_AUTH_SOCK only on Linux systems
-# Source CachyOS config
-if test (uname) = "Linux"
-    # Load CachyOS fish configuration
-    source /usr/share/cachyos-fish-config/cachyos-config.fish
-end
-
-if test (uname) = "Darwin"
-    fastfetch
-    fish_add_path /opt/homebrew/opt/openjdk@21/bin
-end
-
 # Set vi mode
 set -g fish_key_bindings fish_vi_key_bindings
 
@@ -19,8 +7,11 @@ function fish_mode_prompt; end
 # Overwrite fish_greeting
 set fish_greeting
 
-# Initialize Oh My Posh
-oh-my-posh init fish --config ~/.config/ohmyposh/omp.toml | source
+# Initialize Oh-My-Posh and fastfetch (skip if running in VSCode)
+if test "$TERM_PROGRAM" != "vscode"
+    oh-my-posh init fish --config ~/.config/ohmyposh/omp.toml | source
+    fastfetch
+end
 
 # Set up fzf key bindings
 fzf --fish | source;

@@ -2,11 +2,6 @@
 
 # Ignore Linux-specific files when on macOS
 {{ if eq .chezmoi.os "darwin" }}
-.config/hypr
-.config/uwsm
-.config/walker
-.config/waybar
-.config/wlogout
 {{ end }}
 
 # Ignore macOS-specific files when on Linux
@@ -27,3 +22,10 @@ README.md
 nix
 .config/wofi
 .ideavimrc
+.config/hypr
+.config/uwsm
+.config/walker
+.config/waybar
+.config/wlogout
+.config/kitty
+.config/tmux

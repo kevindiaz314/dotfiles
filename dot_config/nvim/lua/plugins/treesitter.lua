@@ -25,6 +25,7 @@ return {
       "css",
       "dockerfile",
       "gitignore",
+      "go",
       "html",
       "hyprlang",
       "java",

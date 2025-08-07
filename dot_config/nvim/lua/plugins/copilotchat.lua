@@ -3,7 +3,7 @@ return {
     "CopilotC-Nvim/CopilotChat.nvim",
     dependencies = {
       { "zbirenbaum/copilot.lua" },
-      { "nvim-lua/plenary.nvim", branch = "master" }, -- for curl, log and async functions
+      { "nvim-lua/plenary.nvim", branch = "master" } -- for curl, log and async functions
     },
     build = "make tiktoken", -- Only on MacOS or Linux
     opts = {
@@ -12,11 +12,10 @@ return {
       answer_header = "  Copilot ",
       window = {
         width = 0.4,
-      },
+      }
     },
     keys = {
-      { "<leader>ct", "<cmd>CopilotChatToggle<cr>", desc = "CopilotChat - Toggle" },
-    },
-    -- See Commands section for default commands if you want to lazy load on them
+      { "<leader>cc", "<cmd>CopilotChatToggle<cr>", desc = "CopilotChat - Toggle" },
+    }
   },
 }

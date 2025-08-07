@@ -18,7 +18,7 @@ return {
         icons = {
           package_installed = " ",
           package_pending = "➜",
-          package_uninstalled = " ",
+          package_uninstalled = " ",
         }
       }
     })
@@ -28,6 +28,7 @@ return {
       ensure_installed = {
         "lua_ls",
         "clangd",
+        "gopls"
       },
       -- Automatically install LSPs to stdpath for neovim
       automatic_installation = true,

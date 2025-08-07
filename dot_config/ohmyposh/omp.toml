@@ -4,31 +4,29 @@ version = 3
 final_space = true
 
 [palette]
-  black = '#262B44'
-  blue = '#394b70'
-  green = '#00ff00'
-  lavender = '#ff757f'
-  orange = '#F07623'
-  pink = '#c53b53'
-  red = '#D81E5B'
-  text = '#E0DEF4'
-  white = '#E0DEF4'
-  wight = '#FFFFFF'
-  light = '#3d59a1'
-  yellow = '#ffc777'
-  terminal-blue = '#7aa2f7'
-  main-bg = '#24283b'
-  t-background = 'p:main-bg'
-
-[secondary_prompt]
-  template = '<p:yellow,transparent></><,p:yellow> > </><p:yellow,transparent></> '
-  foreground = 'p:black'
-  background = 'transparent'
+  black = '#1a1b26'
+  blue = '#2d4f7c'
+  green = '#9ece6a'
+  lavender = '#A36EFF'
+  lavender-white = '#a9b1d6'
+  light = '#3F4664'
+  orange = '#d18616'
+  red = '#E35B77'
+  pink = '#f7768e'
+  terminal-blue = '#7dcfff'
+  text = '#DBE9FF'
+  yellow = '#e0af68'
 
 [transient_prompt]
-  template = '➜ '
+  template = '  '
   foreground = 'p:terminal-blue'
-  background = 'p:t-background'
+  background = 'transparent'
+
+[upgrade]
+  source = 'cdn'
+  interval = '168h'
+  auto = false
+  notice = false
 
 [[blocks]]
   type = 'prompt'
@@ -49,20 +47,19 @@ final_space = true
   [[blocks.segments]]
     leading_diamond = ''
     trailing_diamond = ''
-    foreground = 'p:wight'
+    foreground = 'p:text'
     background = 'p:blue'
     type = 'os'
     style = 'diamond'
 
     [blocks.segments.properties]
-      macos = ""
+      macos = ''
 
   [[blocks.segments]]
     template = '   {{ path .Path .Location }} '
-    folder_separator_symbol = ''
     foreground = 'p:text'
     powerline_symbol = ''
-    background = 'p:pink'
+    background = 'p:red'
     type = 'path'
     style = 'powerline'
 
@@ -73,13 +70,13 @@ final_space = true
 
   [[blocks.segments]]
     template = ' {{ if .UpstreamURL }}{{ url .UpstreamIcon .UpstreamURL }} {{ end }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}  {{ .Working.String }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }} '
-    foreground = '#262B44'
+    foreground = 'p:black'
     powerline_symbol = ''
     background = 'p:lavender'
     type = 'git'
     style = 'powerline'
-    foreground_templates = ['{{ if or (.Working.Changed) (.Staging.Changed) }}p:text{{ end }}', '{{ if and (gt .Ahead 0) (gt .Behind 0) }}p:white{{ end }}', '{{ if gt .Ahead 0 }}p:white{{ end }}']
-    background_templates = ['{{ if or (.Working.Changed) (.Staging.Changed) }}p:lavender{{ end }}', '{{ if and (gt .Ahead 0) (gt .Behind 0) }}p:red{{ end }}', '{{ if gt .Ahead 0 }}#49416D{{ end }}', '{{ if gt .Behind 0 }}#7A306C{{ end }}']
+    foreground_templates = ['{{ if or (.Working.Changed) (.Staging.Changed) }}p:text{{ end }}', '{{ if and (gt .Ahead 0) (gt .Behind 0) }}p:lavender-white{{ end }}', '{{ if gt .Ahead 0 }}p:lavender-white{{ end }}']
+    background_templates = ['{{ if or (.Working.Changed) (.Staging.Changed) }}p:lavender{{ end }}', '{{ if and (gt .Ahead 0) (gt .Behind 0) }}p:pink{{ end }}', '{{ if gt .Ahead 0 }}p:light{{ end }}', '{{ if gt .Behind 0 }}p:red{{ end }}']
 
     [blocks.segments.properties]
       branch_icon = ' '
@@ -90,7 +87,7 @@ final_space = true
 
   [[blocks.segments]]
     template = '  '
-    foreground = 'p:white'
+    foreground = 'p:lavender-white'
     powerline_symbol = ''
     background = 'p:yellow'
     type = 'root'
@@ -103,11 +100,11 @@ final_space = true
     leading_diamond = '<transparent,background></>'
     trailing_diamond = ''
     template = ' {{ if gt .Code 0 }}{{ else }}{{ end }} '
-    foreground = 'p:white'
+    foreground = 'p:text'
     background = 'p:light'
     type = 'status'
     style = 'diamond'
-    background_templates = ['{{ if gt .Code 0 }}p:red{{ end }}']
+    background_templates = ['{{ if gt .Code 0 }}p:pink{{ end }}']
 
     [blocks.segments.properties]
       always_enabled = true
@@ -159,8 +156,8 @@ final_space = true
   newline = true
 
   [[blocks.segments]]
-    template = ' '
-    foreground = '#ff007c'
+    template = ' '
+    foreground = 'p:green'
     type = 'text'
     style = 'plain'
 
@@ -171,7 +168,7 @@ final_space = true
   leading_diamond = ''
   trailing_diamond = ''
   template = '  {{ .Profile }}{{ if .Region }}@{{ .Region }}{{ end }} '
-  foreground = 'p:white'
+  foreground = 'p:lavender-white'
   background = 'p:orange'
   type = 'aws'
   style = 'diamond'
@@ -184,7 +181,7 @@ final_space = true
   leading_diamond = ''
   trailing_diamond = ''
   template = '  {{ .Name }} '
-  foreground = 'p:white'
+  foreground = 'p:lavender-white'
   background = 'p:blue'
   type = 'az'
   style = 'diamond'
@@ -192,3 +189,4 @@ final_space = true
 
   [tooltips.properties]
     display_default = true
+

@@ -1,8 +1,0 @@
-mode=run
-allow_images=true
-width=30%
-height=30%
-location=top
-yoffset=400
-prompt=Search...
-define=drun_print_desktop_file=true

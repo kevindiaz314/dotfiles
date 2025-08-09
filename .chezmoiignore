@@ -6,9 +6,7 @@
 
 # Ignore macOS-specific files when on Linux
 {{ if eq .chezmoi.os "linux" }}
-.config/borders
 .config/leader-key
-.config/sketchybar
 .config/yabai
 .hammerspoon
 .zshrc
@@ -23,9 +21,6 @@ nix
 .config/wofi
 .ideavimrc
 .config/hypr
-.config/uwsm
-.config/walker
 .config/waybar
 .config/wlogout
-.config/kitty
 .config/tmux

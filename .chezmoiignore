@@ -17,10 +17,5 @@ LICENSE
 README.md
 
 # Other ignores
-nix
-.config/wofi
 .ideavimrc
-.config/hypr
-.config/waybar
-.config/wlogout
 .config/tmux

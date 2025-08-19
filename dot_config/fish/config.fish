@@ -7,8 +7,8 @@ function fish_mode_prompt; end
 # Overwrite fish_greeting
 set fish_greeting
 
-# Initialize Oh-My-Posh and fastfetch (skip if running in VSCode)
-if test "$TERM_PROGRAM" != "vscode"
+# Initialize Oh-My-Posh and fastfetch (skip if running in VSCode or Kiro)
+if test "$TERM_PROGRAM" != "vscode"; and test "$TERM_PROGRAM" != "kiro"
     oh-my-posh init fish --config ~/.config/ohmyposh/omp.toml | source
     fastfetch
 end

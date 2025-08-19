@@ -109,3 +109,8 @@ set -gx VISUAL nvim
 
 # Set the TERMINAL environment variable
 set -gx TERMINAL ghostty
+
+# SSH Agent environment (Linux only - macOS handles this automatically)
+if test (uname) = "Linux"; and test -z "$SSH_AUTH_SOCK"
+    set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
+end

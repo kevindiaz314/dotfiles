@@ -19,7 +19,7 @@ final_space = true
   yellow = '#e0af68'
 
 [transient_prompt]
-  template = '  '
+  template = '$ '
   foreground = 'p:terminal-blue'
   background = 'transparent'
 

@@ -4,6 +4,9 @@ return {
   dependencies = {
     "rafamadriz/friendly-snippets",
   },
+  opts = {
+    keymap = { preset = 'enter' }
+  },
 
   -- Release tag downloads pre-built binaries
   version = "*",

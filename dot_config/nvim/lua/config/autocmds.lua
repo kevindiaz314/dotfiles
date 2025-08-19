@@ -18,7 +18,9 @@ local indent_settings = {
   java = 4,
   c = 4,
   nix = 2,
-  go = 4
+  go = 4,
+  qml = 4,
+  conf = 4
 }
 
 -- Set the indentation settings for the current buffer

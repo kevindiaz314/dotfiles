@@ -7,9 +7,11 @@ return {
     },
     build = "make tiktoken", -- Only on MacOS or Linux
     opts = {
-      model = "claude-3.7-sonnet", -- Check documentation for available models https://github.com/CopilotC-Nvim/CopilotChat.nvim?tab=readme-ov-file#models
-      question_header = "  " .. (vim.env.USER:sub(1,1):upper() .. vim.env.USER:sub(2)) .. " ",
-      answer_header = "  Copilot ",
+      model = "claude-sonnet-4", -- Check documentation for available models https://github.com/CopilotC-Nvim/CopilotChat.nvim?tab=readme-ov-file#models
+      headers = {
+        user = "  " .. (vim.env.USER:sub(1,1):upper() .. vim.env.USER:sub(2)) .. " ",
+        assistant = "  Copilot ",
+      },
       window = {
         width = 0.4,
       }

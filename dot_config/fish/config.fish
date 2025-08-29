@@ -1,3 +1,14 @@
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║                            Fish Shell Configuration                          ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+
+# Detect OS for conditional configurations
+set -g os_type (uname)
+
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║                              Basic Shell Settings                            ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+
 # Set vi mode
 set -g fish_key_bindings fish_vi_key_bindings
 
@@ -7,6 +18,10 @@ function fish_mode_prompt; end
 # Overwrite fish_greeting
 set fish_greeting
 
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║                         Initialization (Cross-platform)                      ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+
 # Initialize Oh-My-Posh and fastfetch (skip if running in VSCode or Kiro)
 if test "$TERM_PROGRAM" != "vscode"; and test "$TERM_PROGRAM" != "kiro"
     oh-my-posh init fish --config ~/.config/ohmyposh/omp.toml | source
@@ -14,13 +29,17 @@ if test "$TERM_PROGRAM" != "vscode"; and test "$TERM_PROGRAM" != "kiro"
 end
 
 # Set up fzf key bindings
-fzf --fish | source;
+fzf --fish | source
 
 # Shell plugin
 atuin init fish | source
 
 # Set up Zoxide
 zoxide init fish | source
+
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║                       Custom Functions (Cross-platform)                      ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
 
 # Interactive Neovim search
 function nvims
@@ -56,6 +75,10 @@ function y
     rm -f -- "$tmp"
 end
 
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║                           Aliases (Cross-platform)                         ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+
 alias laz="NVIM_APPNAME=LazyVim nvim"
 alias nvim-test="NVIM_APPNAME=NvimTest nvim"
 alias lc="eza -la --no-user --icons --no-time --no-permissions --no-filesize" # ls clean
@@ -67,7 +90,11 @@ alias ff="fastfetch"
 alias lg="lazygit"
 alias sp="spf"
 
-# TokyoNight Color Palette
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║                         Theme: TokyoNight                                    ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+
+# Color Palette                     
 set -l foreground c0caf5
 set -l selection 283457
 set -l comment 565f89
@@ -103,14 +130,28 @@ set -g fish_pager_color_completion $foreground
 set -g fish_pager_color_description $yellow
 set -g fish_pager_color_selected_background --background=$selection
 
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║                      Environment Variables (Cross-platform)                  ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+
 # Set the EDITOR and VISUAL environment variable
 set -gx EDITOR nvim
-set -gx VISUAL nvim
+set -gx VISUAL cursor
 
-# Set the TERMINAL environment variable
+# Set terminal
 set -gx TERMINAL ghostty
 
-# SSH Agent environment (Linux only - macOS handles this automatically)
-if test (uname) = "Linux"; and test -z "$SSH_AUTH_SOCK"
-    set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║                            OS-Specific Configurations                        ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+
+# Linux-specific configurations
+if test "$os_type" = "Linux"
+    # Add npm global bin to PATH since using sudo to install global packages is highly discouraged
+    fish_add_path ~/.npm-global/bin
+
+    # SSH Agent environment
+    if test -z "$SSH_AUTH_SOCK"
+        set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
+    end
 end

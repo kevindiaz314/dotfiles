@@ -2,6 +2,10 @@
 
 # Ignore Linux-specific files when on macOS
 {{ if eq .chezmoi.os "darwin" }}
+.config/hypr
+.config/systemd
+.config/uwsm
+.config/xdg-desktop-portal
 {{ end }}
 
 # Ignore macOS-specific files when on Linux
@@ -9,7 +13,6 @@
 .config/leader-key
 .config/yabai
 .hammerspoon
-.zshrc
 {{ end }}
 
 # Common ignores

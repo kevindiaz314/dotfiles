@@ -6,7 +6,8 @@ return {
       suggestion = {
         auto_trigger = true,
         keymap = {
-          accept = "<Tab>"
+          accept = "<Tab>",
+          accept_word = "<C-Right>",
         }
       },
       panel = { enabled = false },

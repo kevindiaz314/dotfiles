@@ -22,8 +22,8 @@ set fish_greeting
 # ║                         Initialization (Cross-platform)                      ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 
-# Initialize Oh-My-Posh and fastfetch (skip if running in VSCode or Kiro)
-if test "$TERM_PROGRAM" != "vscode"; and test "$TERM_PROGRAM" != "kiro"
+# Initialize Oh-My-Posh and fastfetch (skip if running in VSCode, Kiro, or Zed)
+if test "$TERM_PROGRAM" != "vscode"; and test "$TERM_PROGRAM" != "kiro"; and test "$TERM_PROGRAM" != "zed"
     oh-my-posh init fish --config ~/.config/ohmyposh/omp.toml | source
     fastfetch
 end

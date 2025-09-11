@@ -8,16 +8,16 @@ return {
     dashboard = {
       preset = {
         keys = {
-          { icon = "󰈞 ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
-          { icon = "󰙰 ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+          { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
+          { icon = "󰮳 ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
           { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
           { icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
           { icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
-          { icon = "󰰷 ", key = "z", desc = "Chezmoi Config", action = ":lua Snacks.dashboard.pick('files', { cwd = '~/.local/share/chezmoi/' })" },
+          { icon = "󰬡 ", key = "z", desc = "Chezmoi Config", action = ":lua Snacks.dashboard.pick('files', { cwd = '~/.local/share/chezmoi/' })" },
           { icon = " ", key = "p", desc = "Projects", action = ":lua Snacks.dashboard.pick('projects')" },
-          { icon = " ", key = "s", desc = "Restore Session", section = "session" },
+          { icon = "󰦛 ", key = "s", desc = "Restore Session", section = "session" },
           { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
-          { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+          { icon = "󰈆 ", key = "q", desc = "Quit", action = ":qa" },
         },
 	header = [[
 ██╗  ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗

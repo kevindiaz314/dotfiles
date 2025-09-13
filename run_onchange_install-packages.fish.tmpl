@@ -158,6 +158,22 @@ for package in $npm_packages
         echo "$package already installed"
     end
 end
+
+# Quickshell configuration
+echo "셸 Configuring Quickshell..."
+set noctalia_shell_dir ~/.config/quickshell/noctalia-shell
+if test -d "$noctalia_shell_dir/.git"
+    echo "Updating noctalia-shell..."
+    command git -C "$noctalia_shell_dir" pull
+else
+    if test -d "$noctalia_shell_dir"
+        echo "Removing existing non-git directory $noctalia_shell_dir before cloning..."
+        rm -rf "$noctalia_shell_dir"
+    end
+    echo "Cloning noctalia-shell..."
+    command git clone https://github.com/noctalia-dev/noctalia-shell "$noctalia_shell_dir"
+end
+
 echo "✅ Package installation completed!"
 {{ else -}}
 echo "❌ This script is designed for Linux (CachyOS). Current OS: {{ .chezmoi.os }}"

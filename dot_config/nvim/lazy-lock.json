@@ -36,5 +36,5 @@
   "trouble.nvim": { "branch": "main", "commit": "85bedb7eb7fa331a2ccbecb9202d8abba64d37b3" },
   "vim-tmux-navigator": { "branch": "master", "commit": "c45243dc1f32ac6bcf6068e5300f3b2b237e576a" },
   "which-key.nvim": { "branch": "main", "commit": "370ec46f710e058c9c1646273e6b225acf47cbed" },
-  "yazi.nvim": { "branch": "main", "commit": "45362b590c8aefb1c573cc935784d723ff1c0188" }
+  "yazi.nvim": { "branch": "main", "commit": "d044edea1cc9c5055d4dea0dd4384edaa75e674a" }
 }

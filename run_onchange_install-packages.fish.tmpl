@@ -1,0 +1,160 @@
+#!/usr/bin/env fish
+
+{{ if eq .chezmoi.os "linux" -}}
+# CachyOS Package Installation Script
+# This script declaratively installs packages for CachyOS setup
+# Uses Fish shell syntax since CachyOS comes with Fish as default
+
+echo "🚀 Starting CachyOS package installation..."
+
+# Update system first
+echo "📦 Updating system packages..."
+sudo pacman -Syu --noconfirm
+
+# Terminal & Shell Tools
+echo "🔧 Installing terminal and shell tools..."
+sudo pacman -S --needed --noconfirm \
+    atuin \
+    zoxide \
+    lazygit \
+    zellij \
+    yazi \
+    satty
+
+# System Configuration Tools
+echo "⚙️  Installing system configuration tools..."
+sudo pacman -S --needed --noconfirm \
+    wl-clipboard \
+    7zip \
+    resvg \
+    playerctl \
+    cava \
+    brightnessctl \
+    libva-utils \
+    keyd \
+    tailscale
+
+# Hyprland & Desktop Environment
+# echo "🪟 Installing Hyprland and desktop environment packages..."
+# sudo pacman -S --needed --noconfirm \
+#     hyprland \
+#     hyprsunset \
+#     uwsm \
+#     xdg-desktop-portal-hyprland
+
+# Niri compositor
+echo "🌊 Installing Niri compositor..."
+sudo pacman -S --needed --noconfirm \
+    niri \
+    xwayland-satellite
+
+# Applications
+echo "🎯 Installing applications..."
+sudo pacman -S --needed --noconfirm \
+    nextcloud-client \
+    ghostty \
+    obsidian \
+    vesktop \
+    zen-browser-bin \
+    chromium \
+    obs-studio-browser \
+    spotify-launcher \
+    zed \
+    yubico-authenticator
+
+# Development Tools
+echo "💻 Installing development tools..."
+sudo pacman -S --needed --noconfirm \
+    neovim \
+    npm \
+    go \
+    hugo
+
+# AUR Packages (using paru which comes with CachyOS by default)
+echo "📦 Installing AUR packages..."
+paru -S --needed --noconfirm \
+    oh-my-posh-bin \
+    visual-studio-code-bin \
+    cursor-bin \
+    kiro-bin \
+    slack-desktop \
+    vicinae-bin \
+    quickshell-git
+
+# Enable and start system services
+echo "🔧 Enabling system services..."
+
+# Enable keyd service for keyboard remapping (idempotent)
+if not systemctl is-enabled keyd.service > /dev/null 2>&1
+    echo "Enabling keyd service..."
+    sudo systemctl enable --now keyd.service
+else
+    echo "keyd service already enabled"
+end
+
+# Enable tailscale (idempotent)
+if not systemctl is-enabled tailscaled.service > /dev/null 2>&1
+    echo "Enabling tailscale service..."
+    sudo systemctl enable --now tailscaled.service
+else
+    echo "tailscale service already enabled"
+end
+
+# Enable user services
+echo "👤 Enabling user services..."
+if not systemctl --user is-enabled ssh-agent.service > /dev/null 2>&1
+    echo "Enabling ssh-agent user service..."
+    systemctl --user enable --now ssh-agent.service
+else
+    echo "ssh-agent service already enabled"
+end
+
+# Setup keyd configuration
+echo "⌨️  Setting up keyd configuration..."
+if test ! -f /etc/keyd/default.conf
+    echo "Creating keyd configuration..."
+    echo '[ids]
+
+0001:0001:70533846
+
+[main]
+
+# Maps capslock to escape when pressed and control when held.
+capslock = overload(control, esc)
+
+# Remaps the escape key to capslock
+esc = capslock
+
+# Swap alt and control
+leftalt = leftcontrol
+leftcontrol = leftalt' | sudo tee /etc/keyd/default.conf
+else
+    echo "keyd configuration already exists"
+end
+
+# NPM global directory setup
+echo "📦 Setting up NPM global directory..."
+if test ! -d ~/.npm-global
+    mkdir ~/.npm-global
+    npm config set prefix '~/.npm-global'
+    echo "✅ NPM global directory configured"
+else
+    echo "NPM global directory already configured"
+end
+
+# Install global NPM packages
+echo "📦 Installing global NPM packages..."
+set -l npm_packages "@google/gemini-cli" "opencode-ai"
+for package in $npm_packages
+    if not npm list -g $package > /dev/null 2>&1
+        echo "Installing $package..."
+        npm install -g $package
+    else
+        echo "$package already installed"
+    end
+end
+echo "✅ Package installation completed!"
+{{ else -}}
+echo "❌ This script is designed for Linux (CachyOS). Current OS: {{ .chezmoi.os }}"
+exit 1
+{{ end -}}

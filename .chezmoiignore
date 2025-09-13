@@ -2,9 +2,7 @@
 
 # Ignore Linux-specific files when on macOS
 {{ if eq .chezmoi.os "darwin" }}
-.config/hypr
 .config/systemd
-.config/uwsm
 .config/xdg-desktop-portal
 {{ end }}
 
@@ -22,3 +20,5 @@ README.md
 # Other ignores
 .ideavimrc
 .config/tmux
+.config/hypr
+.config/uwsm

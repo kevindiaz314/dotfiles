@@ -134,9 +134,10 @@ set -g fish_pager_color_selected_background --background=$selection
 # ║                      Environment Variables (Cross-platform)                  ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 
-# Set the EDITOR and VISUAL environment variable
+# Set the EDITOR, VISUAL, and SUDO_EDITOR environment variable
 set -gx EDITOR nvim
 set -gx VISUAL cursor
+set -gx SUDO_EDITOR nvim
 
 # Set terminal
 set -gx TERMINAL ghostty

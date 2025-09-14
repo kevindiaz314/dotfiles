@@ -48,6 +48,7 @@ echo "🌊 Installing Niri compositor..."
 sudo pacman -S --needed --noconfirm \
     niri \
     xdg-desktop-portal-kde \
+    xdg-desktop-portal-gtk \
     dolphin \
     xwayland-satellite
 
@@ -112,6 +113,15 @@ if not systemctl --user is-enabled ssh-agent.service > /dev/null 2>&1
     systemctl --user enable --now ssh-agent.service
 else
     echo "ssh-agent service already enabled"
+end
+
+# Set GTK dark mode
+echo "🎨 Setting GTK dark mode..."
+if test (gsettings get org.gnome.desktop.interface color-scheme) != "'prefer-dark'"
+    echo "Setting color-scheme to prefer-dark..."
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+else
+    echo "GTK color-scheme is already set to prefer-dark"
 end
 
 # Setup keyd configuration

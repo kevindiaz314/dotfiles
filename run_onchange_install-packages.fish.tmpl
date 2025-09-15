@@ -3,189 +3,307 @@
 {{ if eq .chezmoi.os "linux" -}}
 # CachyOS Package Installation Script
 # This script declaratively installs packages for CachyOS setup
-# Uses Fish shell syntax since CachyOS comes with Fish as default
+# Package definitions are stored in .chezmoidata/packages.yaml
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-echo "🚀 Starting CachyOS package installation..."
+#═══════════════════════════════════════════════════════════════════════════
+# UTILITY FUNCTIONS
+#═══════════════════════════════════════════════════════════════════════════
 
-# Update system first
-echo "📦 Updating system packages..."
-sudo pacman -Syu --noconfirm
-
-# Terminal & Shell Tools
-echo "🔧 Installing terminal and shell tools..."
-sudo pacman -S --needed --noconfirm \
-    atuin \
-    zoxide \
-    lazygit \
-    zellij \
-    yazi \
-    chafa \
-    satty
-
-# System Configuration Tools
-echo "⚙️  Installing system configuration tools..."
-sudo pacman -S --needed --noconfirm \
-    wl-clipboard \
-    7zip \
-    resvg \
-    playerctl \
-    cava \
-    brightnessctl \
-    libva-utils \
-    keyd \
-    tailscale
-
-# Hyprland & Desktop Environment
-# echo "🪟 Installing Hyprland and desktop environment packages..."
-# sudo pacman -S --needed --noconfirm \
-#     hyprland \
-#     hyprsunset \
-#     uwsm \
-#     xdg-desktop-portal-hyprland
-
-# Niri compositor
-echo "🌊 Installing Niri compositor..."
-sudo pacman -S --needed --noconfirm \
-    niri \
-    xdg-desktop-portal-kde \
-    xdg-desktop-portal-gtk \
-    dolphin \
-    xwayland-satellite
-
-# Applications
-echo "🎯 Installing applications..."
-sudo pacman -S --needed --noconfirm \
-    nextcloud-client \
-    kwallet \
-    kwalletmanager \
-    ghostty \
-    obsidian \
-    vesktop \
-    zen-browser-bin \
-    chromium \
-    obs-studio-browser \
-    spotify-launcher \
-    zed \
-    yubico-authenticator
-
-# Development Tools
-echo "💻 Installing development tools..."
-sudo pacman -S --needed --noconfirm \
-    neovim \
-    npm \
-    go \
-    hugo
-
-# AUR Packages (using paru which comes with CachyOS by default)
-echo "📦 Installing AUR packages..."
-paru -S --needed --noconfirm \
-    oh-my-posh-bin \
-    visual-studio-code-bin \
-    cursor-bin \
-    kiro-bin \
-    slack-desktop-wayland \
-    vicinae-bin \
-    quickshell-git
-
-# Enable and start system services
-echo "🔧 Enabling system services..."
-
-# Enable keyd service for keyboard remapping (idempotent)
-if not systemctl is-enabled keyd.service > /dev/null 2>&1
-    echo "Enabling keyd service..."
-    sudo systemctl enable --now keyd.service
-else
-    echo "keyd service already enabled"
+# Enhanced echo functions for better visibility
+function print_header
+    set_color -o cyan
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo "  $argv"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    set_color normal
 end
 
-# Enable tailscale (idempotent)
-if not systemctl is-enabled tailscaled.service > /dev/null 2>&1
-    echo "Enabling tailscale service..."
-    sudo systemctl enable --now tailscaled.service
-else
-    echo "tailscale service already enabled"
+function print_step
+    set_color -o yellow
+    echo "[$STEP_COUNTER/$TOTAL_STEPS] $argv"
+    set_color normal
+    log_message "STEP [$STEP_COUNTER/$TOTAL_STEPS]: $argv"
+    set STEP_COUNTER (math $STEP_COUNTER + 1)
 end
 
+function print_success
+    set_color -o green
+    echo "✅ $argv"
+    set_color normal
+end
+
+function print_info
+    set_color -o blue
+    echo "ℹ️  $argv"
+    set_color normal
+end
+
+function print_warning
+    set_color -o yellow
+    echo "⚠️  $argv"
+    set_color normal
+end
+
+function print_error
+    set_color -o red
+    echo "❌ $argv"
+    set_color normal
+end
+
+function log_message
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $argv" >> $LOG_FILE
+end
+
+#═══════════════════════════════════════════════════════════════════════════
+# INITIALIZATION & STEP COUNTING
+#═══════════════════════════════════════════════════════════════════════════
+
+# Count total steps dynamically based on what exists in packages.yaml
+set TOTAL_STEPS 0
+
+# Package installation steps (only if packages exist)
+{{ if .packages.linux.pacman }}set TOTAL_STEPS (math $TOTAL_STEPS + 1){{ end }}
+{{ if .packages.linux.aur }}set TOTAL_STEPS (math $TOTAL_STEPS + 1){{ end }}
+
+# Special installations
+set TOTAL_STEPS (math $TOTAL_STEPS + 1) # Warp terminal
+
+# Service configuration steps (only if services exist)  
+{{ if .services.linux.system }}set TOTAL_STEPS (math $TOTAL_STEPS + 1){{ end }}
+{{ if .services.linux.user }}set TOTAL_STEPS (math $TOTAL_STEPS + 1){{ end }}
+
+# System configuration steps
+set TOTAL_STEPS (math $TOTAL_STEPS + 1) # GTK theme
+set TOTAL_STEPS (math $TOTAL_STEPS + 1) # keyd configuration
+set TOTAL_STEPS (math $TOTAL_STEPS + 1) # custom fonts
+set TOTAL_STEPS (math $TOTAL_STEPS + 1) # NPM setup
+
+# Optional steps (only if packages exist)
+{{ if .packages.linux.npm }}set TOTAL_STEPS (math $TOTAL_STEPS + 1){{ end }}
+
+# Final configuration
+set TOTAL_STEPS (math $TOTAL_STEPS + 1) # Quickshell
+
+# Initialize counters and logging
+set STEP_COUNTER 1
+set START_TIME (date +%s)
+set LOG_FILE "/tmp/chezmoi-install-$(date +%Y%m%d-%H%M%S).log"
+
+print_header "🚀 CachyOS Package Installation & Configuration"
+
+#═══════════════════════════════════════════════════════════════════════════
+# PACKAGE INSTALLATION
+#═══════════════════════════════════════════════════════════════════════════
+
+{{ if .packages.linux.pacman }}
+# Install all pacman packages in one go for efficiency
+print_step "Installing pacman packages"
+sudo pacman -S --needed --noconfirm{{ range .packages.linux.pacman }} \
+    {{ . }}{{ end }}
+{{ end }}
+
+{{ if .packages.linux.aur }}
+# Install all AUR packages with smart git package handling
+print_step "Installing AUR packages"
+
+# Smart handling for git packages (like ttf-material-symbols-variable-git):
+# - Git packages rebuild on every install, even if up-to-date
+# - We skip them if already installed to save time and avoid unnecessary builds
+# - Only install git packages when they're actually missing
+set install_material_font false
+if not pacman -Q ttf-material-symbols-variable-git > /dev/null 2>&1
+    set install_material_font true
+end
+
+if test "$install_material_font" = true
+    # Install all AUR packages including git packages
+    paru -S --needed --noconfirm{{ range .packages.linux.aur }} \
+        {{ . }}{{ end }}
+else
+    # Install AUR packages except git packages (they're already installed)
+    paru -S --needed --noconfirm{{ range .packages.linux.aur }}{{ if ne . "ttf-material-symbols-variable-git" }} \
+        {{ . }}{{ end }}{{ end }}
+    print_info "Skipping ttf-material-symbols-variable-git (already installed)"
+end
+{{ end }}
+
+#═══════════════════════════════════════════════════════════════════════════
+# SPECIAL INSTALLATIONS
+#═══════════════════════════════════════════════════════════════════════════
+
+# Install Warp terminal (requires special handling - not in official repos)
+print_step "Installing Warp terminal"
+if not pacman -Q warp-terminal > /dev/null 2>&1
+    print_info "Downloading and installing Warp terminal..."
+    set temp_dir (mktemp -d)
+    set warp_version (curl -s "https://app.warp.dev/get_warp?package=pacman" | rg -o "window\.warp_app_version = '[^']*'" | cut -d"'" -f2)
+    if test -z "$warp_version"
+        print_error "Failed to get Warp version"
+        rm -rf "$temp_dir"
+    else
+        set download_url "https://releases.warp.dev/stable/$warp_version/warp-terminal-$warp_version-1-x86_64.pkg.tar.zst"
+        print_info "Downloading from: $download_url"
+        curl -L "$download_url" -o "$temp_dir/warp-terminal.pkg.tar.zst"
+        if test $status -eq 0
+            sudo pacman -U --noconfirm "$temp_dir/warp-terminal.pkg.tar.zst"
+            print_success "Warp terminal installed"
+        else
+            print_error "Failed to download Warp terminal"
+        end
+        rm -rf "$temp_dir"
+    end
+else
+    print_info "Warp terminal already installed"
+end
+
+#═══════════════════════════════════════════════════════════════════════════
+# SYSTEM SERVICE CONFIGURATION
+#═══════════════════════════════════════════════════════════════════════════
+
+{{ if .services.linux.system }}
+# Enable system services
+print_step "Enabling system services"
+{{ range .services.linux.system }}
+set service_name {{ . }}
+if not systemctl is-enabled $service_name > /dev/null 2>&1
+    print_info "Enabling $service_name..."
+    sudo systemctl enable --now $service_name
+else
+    print_info "$service_name already enabled"
+end
+{{ end }}
+{{ end }}
+
+{{ if .services.linux.user }}
 # Enable user services
-echo "👤 Enabling user services..."
-if not systemctl --user is-enabled ssh-agent.service > /dev/null 2>&1
-    echo "Enabling ssh-agent user service..."
-    systemctl --user enable --now ssh-agent.service
+print_step "Enabling user services"
+{{ range .services.linux.user }}
+set service_name {{ . }}
+if not systemctl --user is-enabled $service_name > /dev/null 2>&1
+    print_info "Enabling $service_name..."
+    systemctl --user enable --now $service_name
 else
-    echo "ssh-agent service already enabled"
+    print_info "$service_name already enabled"
 end
+{{ end }}
+{{ end }}
+
+#═══════════════════════════════════════════════════════════════════════════
+# SYSTEM CONFIGURATION
+#═══════════════════════════════════════════════════════════════════════════
 
 # Set GTK dark mode
-echo "🎨 Setting GTK dark mode..."
-if test (gsettings get org.gnome.desktop.interface color-scheme) != "'prefer-dark'"
-    echo "Setting color-scheme to prefer-dark..."
-    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+print_step "Setting GTK dark mode"
+if test (gsettings get org.gnome.desktop.interface color-scheme) != "'{{ index .configurations.linux.gtk "color-scheme" }}'"
+    print_info "Setting color-scheme to {{ index .configurations.linux.gtk "color-scheme" }}..."
+    gsettings set org.gnome.desktop.interface color-scheme '{{ index .configurations.linux.gtk "color-scheme" }}'
 else
-    echo "GTK color-scheme is already set to prefer-dark"
+    print_info "GTK color-scheme is already set to {{ index .configurations.linux.gtk "color-scheme" }}"
 end
 
 # Setup keyd configuration
-echo "⌨️  Setting up keyd configuration..."
-if test ! -f /etc/keyd/default.conf
-    echo "Creating keyd configuration..."
-    echo '[ids]
-
-0001:0001:70533846
-
-[main]
-
-# Maps capslock to escape when pressed and control when held.
-capslock = overload(control, esc)
-
-# Remaps the escape key to capslock
-esc = capslock
-
-# Swap alt and control
-leftalt = leftcontrol
-leftcontrol = leftalt' | sudo tee /etc/keyd/default.conf
+print_step "Setting up keyd configuration"
+if test ! -f {{ index .configurations.linux.keyd "config_file" }}
+    print_info "Creating keyd configuration..."
+    echo '{{ index .configurations.linux.keyd "config_content" }}' | sudo tee {{ index .configurations.linux.keyd "config_file" }}
 else
-    echo "keyd configuration already exists"
+    print_info "keyd configuration already exists"
 end
 
+#═══════════════════════════════════════════════════════════════════════════
+# FONT INSTALLATION
+#═══════════════════════════════════════════════════════════════════════════
+
+# Custom fonts setup (MonoLisa from Nextcloud)
+print_step "Setting up custom fonts"
+if test -d ~/Nextcloud/Documents/MonoLisa-Variable
+    if test -d ~/.local/share/fonts/MonoLisa-Variable
+        print_info "MonoLisa font already installed"
+    else
+        print_info "Installing MonoLisa font..."
+        mkdir -p ~/.local/share/fonts
+        cp -r ~/Nextcloud/Documents/MonoLisa-Variable ~/.local/share/fonts/
+        print_success "MonoLisa font installed"
+    end
+else
+    print_warning "Skipping MonoLisa installation (Nextcloud not synced yet)"
+end
+
+#═══════════════════════════════════════════════════════════════════════════
+# NPM CONFIGURATION
+#═══════════════════════════════════════════════════════════════════════════
+
 # NPM global directory setup
-echo "📦 Setting up NPM global directory..."
+print_step "Setting up NPM global directory"
 if test ! -d ~/.npm-global
     mkdir ~/.npm-global
     npm config set prefix '~/.npm-global'
-    echo "✅ NPM global directory configured"
+    print_success "NPM global directory configured"
 else
-    echo "NPM global directory already configured"
+    print_info "NPM global directory already configured"
 end
 
+{{ if .packages.linux.npm }}
 # Install global NPM packages
-echo "📦 Installing global NPM packages..."
-set -l npm_packages "@google/gemini-cli" "opencode-ai"
-for package in $npm_packages
-    if not npm list -g $package > /dev/null 2>&1
-        echo "Installing $package..."
-        npm install -g $package
-    else
-        echo "$package already installed"
-    end
+print_step "Installing global NPM packages"
+{{ range .packages.linux.npm }}
+set package {{ . }}
+if not npm list -g $package > /dev/null 2>&1
+    print_info "Installing $package..."
+    npm install -g $package
+else
+    print_info "$package already installed"
 end
+{{ end }}
+{{ end }}
 
-# Quickshell configuration
-echo "셸 Configuring Quickshell..."
+#═══════════════════════════════════════════════════════════════════════════
+# SHELL CONFIGURATION
+#═══════════════════════════════════════════════════════════════════════════
+
+# Quickshell configuration (Niri window manager shell)
+print_step "Configuring Quickshell"
 set noctalia_shell_dir ~/.config/quickshell/noctalia-shell
 if test -d "$noctalia_shell_dir/.git"
-    echo "Updating noctalia-shell..."
+    print_info "Updating noctalia-shell..."
     command git -C "$noctalia_shell_dir" pull
 else
     if test -d "$noctalia_shell_dir"
-        echo "Removing existing non-git directory $noctalia_shell_dir before cloning..."
+        print_warning "Removing existing non-git directory $noctalia_shell_dir before cloning..."
         rm -rf "$noctalia_shell_dir"
     end
-    echo "Cloning noctalia-shell..."
+    print_info "Cloning noctalia-shell..."
     command git clone https://github.com/noctalia-dev/noctalia-shell "$noctalia_shell_dir"
 end
 
-echo "✅ Package installation completed!"
+#═══════════════════════════════════════════════════════════════════════════
+# COMPLETION SUMMARY
+#═══════════════════════════════════════════════════════════════════════════
+
+# Calculate elapsed time and show summary
+set END_TIME (date +%s)
+set ELAPSED_TIME (math $END_TIME - $START_TIME)
+
+# Smart time display - only show minutes if >= 1 minute
+if test $ELAPSED_TIME -ge 60
+    set MINUTES (math $ELAPSED_TIME / 60)
+    set SECONDS (math $ELAPSED_TIME % 60)
+    set TIME_DISPLAY "$MINUTES"m "$SECONDS"s
+else
+    set TIME_DISPLAY "$ELAPSED_TIME"s
+end
+
+print_header "🎉 Installation Complete!"
+print_success "All packages and configurations have been successfully installed"
+print_info "Total execution time: $TIME_DISPLAY"
+print_info "Pacman packages: {{ len .packages.linux.pacman }} installed"
+print_info "AUR packages: {{ len .packages.linux.aur }} installed"
+print_info "Services configured: {{ len .services.linux.system }} system, {{ len .services.linux.user }} user"
+print_info "Configurations applied: GTK theme, keyd, fonts, NPM, Quickshell"
+echo ""
+print_info "You may need to restart your session for some changes to take effect"
 {{ else -}}
-echo "❌ This script is designed for Linux (CachyOS). Current OS: {{ .chezmoi.os }}"
+print_error "This script is designed for Linux (CachyOS). Current OS: {{ .chezmoi.os }}"
 exit 1
 {{ end -}}

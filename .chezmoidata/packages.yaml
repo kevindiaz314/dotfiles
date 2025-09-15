@@ -1,0 +1,109 @@
+packages:
+  linux:
+    # All pacman packages grouped together for efficiency
+    pacman:
+      # Terminal & Shell Tools
+      - atuin
+      - zoxide
+      - lazygit
+      - zellij
+      - yazi
+      - chafa
+      - satty
+      
+      # System Configuration Tools
+      - wl-clipboard
+      - 7zip
+      - resvg
+      - playerctl
+      - cava
+      - brightnessctl
+      - libva-utils
+      - keyd
+      - tailscale
+      
+      # Niri compositor
+      - quickshell
+      - niri
+      - xdg-desktop-portal-kde
+      - xdg-desktop-portal-gtk
+      - polkit-kde-agent
+      - dolphin
+      - wlsunset
+      - uwsm
+      - xwayland-satellite
+      
+      # Applications
+      - nextcloud-client
+      - kwallet
+      - kwalletmanager
+      - ghostty
+      - obsidian
+      - vesktop
+      - zen-browser-bin
+      - chromium
+      - obs-studio-browser
+      - zed
+      - cachy-update
+      - yubico-authenticator
+      
+      # Development Tools
+      - neovim
+      - npm
+      - go
+      - hugo
+      
+      # Fonts (stable packages only)
+      - ttf-roboto
+      - inter-font
+
+    # All AUR packages grouped together
+    aur:
+      # Applications
+      - oh-my-posh-bin
+      - visual-studio-code-bin
+      - cursor-bin
+      - kiro-bin
+      - slack-desktop-wayland
+      - vicinae-bin
+      - spotify
+      
+      # Fonts (only when needed, check if installed first)
+      - ttf-material-symbols-variable-git
+
+    # NPM packages
+    npm:
+      - "@google/gemini-cli"
+      - "opencode-ai"
+
+services:
+  linux:
+    system:
+      - keyd.service
+      - tailscaled.service
+    user:
+      - ssh-agent.service
+      - ssh-add.service
+
+configurations:
+  linux:
+    gtk:
+      color-scheme: "prefer-dark"
+    keyd:
+      config_file: "/etc/keyd/default.conf"
+      config_content: |
+        [ids]
+        
+        0001:0001:70533846
+        
+        [main]
+        
+        # Maps capslock to escape when pressed and control when held.
+        capslock = overload(control, esc)
+        
+        # Remaps the escape key to capslock
+        esc = capslock
+        
+        # Swap alt and control
+        leftalt = leftcontrol
+        leftcontrol = leftalt

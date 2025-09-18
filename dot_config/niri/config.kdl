@@ -2,13 +2,21 @@
 // Find the full list of options on the wiki:
 // https://yalter.github.io/niri/Configuration:-Input
 
-environment {
-    ELECTRON_OZONE_PLATFORM_HINT "wayland"
-    GTK_USE_PORTAL "1"
+//  ▗▄▖ ▗▖ ▗▖▗▄▄▄▖▗▄▖  ▗▄▄▖▗▄▄▄▖▗▄▖ ▗▄▄▖▗▄▄▄▖
+// ▐▌ ▐▌▐▌ ▐▌  █ ▐▌ ▐▌▐▌     █ ▐▌ ▐▌▐▌ ▐▌ █  
+// ▐▛▀▜▌▐▌ ▐▌  █ ▐▌ ▐▌ ▝▀▚▖  █ ▐▛▀▜▌▐▛▀▚▖ █  
+// ▐▌ ▐▌▝▚▄▞▘  █ ▝▚▄▞▘▗▄▄▞▘  █ ▐▌ ▐▌▐▌ ▐▌ █
 
-    // Remove a variable by using null as the value:
-    // DISPLAY null
-}
+// Add lines like this to spawn processes at startup.
+// Note that running niri as a session supports xdg-desktop-autostart,
+// which may be more convenient to use.
+// See the binds section below for more spawn examples.
+
+// To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
+spawn-sh-at-startup "qs -c noctalia-shell"
+spawn-sh-at-startup "vicinae server"
+spawn-at-startup "/usr/lib/polkit-kde-authentication-agent-1"
+spawn-at-startup "/usr/lib/pam_kwallet_init"
 
 window-rule {
     draw-border-with-background false
@@ -236,18 +244,9 @@ layout {
     }
 }
 
-// Add lines like this to spawn processes at startup.
-// Note that running niri as a session supports xdg-desktop-autostart,
-// which may be more convenient to use.
-// See the binds section below for more spawn examples.
-
-// To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
-spawn-sh-at-startup "vicinae server"
-spawn-sh-at-startup "qs -c noctalia-shell"
-
 hotkey-overlay {
     // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
-    // skip-at-startup
+    skip-at-startup
 }
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
@@ -279,6 +278,19 @@ animations {
 // Window rules let you adjust behavior for individual windows.
 // Find more information on the wiki:
 // https://yalter.github.io/niri/Configuration:-Window-Rules
+
+// Make all windows slightly transparent by default.
+window-rule {
+    opacity 0.99
+}
+
+// Make certain apps open maximized by default.
+window-rule {
+    match app-id="zen"
+    match app-id="vesktop"
+    open-maximized true
+}
+
 
 // Work around WezTerm's initial configure bug
 // by setting an empty default-column-width.
@@ -313,7 +325,7 @@ window-rule {
 
 // Example: enable rounded corners for all windows.
 window-rule {
-    geometry-corner-radius 10
+    geometry-corner-radius 15
     clip-to-geometry true
 }
 
@@ -338,15 +350,16 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     // Suggested binds for running programs: terminal, app launcher, screen locker.
-    Mod+Return { spawn "ghostty"; }
-    Mod+A { spawn "cursor"; }
-    Mod+E { spawn "nautilus"; }
+    Mod+Return { spawn-sh "app2unit ghostty"; }
+    Mod+T { spawn-sh "app2unit code"; }
+    Mod+A { spawn-sh "app2unit cursor"; }
+    Mod+E { spawn-sh "app2unit dolphin"; }
     // Open/close the Overview: a zoomed-out view of workspaces and windows.
     // You can also move the mouse into the top-left hot corner,
     // or do a four-finger swipe up on a touchpad.
     Mod+O repeat=false { toggle-overview; }
     Mod+Q repeat=false { close-window; }
-    Mod+W { spawn "zen-browser"; }
+    Mod+W { spawn-sh "app2unit zen-browser"; }
     Mod+Space { spawn "vicinae"; }
 
 // ╔══════════════════════════════════════════════════════════════════════════════╗

@@ -288,6 +288,8 @@ window-rule {
 window-rule {
     match app-id="zen"
     match app-id="vesktop"
+    match app-id="Slack"
+    match app-id="code"
     open-maximized true
 }
 

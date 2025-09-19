@@ -10,7 +10,7 @@ packages:
       - yazi
       - chafa
       - satty
-      
+
       # System Configuration Tools
       - wl-clipboard
       - 7zip
@@ -21,7 +21,7 @@ packages:
       - libva-utils
       - keyd
       - tailscale
-      
+
       # Niri compositor
       - quickshell
       - niri
@@ -32,7 +32,7 @@ packages:
       - wlsunset
       - uwsm
       - xwayland-satellite
-      
+
       # Applications
       - nextcloud-client
       - kwallet
@@ -46,13 +46,13 @@ packages:
       - zed
       - cachy-update
       - yubico-authenticator
-      
+
       # Development Tools
       - neovim
       - npm
       - go
       - hugo
-      
+
       # Fonts (stable packages only)
       - ttf-roboto
       - inter-font
@@ -64,10 +64,11 @@ packages:
       - visual-studio-code-bin
       - cursor-bin
       - kiro-bin
-      - slack-desktop-wayland
+      - slack-desktop
       - vicinae-bin
       - spotify
-      
+      - app2unit-git
+
       # Fonts (only when needed, check if installed first)
       - ttf-material-symbols-variable-git
 
@@ -93,17 +94,17 @@ configurations:
       config_file: "/etc/keyd/default.conf"
       config_content: |
         [ids]
-        
+
         0001:0001:70533846
-        
+
         [main]
-        
+
         # Maps capslock to escape when pressed and control when held.
         capslock = overload(control, esc)
-        
+
         # Remaps the escape key to capslock
         esc = capslock
-        
+
         # Swap alt and control
         leftalt = leftcontrol
         leftcontrol = leftalt

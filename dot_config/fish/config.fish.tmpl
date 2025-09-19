@@ -2,18 +2,12 @@
 # ║                            Fish Shell Configuration                          ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 
-# Detect OS for conditional configurations
-set -g os_type (uname)
-
-# ╔══════════════════════════════════════════════════════════════════════════════╗
-# ║                              Basic Shell Settings                            ║
-# ╚══════════════════════════════════════════════════════════════════════════════╝
-
 # Set vi mode
 set -g fish_key_bindings fish_vi_key_bindings
 
 # Disable vi mode indicators
-function fish_mode_prompt; end
+function fish_mode_prompt
+end
 
 # Overwrite fish_greeting
 set fish_greeting
@@ -23,7 +17,7 @@ set fish_greeting
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 
 # Initialize Oh-My-Posh and fastfetch (skip if running in VSCode, Kiro, or Zed)
-if test "$TERM_PROGRAM" != "vscode"; and test "$TERM_PROGRAM" != "kiro"; and test "$TERM_PROGRAM" != "zed"
+if test "$TERM_PROGRAM" != vscode; and test "$TERM_PROGRAM" != kiro; and test "$TERM_PROGRAM" != zed
     oh-my-posh init fish --config ~/.config/ohmyposh/omp.toml | source
     fastfetch
 end
@@ -40,21 +34,6 @@ zoxide init fish | source
 # ╔══════════════════════════════════════════════════════════════════════════════╗
 # ║                       Custom Functions (Cross-platform)                      ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
-
-# Interactive Neovim search
-function nvims
-    set -l items Default LazyVim
-    set -l config (printf "%s\n" $items | fzf --prompt=" Neovim Config   " --height=~50% --layout=reverse --border --exit-0)
-
-    if test -z "$config"
-        echo "Nothing selected"
-        return 0
-    else if test "$config" = Default
-        set config ""
-    end
-
-    env NVIM_APPNAME=$config nvim $argv
-end
 
 # Select a file with fzf and preview it using bat, then open it in Neovim
 function in
@@ -76,11 +55,9 @@ function y
 end
 
 # ╔══════════════════════════════════════════════════════════════════════════════╗
-# ║                           Aliases (Cross-platform)                         ║
+# ║                           Aliases (Cross-platform)                           ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 
-alias laz="NVIM_APPNAME=LazyVim nvim"
-alias nvim-test="NVIM_APPNAME=NvimTest nvim"
 alias lc="eza -la --no-user --icons --no-time --no-permissions --no-filesize" # ls clean
 alias l="eza --long --total-size -h -F --icons" # Extended details with type indicators
 alias ll="eza --long --total-size -ha -F --icons" # Long format, including hidden files
@@ -94,7 +71,7 @@ alias sp="spf"
 # ║                         Theme: TokyoNight                                    ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 
-# Color Palette                     
+# Color Palette
 set -l foreground c0caf5
 set -l selection 283457
 set -l comment 565f89
@@ -146,13 +123,14 @@ set -gx TERMINAL ghostty
 # ║                            OS-Specific Configurations                        ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 
-# Linux-specific configurations
-if test "$os_type" = "Linux"
-    # Add npm global bin to PATH since using sudo to install global packages is highly discouraged
-    fish_add_path ~/.npm-global/bin
+{{ if eq .chezmoi.os "linux" -}}
+# Add npm global bin to PATH since using sudo to install global packages is highly discouraged
+fish_add_path ~/.npm-global/bin
 
-    # SSH Agent environment
-    if test -z "$SSH_AUTH_SOCK"
-        set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
-    end
+# SSH Agent environment
+if test -z "$SSH_AUTH_SOCK"
+    set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
 end
+
+{{ else if eq .chezmoi.os "darwin" -}}
+{{ end -}}

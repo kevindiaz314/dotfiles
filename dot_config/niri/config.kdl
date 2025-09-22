@@ -27,8 +27,6 @@ workspace "spotify" {
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 spawn-sh-at-startup "qs -c noctalia-shell"
 spawn-sh-at-startup "vicinae server"
-spawn-at-startup "/usr/lib/polkit-kde-authentication-agent-1"
-spawn-at-startup "/usr/lib/pam_kwallet_init"
 spawn-sh-at-startup "app2unit zen-browser"
 spawn-sh-at-startup "ghostty +new-window"
 

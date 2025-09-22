@@ -94,6 +94,12 @@ layout {
     offset x=0 y=5
     color "#0007"
   }
+
+  // Set the default column width of new windows
+  default-column-width { proportion 0.7; }
+
+  // Center a single column on a workspace.
+  always-center-single-column
 }
 
 hotkey-overlay {
@@ -149,6 +155,7 @@ window-rule {
   match app-id="vesktop"
   match app-id="Slack"
   match app-id="code"
+  match app-id="cursor"
   match app-id="Spotify"
   open-maximized true
 }
@@ -156,8 +163,8 @@ window-rule {
 // Open Dolphin as a floating window with custom size.
 window-rule {
   match app-id="org.gnome.Nautilus"
-  default-column-width { proportion 0.5; }
-  default-window-height { proportion 0.6; }
+  default-column-width { proportion 0.6; }
+  default-window-height { proportion 0.7; }
   open-floating true
 }
 

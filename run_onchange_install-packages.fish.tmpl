@@ -78,12 +78,12 @@ set TOTAL_STEPS (math $TOTAL_STEPS + 1) # GTK theme
 set TOTAL_STEPS (math $TOTAL_STEPS + 1) # keyd configuration
 set TOTAL_STEPS (math $TOTAL_STEPS + 1) # custom fonts
 set TOTAL_STEPS (math $TOTAL_STEPS + 1) # NPM setup
+set TOTAL_STEPS (math $TOTAL_STEPS + 1) # Git configuration
 
 # Optional steps (only if packages exist)
 {{ if .packages.linux.npm }}set TOTAL_STEPS (math $TOTAL_STEPS + 1){{ end }}
 
-# Final configuration
-set TOTAL_STEPS (math $TOTAL_STEPS + 1) # Quickshell
+
 
 # Initialize counters and logging
 set STEP_COUNTER 1
@@ -99,7 +99,7 @@ print_header "🚀 CachyOS Package Installation & Configuration"
 {{ if .packages.linux.pacman }}
 # Install all pacman packages in one go for efficiency
 print_step "Installing pacman packages"
-sudo pacman -S --needed --noconfirm{{ range .packages.linux.pacman }} \
+sudo pacman -S --needed {{ range .packages.linux.pacman }} \
     {{ . }}{{ end }}
 {{ end }}
 
@@ -118,11 +118,11 @@ end
 
 if test "$install_material_font" = true
     # Install all AUR packages including git packages
-    paru -S --needed --noconfirm{{ range .packages.linux.aur }} \
+    paru -S --needed {{ range .packages.linux.aur }} \
         {{ . }}{{ end }}
 else
     # Install AUR packages except git packages (they're already installed)
-    paru -S --needed --noconfirm{{ range .packages.linux.aur }}{{ if ne . "ttf-material-symbols-variable-git" }} \
+    paru -S --needed {{ range .packages.linux.aur }}{{ if ne . "ttf-material-symbols-variable-git" }} \
         {{ . }}{{ end }}{{ end }}
     print_info "Skipping ttf-material-symbols-variable-git (already installed)"
 end
@@ -146,7 +146,7 @@ if not pacman -Q warp-terminal >/dev/null 2>&1
         print_info "Downloading from: $download_url"
         curl -L "$download_url" -o "$temp_dir/warp-terminal.pkg.tar.zst"
         if test $status -eq 0
-            sudo pacman -U --noconfirm "$temp_dir/warp-terminal.pkg.tar.zst"
+            sudo pacman -U  "$temp_dir/warp-terminal.pkg.tar.zst"
             print_success "Warp terminal installed"
         else
             print_error "Failed to download Warp terminal"
@@ -231,6 +231,26 @@ else
 end
 
 #═══════════════════════════════════════════════════════════════════════════
+# GIT CONFIGURATION
+#═══════════════════════════════════════════════════════════════════════════
+
+# Git configuration (from Nextcloud)
+print_step "Setting up Git configuration"
+set git_src "$HOME/Nextcloud/Documents/git"
+set git_dest "$HOME/.config/git"
+if test -d $git_src
+    if test -d $git_dest
+        print_info "Git config already present at $git_dest"
+    else
+        print_info "Installing Git config from Nextcloud..."
+        cp -r $git_src $git_dest
+        print_success "Git config installed"
+    end
+else
+    print_warning "Skipping Git config (Nextcloud not synced yet)"
+end
+
+#═══════════════════════════════════════════════════════════════════════════
 # NPM CONFIGURATION
 #═══════════════════════════════════════════════════════════════════════════
 
@@ -258,24 +278,7 @@ end
 {{ end }}
 {{ end }}
 
-#═══════════════════════════════════════════════════════════════════════════
-# SHELL CONFIGURATION
-#═══════════════════════════════════════════════════════════════════════════
 
-# Quickshell configuration (Niri window manager shell)
-print_step "Configuring Quickshell"
-set noctalia_shell_dir ~/.config/quickshell/noctalia-shell
-if test -d "$noctalia_shell_dir/.git"
-    print_info "Updating noctalia-shell..."
-    command git -C "$noctalia_shell_dir" pull
-else
-    if test -d "$noctalia_shell_dir"
-        print_warning "Removing existing non-git directory $noctalia_shell_dir before cloning..."
-        rm -rf "$noctalia_shell_dir"
-    end
-    print_info "Cloning noctalia-shell..."
-    command git clone https://github.com/noctalia-dev/noctalia-shell "$noctalia_shell_dir"
-end
 
 #═══════════════════════════════════════════════════════════════════════════
 # COMPLETION SUMMARY
@@ -300,7 +303,7 @@ print_info "Total execution time: $TIME_DISPLAY"
 print_info "Pacman packages: {{ len .packages.linux.pacman }} installed"
 print_info "AUR packages: {{ len .packages.linux.aur }} installed"
 print_info "Services configured: {{ len .services.linux.system }} system, {{ len .services.linux.user }} user"
-print_info "Configurations applied: GTK theme, keyd, fonts, NPM, Quickshell"
+print_info "Configurations applied: GTK theme, keyd, fonts, Git config, NPM"
 echo ""
 print_info "You may need to restart your session for some changes to take effect"
 {{ else -}}

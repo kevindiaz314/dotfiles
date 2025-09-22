@@ -1,5 +1,0 @@
-export QT_QPA_PLATFORMTHEME=kde
-export GTK_USE_PORTAL=1
-export ELECTRON_OZONE_PLATFORM_HINT=wayland
-export APP2UNIT_SLICES='a=app-graphical.slice b=background-graphical.slice s=session-graphical.slice'
-export XDG_MENU_PREFIX=plasma-

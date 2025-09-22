@@ -21,14 +21,16 @@ packages:
       - libva-utils
       - keyd
       - tailscale
+      - ddcutil
+      - gpu-screen-recorder
 
       # Niri compositor
       - quickshell
       - niri
-      - xdg-desktop-portal-kde
+      - xdg-desktop-portal-gnome
+      - gnome-keyring
       - xdg-desktop-portal-gtk
       - polkit-kde-agent
-      - dolphin
       - wlsunset
       - uwsm
       - xwayland-satellite

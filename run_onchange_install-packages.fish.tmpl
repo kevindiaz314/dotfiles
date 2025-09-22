@@ -1,4 +1,4 @@
-#!/usr/bin/env fish
+#!/usr/bin/fish --no-config
 
 {{ if eq .chezmoi.os "linux" -}}
 # CachyOS Package Installation Script
@@ -52,7 +52,7 @@ function print_error
 end
 
 function log_message
-    echo "$(date '+%Y-%m-%d %H:%M:%S') - $argv" >> $LOG_FILE
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $argv" >>$LOG_FILE
 end
 
 #═══════════════════════════════════════════════════════════════════════════
@@ -112,7 +112,7 @@ print_step "Installing AUR packages"
 # - We skip them if already installed to save time and avoid unnecessary builds
 # - Only install git packages when they're actually missing
 set install_material_font false
-if not pacman -Q ttf-material-symbols-variable-git > /dev/null 2>&1
+if not pacman -Q ttf-material-symbols-variable-git >/dev/null 2>&1
     set install_material_font true
 end
 
@@ -134,7 +134,7 @@ end
 
 # Install Warp terminal (requires special handling - not in official repos)
 print_step "Installing Warp terminal"
-if not pacman -Q warp-terminal > /dev/null 2>&1
+if not pacman -Q warp-terminal >/dev/null 2>&1
     print_info "Downloading and installing Warp terminal..."
     set temp_dir (mktemp -d)
     set warp_version (curl -s "https://app.warp.dev/get_warp?package=pacman" | rg -o "window\.warp_app_version = '[^']*'" | cut -d"'" -f2)
@@ -166,7 +166,7 @@ end
 print_step "Enabling system services"
 {{ range .services.linux.system }}
 set service_name {{ . }}
-if not systemctl is-enabled $service_name > /dev/null 2>&1
+if not systemctl is-enabled $service_name >/dev/null 2>&1
     print_info "Enabling $service_name..."
     sudo systemctl enable --now $service_name
 else
@@ -180,7 +180,7 @@ end
 print_step "Enabling user services"
 {{ range .services.linux.user }}
 set service_name {{ . }}
-if not systemctl --user is-enabled $service_name > /dev/null 2>&1
+if not systemctl --user is-enabled $service_name >/dev/null 2>&1
     print_info "Enabling $service_name..."
     systemctl --user enable --now $service_name
 else
@@ -249,7 +249,7 @@ end
 print_step "Installing global NPM packages"
 {{ range .packages.linux.npm }}
 set package {{ . }}
-if not npm list -g $package > /dev/null 2>&1
+if not npm list -g $package >/dev/null 2>&1
     print_info "Installing $package..."
     npm install -g $package
 else

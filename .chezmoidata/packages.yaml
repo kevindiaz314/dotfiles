@@ -30,15 +30,11 @@ packages:
       - xdg-desktop-portal-gnome
       - gnome-keyring
       - xdg-desktop-portal-gtk
-      - polkit-kde-agent
       - wlsunset
-      - uwsm
       - xwayland-satellite
 
       # Applications
       - nextcloud-client
-      - kwallet
-      - kwalletmanager
       - ghostty
       - obsidian
       - vesktop
@@ -70,6 +66,9 @@ packages:
       - vicinae-bin
       - spotify
       - app2unit-git
+
+      # Shell configurations
+      - noctalia-shell
 
       # Fonts (only when needed, check if installed first)
       - ttf-material-symbols-variable-git

@@ -48,7 +48,7 @@ end
 function y
     set tmp (mktemp -t "yazi-cwd.XXXXXX")
     yazi $argv --cwd-file="$tmp"
-    if set cwd (command cat -- "$tmp"); and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
+    if read -z cwd <"$tmp"; and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
         builtin cd -- "$cwd"
     end
     rm -f -- "$tmp"
@@ -66,6 +66,7 @@ alias n="nvim"
 alias ff="fastfetch"
 alias lg="lazygit"
 alias sp="spf"
+alias op="opencode"
 
 # ╔══════════════════════════════════════════════════════════════════════════════╗
 # ║                         Theme: TokyoNight                                    ║

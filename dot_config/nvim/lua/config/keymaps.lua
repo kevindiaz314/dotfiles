@@ -7,3 +7,6 @@ local keymap = vim.keymap
 
 -- Save the current buffer
 keymap.set("n", "<leader>w", "<cmd>w<cr>", { desc = "Save file" })
+
+-- Yank to system clipboard
+keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "Yank to system clipboard" })

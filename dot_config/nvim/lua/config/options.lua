@@ -7,3 +7,5 @@ local opt = vim.opt
 
 -- Disable system clipboard integration
 opt.clipboard = ""
+
+vim.g.ai_cmp = false

@@ -42,8 +42,9 @@ packages:
       - chromium
       - obs-studio-browser
       - zed
+      - gnome-shell-extensions
+      - gnome-browser-connector
       - cachy-update
-      - yubico-authenticator
 
       # Development Tools
       - neovim
@@ -64,6 +65,7 @@ packages:
       - kiro-bin
       - slack-desktop
       - vicinae-bin
+      - refine
       - spotify
       - app2unit-git
 
@@ -77,6 +79,7 @@ packages:
     npm:
       - "@google/gemini-cli"
       - "opencode-ai"
+      - "@github/copilot"
 
 services:
   linux:

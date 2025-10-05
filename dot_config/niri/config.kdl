@@ -25,8 +25,6 @@ workspace "spotify" {
 // ▐▌ ▐▌▝▚▄▞▘  █ ▝▚▄▞▘▗▄▄▞▘  █ ▐▌ ▐▌▐▌ ▐▌ █
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
-spawn-sh-at-startup "qs -c noctalia-shell"
-spawn-sh-at-startup "vicinae server"
 spawn-sh-at-startup "app2unit zen-browser"
 spawn-sh-at-startup "ghostty +new-window"
 
@@ -207,7 +205,7 @@ binds {
   Mod+O repeat=false { toggle-overview; }
   Mod+Q repeat=false { close-window; }
   Mod+W { spawn-sh "app2unit zen-browser"; }
-  Mod+Space { spawn "vicinae"; }
+  Mod+Space { spawn-sh "vicinae toggle"; }
 
   // ╔══════════════════════════════════════════════════════════════════════════════╗
   // ║                             Noctalia Bindings                                ║

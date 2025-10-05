@@ -72,6 +72,7 @@ set TOTAL_STEPS (math $TOTAL_STEPS + 1) # Warp terminal
 # Service configuration steps (only if services exist)  
 {{ if .services.linux.system }}set TOTAL_STEPS (math $TOTAL_STEPS + 1){{ end }}
 {{ if .services.linux.user }}set TOTAL_STEPS (math $TOTAL_STEPS + 1){{ end }}
+{{ if .services.linux.user_wants }}set TOTAL_STEPS (math $TOTAL_STEPS + 1){{ end }}
 
 # System configuration steps
 set TOTAL_STEPS (math $TOTAL_STEPS + 1) # GTK theme
@@ -187,6 +188,24 @@ else
     print_info "$service_name already enabled"
 end
 {{ end }}
+
+{{ if .services.linux.user_wants }}
+# Link user services to target wants
+print_step "Linking user service dependencies"
+{{ range .services.linux.user_wants }}
+set base_service "{{ .base }}"
+{{ range .targets }}
+set wanted_service "{{ . }}"
+systemctl --user add-wants $base_service $wanted_service
+if not systemctl --user is-active $wanted_service >/dev/null 2>&1
+    print_info "Starting $wanted_service..."
+    systemctl --user start $wanted_service
+else
+    print_info "$wanted_service already active"
+end
+{{ end }}
+{{ end }}
+{{ end }}
 {{ end }}
 
 #═══════════════════════════════════════════════════════════════════════════
@@ -278,8 +297,6 @@ end
 {{ end }}
 {{ end }}
 
-
-
 #═══════════════════════════════════════════════════════════════════════════
 # COMPLETION SUMMARY
 #═══════════════════════════════════════════════════════════════════════════
@@ -303,6 +320,7 @@ print_info "Total execution time: $TIME_DISPLAY"
 print_info "Pacman packages: {{ len .packages.linux.pacman }} installed"
 print_info "AUR packages: {{ len .packages.linux.aur }} installed"
 print_info "Services configured: {{ len .services.linux.system }} system, {{ len .services.linux.user }} user"
+print_info "Service wants linked: {{ len .services.linux.user_wants }} set(s)"
 print_info "Configurations applied: GTK theme, keyd, fonts, Git config, NPM"
 echo ""
 print_info "You may need to restart your session for some changes to take effect"

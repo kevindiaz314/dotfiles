@@ -23,6 +23,7 @@ packages:
       - tailscale
       - ddcutil
       - gpu-screen-recorder
+      - zip
 
       # Niri compositor
       - quickshell
@@ -36,7 +37,6 @@ packages:
       # Applications
       - nextcloud-client
       - ghostty
-      - obsidian
       - vesktop
       - zen-browser-bin
       - chromium
@@ -80,6 +80,7 @@ packages:
       - "@google/gemini-cli"
       - "opencode-ai"
       - "@github/copilot"
+      - "mint"
 
 services:
   linux:
@@ -89,6 +90,12 @@ services:
     user:
       - ssh-agent.service
       - ssh-add.service
+      - vicinae.service
+      - noctalia.service
+    user_wants:
+      - base: niri.service
+        targets:
+          - noctalia.service
 
 configurations:
   linux:
@@ -99,7 +106,7 @@ configurations:
       config_content: |
         [ids]
 
-        0001:0001:70533846
+        0001:0001:09b4e68d
 
         [main]
 

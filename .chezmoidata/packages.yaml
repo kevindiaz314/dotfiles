@@ -49,8 +49,7 @@ packages:
       # Development Tools
       - neovim
       - npm
-      - go
-      - hugo
+      - deno
 
       # Fonts (stable packages only)
       - ttf-roboto
@@ -63,11 +62,11 @@ packages:
       - visual-studio-code-bin
       - cursor-bin
       - kiro-bin
-      - slack-desktop
+      - slack-desktop-wayland
       - vicinae-bin
       - refine
       - spotify
-      - app2unit-git
+      - helium-browser-bin
 
       # Shell configurations
       - noctalia-shell

@@ -123,6 +123,11 @@ window-rule {
 }
 
 window-rule {
+  match at-startup=true app-id="helium"
+  open-on-workspace "browser"
+}
+
+window-rule {
   match at-startup=true app-id="com.mitchellh.ghostty"
   open-on-workspace "terminal"
 }
@@ -150,6 +155,7 @@ window-rule {
 // Make certain apps open maximized by default
 window-rule {
   match app-id="zen"
+  match app-id="helium"
   match app-id="vesktop"
   match app-id="Slack"
   match app-id="code"

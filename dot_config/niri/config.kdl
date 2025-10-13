@@ -1,3 +1,8 @@
+// ▗▖ ▗▖ ▗▄▖ ▗▄▄▖ ▗▖ ▗▖ ▗▄▄▖▗▄▄▖  ▗▄▖  ▗▄▄▖▗▄▄▄▖ ▗▄▄▖
+// ▐▌ ▐▌▐▌ ▐▌▐▌ ▐▌▐▌▗▞▘▐▌   ▐▌ ▐▌▐▌ ▐▌▐▌   ▐▌   ▐▌   
+// ▐▌ ▐▌▐▌ ▐▌▐▛▀▚▖▐▛▚▖  ▝▀▚▖▐▛▀▘ ▐▛▀▜▌▐▌   ▐▛▀▀▘ ▝▀▚▖
+// ▐▙█▟▌▝▚▄▞▘▐▌ ▐▌▐▌ ▐▌▗▄▄▞▘▐▌   ▐▌ ▐▌▝▚▄▄▖▐▙▄▄▖▗▄▄▞▘
+                                                  
 // Define workspaces for laptop display and Samsung monitor
 workspace "browser" {
   open-on-output "Samsung Electric Company S27C900P H1AK500000"
@@ -17,6 +22,10 @@ workspace "chat" {
 
 workspace "spotify" {
   open-on-output "eDP-1"
+}
+
+switch-events {
+  lid-close { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "lockScreen" "toggle"; }
 }
 
 //  ▗▄▖ ▗▖ ▗▖▗▄▄▄▖▗▄▖  ▗▄▄▖▗▄▄▄▖▗▄▖ ▗▄▄▖▗▄▄▄▖

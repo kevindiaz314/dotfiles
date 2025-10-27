@@ -120,7 +120,9 @@ history_filter = [
   # This rule works the same as the 'z' rule below, but for 'nvim (alias n)' instead
   "^n ",
   "^n$",
+
   "^op$",
+  "^btop$",
 
   "^iin$",
   "^cd$",

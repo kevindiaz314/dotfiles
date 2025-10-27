@@ -67,6 +67,7 @@ packages:
       - refine
       - spotify
       - helium-browser-bin
+      - postman-bin
 
       # Shell configurations
       - noctalia-shell

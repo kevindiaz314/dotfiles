@@ -1,8 +1,8 @@
 // ▗▖ ▗▖ ▗▄▖ ▗▄▄▖ ▗▖ ▗▖ ▗▄▄▖▗▄▄▖  ▗▄▖  ▗▄▄▖▗▄▄▄▖ ▗▄▄▖
-// ▐▌ ▐▌▐▌ ▐▌▐▌ ▐▌▐▌▗▞▘▐▌   ▐▌ ▐▌▐▌ ▐▌▐▌   ▐▌   ▐▌   
+// ▐▌ ▐▌▐▌ ▐▌▐▌ ▐▌▐▌▗▞▘▐▌   ▐▌ ▐▌▐▌ ▐▌▐▌   ▐▌   ▐▌
 // ▐▌ ▐▌▐▌ ▐▌▐▛▀▚▖▐▛▚▖  ▝▀▚▖▐▛▀▘ ▐▛▀▜▌▐▌   ▐▛▀▀▘ ▝▀▚▖
 // ▐▙█▟▌▝▚▄▞▘▐▌ ▐▌▐▌ ▐▌▗▄▄▞▘▐▌   ▐▌ ▐▌▝▚▄▄▖▐▙▄▄▖▗▄▄▞▘
-                                                  
+
 // Define workspaces for laptop display and Samsung monitor
 workspace "browser" {
   open-on-output "Samsung Electric Company S27C900P H1AK500000"
@@ -25,7 +25,7 @@ workspace "spotify" {
 }
 
 switch-events {
-  lid-close { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "lockScreen" "toggle"; }
+  lid-close { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "sessionMenu" "lockAndSuspend"; }
 }
 
 //  ▗▄▖ ▗▖ ▗▖▗▄▄▄▖▗▄▖  ▗▄▄▖▗▄▄▄▖▗▄▖ ▗▄▄▖▗▄▄▄▖
@@ -36,6 +36,7 @@ switch-events {
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 spawn-at-startup "helium-browser"
 spawn-sh-at-startup "ghostty +new-window"
+spawn-sh-at-startup "qs -c noctalia-shell"
 
 // ▗▄▄▄▖▗▖  ▗▖▗▄▄▖ ▗▖ ▗▖▗▄▄▄▖
 //   █  ▐▛▚▖▐▌▐▌ ▐▌▐▌ ▐▌  █
@@ -148,7 +149,7 @@ window-rule {
 }
 
 window-rule {
-  match app-id="Spotify"
+  match app-id="spotify"
   open-on-workspace "spotify"
 }
 
@@ -169,7 +170,7 @@ window-rule {
   match app-id="Slack"
   match app-id="code"
   match app-id="cursor"
-  match app-id="Spotify"
+  match app-id="spotify"
   open-maximized true
 }
 
@@ -213,11 +214,13 @@ window-rule {
 // ▐▌ ▐▌▐▙▄▄▖  ▐▌  ▐▙▄▞▘▗▄█▄▖▐▌  ▐▌▐▙▄▄▀▗▄▄▞▘
 
 binds {
+  Mod+A { spawn-sh "warp-terminal"; }
   Mod+C { spawn-sh "cursor"; }
   Mod+E { spawn-sh "nautilus"; }
   Mod+Q repeat=false { close-window; }
   Mod+Return { spawn-sh "ghostty +new-window"; }
   Mod+Space { spawn-sh "vicinae toggle"; }
+  Mod+S {spawn-sh "spotify --ozone-platform=wayland"; }
   Mod+V { spawn-sh "code"; }
   Mod+W { spawn-sh "helium-browser"; }
 
@@ -225,7 +228,7 @@ binds {
   // ║                             Noctalia Bindings                                ║
   // ╚══════════════════════════════════════════════════════════════════════════════╝
   Mod+X { spawn-sh "qs -c noctalia-shell ipc call sessionMenu toggle"; }
-  Mod+Alt+L { spawn-sh "qs -c noctalia-shell ipc call lockScreen toggle"; }
+  Mod+Alt+L { spawn-sh "qs -c noctalia-shell ipc call lockScreen lock"; }
   Mod+Comma { spawn-sh "qs -c noctalia-shell ipc call settings toggle"; }
 
   XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05+"; }
@@ -259,9 +262,9 @@ binds {
   Mod+Shift+H     { focus-monitor-left; }
   Mod+Shift+L     { focus-monitor-right; }
 
-  // Move columns between monitors
-  Mod+Shift+Ctrl+H     { move-column-to-monitor-left; }
-  Mod+Shift+Ctrl+L     { move-column-to-monitor-right; }
+  // Move workspaces between monitors
+  Mod+Shift+Ctrl+H  { move-workspace-to-monitor-left; }
+  Mod+Shift+Ctrl+L  { move-workspace-to-monitor-right; }
 
   // Navigate and move columns between workspaces using mouse wheel (vertical)
   Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }

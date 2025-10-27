@@ -1,4 +1,10 @@
 return {
+  {
+    "folke/tokyonight.nvim",
+    opts = { style = "night" },
+  },
+
+  -- Snacks: A collection of QoL plugins for Neovim
   "folke/snacks.nvim",
   keys = {
     -- Overwrite the default "Find Files (Root Dir)" mapping

@@ -36,7 +36,7 @@ switch-events {
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 spawn-at-startup "helium-browser"
 spawn-sh-at-startup "ghostty +new-window"
-spawn-sh-at-startup "qs -c noctalia-shell"
+// spawn-sh-at-startup "qs -c noctalia-shell"
 
 // ▗▄▄▄▖▗▖  ▗▖▗▄▄▖ ▗▖ ▗▖▗▄▄▄▖
 //   █  ▐▛▚▖▐▌▐▌ ▐▌▐▌ ▐▌  █
@@ -171,6 +171,7 @@ window-rule {
   match app-id="code"
   match app-id="cursor"
   match app-id="spotify"
+  match app-id="com.obsproject.Studio"
   open-maximized true
 }
 
@@ -266,6 +267,10 @@ binds {
   Mod+Shift+Ctrl+H  { move-workspace-to-monitor-left; }
   Mod+Shift+Ctrl+L  { move-workspace-to-monitor-right; }
 
+  // Move columns between monitors
+  Mod+Shift+Ctrl+Left  { move-column-to-monitor-left; }
+  Mod+Shift+Ctrl+Right { move-column-to-monitor-right; }
+
   // Navigate and move columns between workspaces using mouse wheel (vertical)
   Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
   Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
@@ -273,8 +278,8 @@ binds {
   Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
 
   // Navigate and move columns between columns using mouse wheel (horizontal)
-  Mod+WheelScrollRight      { focus-column-right; }
-  Mod+WheelScrollLeft       { focus-column-left; }
+  Mod+WheelScrollRight      { focus-column-or-monitor-right; }
+  Mod+WheelScrollLeft       { focus-column-or-monitor-left; }
   Mod+Ctrl+WheelScrollRight { move-column-right; }
   Mod+Ctrl+WheelScrollLeft  { move-column-left; }
 

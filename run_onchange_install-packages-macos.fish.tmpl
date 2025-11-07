@@ -1,0 +1,147 @@
+#!/usr/bin/env fish
+
+{{ if eq .chezmoi.os "darwin" -}}
+# macOS Package Installation Script
+# This script declaratively installs packages for macOS setup
+# Package definitions are stored in .chezmoidata/packages.yaml
+#━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+#═══════════════════════════════════════════════════════════════════════════
+# UTILITY FUNCTIONS
+#═══════════════════════════════════════════════════════════════════════════
+
+# Enhanced echo functions for better visibility
+function print_header
+    set_color -o cyan
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo "  $argv"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    set_color normal
+end
+
+function print_step
+    set_color -o yellow
+    echo "[$STEP_COUNTER/$TOTAL_STEPS] $argv"
+    set_color normal
+    log_message "STEP [$STEP_COUNTER/$TOTAL_STEPS]: $argv"
+    set STEP_COUNTER (math $STEP_COUNTER + 1)
+end
+
+function print_success
+    set_color -o green
+    echo "✅ $argv"
+    set_color normal
+end
+
+function print_info
+    set_color -o blue
+    echo "ℹ️  $argv"
+    set_color normal
+end
+
+function print_warning
+    set_color -o yellow
+    echo "⚠️  $argv"
+    set_color normal
+end
+
+function print_error
+    set_color -o red
+    echo "❌ $argv"
+    set_color normal
+end
+
+function log_message
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $argv" >>$LOG_FILE
+end
+
+#═══════════════════════════════════════════════════════════════════════════
+# INITIALIZATION & STEP COUNTING
+#═══════════════════════════════════════════════════════════════════════════
+
+# Count total steps dynamically based on what exists in packages.yaml
+set TOTAL_STEPS 0
+
+# Homebrew installation steps
+{{ if .packages.macos.brew }}set TOTAL_STEPS (math $TOTAL_STEPS + 1){{ end }}
+{{ if .packages.macos.cask }}set TOTAL_STEPS (math $TOTAL_STEPS + 1){{ end }}
+
+# NPM installation step (if packages exist)
+{{ if .packages.npm }}set TOTAL_STEPS (math $TOTAL_STEPS + 1){{ end }}
+
+# Initialize counters and logging
+set STEP_COUNTER 1
+set START_TIME (date +%s)
+set LOG_FILE "/tmp/chezmoi-install-$(date +%Y%m%d-%H%M%S).log"
+
+print_header "🚀 macOS Package Installation & Configuration"
+
+#═══════════════════════════════════════════════════════════════════════════
+# HOMEBREW PACKAGE INSTALLATION
+#═══════════════════════════════════════════════════════════════════════════
+
+{{ if .packages.macos.brew }}
+# Install Homebrew formulae (command-line tools)
+print_step "Installing Homebrew formulae"
+brew install {{ range .packages.macos.brew }} \
+    {{ . }}{{ end }}
+{{ end }}
+
+{{ if .packages.macos.cask }}
+# Install Homebrew casks (GUI applications)
+print_step "Installing Homebrew casks"
+brew install --cask {{ range .packages.macos.cask }} \
+    {{ . }}{{ end }}
+{{ end }}
+
+#═══════════════════════════════════════════════════════════════════════════
+# NPM CONFIGURATION
+#═══════════════════════════════════════════════════════════════════════════
+
+{{ if .packages.npm }}
+# Install global NPM packages
+# On macOS with Homebrew-installed Node.js, we can install globally without custom prefix
+print_step "Installing global NPM packages"
+{{ range .packages.npm }}
+set package {{ . }}
+if not npm list -g $package >/dev/null 2>&1
+    print_info "Installing $package..."
+    npm install -g $package
+else
+    print_info "$package already installed"
+end
+{{ end }}
+{{ end }}
+
+#═══════════════════════════════════════════════════════════════════════════
+# COMPLETION SUMMARY
+#═══════════════════════════════════════════════════════════════════════════
+
+# Calculate elapsed time and show summary
+set END_TIME (date +%s)
+set ELAPSED_TIME (math $END_TIME - $START_TIME)
+
+# Smart time display - only show minutes if >= 1 minute
+if test $ELAPSED_TIME -ge 60
+    set MINUTES (math $ELAPSED_TIME / 60)
+    set SECONDS (math $ELAPSED_TIME % 60)
+    set TIME_DISPLAY "$MINUTES"m "$SECONDS"s
+else
+    set TIME_DISPLAY "$ELAPSED_TIME"s
+end
+
+print_header "🎉 Installation Complete!"
+print_success "All packages have been successfully installed"
+print_info "Total execution time: $TIME_DISPLAY"
+{{ if .packages.macos.brew -}}
+print_info "Homebrew formulae: {{ len .packages.macos.brew }} installed"
+{{ end -}}
+{{ if .packages.macos.cask -}}
+print_info "Homebrew casks: {{ len .packages.macos.cask }} installed"
+{{ end -}}
+{{ if .packages.npm -}}
+print_info "NPM packages: {{ len .packages.npm }} installed"
+{{ end -}}
+echo ""
+print_info "You may need to restart your session for some changes to take effect"
+{{ end -}}

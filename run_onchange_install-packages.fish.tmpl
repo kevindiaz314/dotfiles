@@ -1,4 +1,4 @@
-#!/usr/bin/fish --no-config
+#!/usr/bin/env fish
 
 {{ if eq .chezmoi.os "linux" -}}
 # CachyOS Package Installation Script
@@ -82,7 +82,7 @@ set TOTAL_STEPS (math $TOTAL_STEPS + 1) # NPM setup
 set TOTAL_STEPS (math $TOTAL_STEPS + 1) # Git configuration
 
 # Optional steps (only if packages exist)
-{{ if .packages.linux.npm }}set TOTAL_STEPS (math $TOTAL_STEPS + 1){{ end }}
+{{ if .packages.npm }}set TOTAL_STEPS (math $TOTAL_STEPS + 1){{ end }}
 
 
 
@@ -283,10 +283,10 @@ else
     print_info "NPM global directory already configured"
 end
 
-{{ if .packages.linux.npm }}
+{{ if .packages.npm }}
 # Install global NPM packages
 print_step "Installing global NPM packages"
-{{ range .packages.linux.npm }}
+{{ range .packages.npm }}
 set package {{ . }}
 if not npm list -g $package >/dev/null 2>&1
     print_info "Installing $package..."
@@ -324,7 +324,4 @@ print_info "Service wants linked: {{ len .services.linux.user_wants }} set(s)"
 print_info "Configurations applied: GTK theme, keyd, fonts, Git config, NPM"
 echo ""
 print_info "You may need to restart your session for some changes to take effect"
-{{ else -}}
-print_error "This script is designed for Linux (CachyOS). Current OS: {{ .chezmoi.os }}"
-exit 1
 {{ end -}}

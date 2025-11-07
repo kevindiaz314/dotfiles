@@ -1,4 +1,67 @@
 packages:
+  # NPM packages (shared across all OS)
+  npm:
+    - "@google/gemini-cli"
+    - "opencode-ai"
+    - "@github/copilot"
+    - "mint"
+
+  macos:
+    # Homebrew formulae (command-line tools)
+    brew:
+      # Terminal & Shell Tools
+      - atuin
+      - bat
+      - btop
+      - eza
+      - fastfetch
+      - fd
+      - fish
+      - fzf
+      - lazygit
+      - ripgrep
+      - superfile
+      - yazi
+      - zellij
+      - zoxide
+
+      # Development Tools
+      - git
+      - neovim
+      - node
+      - oh-my-posh
+
+    # Homebrew casks (GUI applications)
+    cask:
+      # Utilities
+      - balenaetcher
+      - cleanshot
+      - forklift
+      - itsycal
+      - leader-key
+      - localsend
+      - logi-options+
+      - raycast
+
+      # Development
+      - cursor
+      - ghostty
+      - visual-studio-code
+      - warp
+
+      # Communication & Collaboration
+      - nextcloud
+      - slack
+      - vesktop
+
+      # Productivity & Media
+      - obsidian
+      - spotify
+      - thebrowsercompany-dia
+
+      # System & Network
+      - tailscale-app
+
   linux:
     # All pacman packages grouped together for efficiency
     pacman:
@@ -74,13 +137,6 @@ packages:
 
       # Fonts (only when needed, check if installed first)
       - ttf-material-symbols-variable-git
-
-    # NPM packages
-    npm:
-      - "@google/gemini-cli"
-      - "opencode-ai"
-      - "@github/copilot"
-      - "mint"
 
 services:
   linux:

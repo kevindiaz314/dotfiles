@@ -1,0 +1,8 @@
+[gpg]
+  format = ssh
+[user]
+  signingkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA9SvPe8Psw9urHZfHqMQZ5uAoLc74pVqhxUHafpar9K"
+  name = Kevin Diaz
+  email = github@kev314.dev
+[commit]
+  gpgsign = true

@@ -11,8 +11,6 @@
 # Ignore macOS-specific files when on Linux
 {{ if eq .chezmoi.os "linux" }}
 .config/leader-key
-.config/yabai
-.hammerspoon
 {{ end }}
 
 # Common ignores
@@ -21,4 +19,3 @@ README.md
 
 # Other ignores
 .ideavimrc
-.config/hypr

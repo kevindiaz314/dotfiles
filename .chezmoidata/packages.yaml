@@ -30,6 +30,7 @@ packages:
       - neovim
       - node
       - oh-my-posh
+      - deno
 
     # Homebrew casks (GUI applications)
     cask:
@@ -48,11 +49,13 @@ packages:
       - ghostty
       - visual-studio-code
       - warp
+      - claude
 
       # Communication & Collaboration
       - nextcloud
       - slack
       - vesktop
+      - whatsapp
 
       # Productivity & Media
       - obsidian
@@ -61,6 +64,9 @@ packages:
 
       # System & Network
       - tailscale-app
+
+      # Fonts
+      - font-maple-mono-nf
 
   linux:
     # All pacman packages grouped together for efficiency
@@ -91,9 +97,6 @@ packages:
       # Niri compositor
       - quickshell
       - niri
-      - xdg-desktop-portal-gnome
-      - gnome-keyring
-      - xdg-desktop-portal-gtk
       - wlsunset
       - xwayland-satellite
 
@@ -101,12 +104,8 @@ packages:
       - nextcloud-client
       - ghostty
       - vesktop
-      - zen-browser-bin
-      - chromium
       - obs-studio-browser
       - zed
-      - gnome-shell-extensions
-      - gnome-browser-connector
       - cachy-update
 
       # Development Tools
@@ -124,10 +123,8 @@ packages:
       - oh-my-posh-bin
       - visual-studio-code-bin
       - cursor-bin
-      - kiro-bin
       - slack-desktop-wayland
       - vicinae-bin
-      - refine
       - spotify
       - helium-browser-bin
       - postman-bin
@@ -135,7 +132,7 @@ packages:
       # Shell configurations
       - noctalia-shell
 
-      # Fonts (only when needed, check if installed first)
+      # Fonts
       - ttf-material-symbols-variable-git
 
 services:

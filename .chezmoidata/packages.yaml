@@ -99,6 +99,7 @@ packages:
       - niri
       - wlsunset
       - xwayland-satellite
+      - xdg-desktop-portal-gnome
 
       # Applications
       - nextcloud-client
@@ -131,9 +132,6 @@ packages:
 
       # Shell configurations
       - noctalia-shell
-
-      # Fonts
-      - ttf-material-symbols-variable-git
 
 services:
   linux:

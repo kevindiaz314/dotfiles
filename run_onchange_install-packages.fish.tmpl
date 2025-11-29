@@ -78,8 +78,9 @@ set TOTAL_STEPS (math $TOTAL_STEPS + 1) # Warp terminal
 set TOTAL_STEPS (math $TOTAL_STEPS + 1) # GTK theme
 set TOTAL_STEPS (math $TOTAL_STEPS + 1) # keyd configuration
 set TOTAL_STEPS (math $TOTAL_STEPS + 1) # custom fonts
+set TOTAL_STEPS (math $TOTAL_STEPS + 1) # SSH setup
+set TOTAL_STEPS (math $TOTAL_STEPS + 1) # GitHub Copilot config
 set TOTAL_STEPS (math $TOTAL_STEPS + 1) # NPM setup
-set TOTAL_STEPS (math $TOTAL_STEPS + 1) # Git configuration
 
 # Optional steps (only if packages exist)
 {{ if .packages.npm }}set TOTAL_STEPS (math $TOTAL_STEPS + 1){{ end }}
@@ -105,28 +106,10 @@ sudo pacman -S --needed {{ range .packages.linux.pacman }} \
 {{ end }}
 
 {{ if .packages.linux.aur }}
-# Install all AUR packages with smart git package handling
+# Install all AUR packages
 print_step "Installing AUR packages"
-
-# Smart handling for git packages (like ttf-material-symbols-variable-git):
-# - Git packages rebuild on every install, even if up-to-date
-# - We skip them if already installed to save time and avoid unnecessary builds
-# - Only install git packages when they're actually missing
-set install_material_font false
-if not pacman -Q ttf-material-symbols-variable-git >/dev/null 2>&1
-    set install_material_font true
-end
-
-if test "$install_material_font" = true
-    # Install all AUR packages including git packages
-    paru -S --needed {{ range .packages.linux.aur }} \
-        {{ . }}{{ end }}
-else
-    # Install AUR packages except git packages (they're already installed)
-    paru -S --needed {{ range .packages.linux.aur }}{{ if ne . "ttf-material-symbols-variable-git" }} \
-        {{ . }}{{ end }}{{ end }}
-    print_info "Skipping ttf-material-symbols-variable-git (already installed)"
-end
+paru -S --needed {{ range .packages.linux.aur }} \
+    {{ . }}{{ end }}
 {{ end }}
 
 #═══════════════════════════════════════════════════════════════════════════
@@ -134,20 +117,27 @@ end
 #═══════════════════════════════════════════════════════════════════════════
 
 # Install Warp terminal (requires special handling - not in official repos)
+# Warp provides their own Arch package with automated repo updates after first install
+# We extract the version from their download page and fetch the package directly
 print_step "Installing Warp terminal"
 if not pacman -Q warp-terminal >/dev/null 2>&1
-    print_info "Downloading and installing Warp terminal..."
-    set temp_dir (mktemp -d)
-    set warp_version (curl -s "https://app.warp.dev/get_warp?package=pacman" | rg -o "window\.warp_app_version = '[^']*'" | cut -d"'" -f2)
+    print_info "Fetching latest Warp version..."
+    
+    # Extract version from the download page (embedded in JavaScript)
+    set warp_version (curl -s "https://app.warp.dev/get_warp?package=pacman" | grep -oP "goAppVersion = 'v[^']+'" | cut -d"'" -f2)
+    
     if test -z "$warp_version"
         print_error "Failed to get Warp version"
-        rm -rf "$temp_dir"
     else
+        print_info "Found Warp version: $warp_version"
+        set temp_dir (mktemp -d)
+        set pkg_file "$temp_dir/warp-terminal.pkg.tar.zst"
         set download_url "https://releases.warp.dev/stable/$warp_version/warp-terminal-$warp_version-1-x86_64.pkg.tar.zst"
+        
         print_info "Downloading from: $download_url"
-        curl -L "$download_url" -o "$temp_dir/warp-terminal.pkg.tar.zst"
-        if test $status -eq 0
-            sudo pacman -U  "$temp_dir/warp-terminal.pkg.tar.zst"
+        if curl -fSL "$download_url" -o "$pkg_file"
+            print_info "Installing Warp terminal package..."
+            sudo pacman -U --noconfirm "$pkg_file"
             print_success "Warp terminal installed"
         else
             print_error "Failed to download Warp terminal"
@@ -250,23 +240,44 @@ else
 end
 
 #═══════════════════════════════════════════════════════════════════════════
-# GIT CONFIGURATION
+# SSH CONFIGURATION
 #═══════════════════════════════════════════════════════════════════════════
 
-# Git configuration (from Nextcloud)
-print_step "Setting up Git configuration"
-set git_src "$HOME/Nextcloud/Documents/git"
-set git_dest "$HOME/.config/git"
-if test -d $git_src
-    if test -d $git_dest
-        print_info "Git config already present at $git_dest"
+# SSH directory setup (from Nextcloud)
+print_step "Setting up SSH configuration"
+if test -d ~/Nextcloud/Documents/.ssh
+    if test -d ~/.ssh
+        print_info "SSH directory already exists"
     else
-        print_info "Installing Git config from Nextcloud..."
-        cp -r $git_src $git_dest
-        print_success "Git config installed"
+        print_info "Copying SSH configuration..."
+        cp -r ~/Nextcloud/Documents/.ssh ~/
+        chmod 700 ~/.ssh
+        chmod 600 ~/.ssh/*
+        print_success "SSH configuration installed"
     end
 else
-    print_warning "Skipping Git config (Nextcloud not synced yet)"
+    print_warning "Skipping SSH setup (Nextcloud not synced yet)"
+end
+
+#═══════════════════════════════════════════════════════════════════════════
+# GITHUB COPILOT CONFIGURATION
+#═══════════════════════════════════════════════════════════════════════════
+
+# GitHub Copilot config setup (from Nextcloud)
+print_step "Setting up GitHub Copilot configuration"
+if test -d ~/Nextcloud/Documents/github-copilot
+    if test -d ~/.config/github-copilot
+        print_info "GitHub Copilot config already exists"
+        print_info "Copying apps.json file only..."
+        cp ~/Nextcloud/Documents/github-copilot/apps.json ~/.config/github-copilot/
+        print_success "GitHub Copilot apps.json updated"
+    else
+        print_info "Installing GitHub Copilot configuration..."
+        cp -r ~/Nextcloud/Documents/github-copilot ~/.config/
+        print_success "GitHub Copilot configuration installed"
+    end
+else
+    print_warning "Skipping GitHub Copilot setup (Nextcloud not synced yet)"
 end
 
 #═══════════════════════════════════════════════════════════════════════════
@@ -321,7 +332,7 @@ print_info "Pacman packages: {{ len .packages.linux.pacman }} installed"
 print_info "AUR packages: {{ len .packages.linux.aur }} installed"
 print_info "Services configured: {{ len .services.linux.system }} system, {{ len .services.linux.user }} user"
 print_info "Service wants linked: {{ len .services.linux.user_wants }} set(s)"
-print_info "Configurations applied: GTK theme, keyd, fonts, Git config, NPM"
+print_info "Configurations applied: GTK theme, keyd, fonts, SSH, GitHub Copilot, NPM"
 echo ""
 print_info "You may need to restart your session for some changes to take effect"
 {{ end -}}

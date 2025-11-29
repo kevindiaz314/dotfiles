@@ -35,8 +35,10 @@ switch-events {
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 spawn-at-startup "helium-browser"
-spawn-sh-at-startup "ghostty +new-window"
-// spawn-sh-at-startup "qs -c noctalia-shell"
+spawn-at-startup "/usr/lib/pam_kwallet_init"
+spawn-at-startup "/usr/lib/polkit-kde-authentication-agent-1"
+// spawn-sh-at-startup "ghostty +new-window"
+spawn-at-startup "warp-terminal"
 
 // ▗▄▄▄▖▗▖  ▗▖▗▄▄▖ ▗▖ ▗▖▗▄▄▄▖
 //   █  ▐▛▚▖▐▌▐▌ ▐▌▐▌ ▐▌  █
@@ -128,17 +130,17 @@ animations {
 // ▐▙█▟▌▗▄█▄▖▐▌  ▐▌▐▙▄▄▀▝▚▄▞▘▐▙█▟▌   ▐▌ ▐▌▝▚▄▞▘▐▙▄▄▖▐▙▄▄▖▗▄▄▞▘
 
 window-rule {
-  match at-startup=true app-id="zen"
-  open-on-workspace "browser"
-}
-
-window-rule {
   match at-startup=true app-id="helium"
   open-on-workspace "browser"
 }
 
 window-rule {
   match at-startup=true app-id="com.mitchellh.ghostty"
+  open-on-workspace "terminal"
+}
+
+window-rule {
+  match at-startup=true app-id="dev.warp.Warp"
   open-on-workspace "terminal"
 }
 
@@ -185,9 +187,17 @@ window-rule {
 
 // Open Dolphin as a floating window with custom size
 window-rule {
-  match app-id="org.gnome.Nautilus"
+  match app-id="org.kde.dolphin"
   default-column-width { proportion 0.6; }
   default-window-height { proportion 0.7; }
+  open-floating true
+}
+
+// Open Dolphin File Picker as a floating window with custom size
+window-rule {
+  match app-id="org.freedesktop.impl.portal.desktop.kde"
+  default-column-width { proportion 0.5; }
+  default-window-height { proportion 0.5; }
   open-floating true
 }
 
@@ -217,9 +227,9 @@ window-rule {
 binds {
   Mod+A { spawn-sh "warp-terminal"; }
   Mod+C { spawn-sh "cursor"; }
-  Mod+E { spawn-sh "nautilus"; }
+  Mod+E { spawn-sh "dolphin"; }
   Mod+Q repeat=false { close-window; }
-  Mod+Return { spawn-sh "ghostty +new-window"; }
+  Mod+Return { spawn-sh "warp-terminal"; }
   Mod+Space { spawn-sh "vicinae toggle"; }
   Mod+S {spawn-sh "spotify --ozone-platform=wayland"; }
   Mod+V { spawn-sh "code"; }

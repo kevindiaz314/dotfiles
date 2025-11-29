@@ -148,6 +148,10 @@ history_filter = [
   # This rule ignores the bare 'z' command, which is used to navigate to the home directory,
   "^z$",
   "^pwd$",
+  
+  # Coding Agents
+  "^copilot$",
+  "^gemini$"
 ]
 
 ## prevent commands run with cwd matching any of these regexes from being written

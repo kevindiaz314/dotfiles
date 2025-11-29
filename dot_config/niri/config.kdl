@@ -319,6 +319,9 @@ binds {
   // Fullscreen the current window
   Mod+Shift+F { fullscreen-window; }
 
+  // Toggle floating state of the current window
+  Mod+Shift+V { toggle-window-floating; }
+
   // Finer width adjustments
   Mod+Minus { set-column-width "-10%"; }
   Mod+Equal { set-column-width "+10%"; }

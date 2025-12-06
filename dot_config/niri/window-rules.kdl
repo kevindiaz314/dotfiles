@@ -1,0 +1,95 @@
+// ▗▖ ▗▖▗▄▄▄▖▗▖  ▗▖▗▄▄▄  ▗▄▖ ▗▖ ▗▖   ▗▄▄▖ ▗▖ ▗▖▗▖   ▗▄▄▄▖ ▗▄▄▖
+// ▐▌ ▐▌  █  ▐▛▚▖▐▌▐▌  █▐▌ ▐▌▐▌ ▐▌   ▐▌ ▐▌▐▌ ▐▌▐▌   ▐▌   ▐▌
+// ▐▌ ▐▌  █  ▐▌ ▝▜▌▐▌  █▐▌ ▐▌▐▌ ▐▌   ▐▛▀▚▖▐▌ ▐▌▐▌   ▐▛▀▀▘ ▝▀▚▖
+// ▐▙█▟▌▗▄█▄▖▐▌  ▐▌▐▙▄▄▀▝▚▄▞▘▐▙█▟▌   ▐▌ ▐▌▝▚▄▞▘▐▙▄▄▖▐▙▄▄▖▗▄▄▞▘
+
+window-rule {
+  match at-startup=true app-id="helium"
+  open-on-workspace "browser"
+}
+
+window-rule {
+  match at-startup=true app-id="com.mitchellh.ghostty"
+  open-on-workspace "terminal"
+}
+
+window-rule {
+  match at-startup=true app-id="dev.warp.Warp"
+  open-on-workspace "terminal"
+}
+
+window-rule {
+  match app-id="vesktop"
+  match app-id="Slack"
+  open-on-workspace "chat"
+}
+
+window-rule {
+  match app-id="spotify"
+  open-on-workspace "spotify"
+}
+
+window-rule {
+  draw-border-with-background false
+}
+
+// Make all windows slightly transparent by default
+window-rule {
+  opacity 0.99
+}
+
+// Make certain apps open maximized by default
+window-rule {
+  match app-id="zen"
+  match app-id="helium"
+  match app-id="vesktop"
+  match app-id="Slack"
+  match app-id="code"
+  match app-id="cursor"
+  match app-id="spotify"
+  match app-id="com.obsproject.Studio"
+  open-maximized true
+}
+
+// Open Nextcloud as a floating window with custom size
+window-rule {
+  match title="Nextcloud"
+  default-column-width { proportion 0.3; }
+  default-window-height { proportion 0.6; }
+  open-floating true
+}
+
+// Open Dolphin as a floating window with custom size
+window-rule {
+  match app-id="org.kde.dolphin"
+  default-column-width { proportion 0.6; }
+  default-window-height { proportion 0.7; }
+  open-floating true
+}
+
+// Open Dolphin File Picker as a floating window with custom size
+window-rule {
+  match app-id="org.freedesktop.impl.portal.desktop.kde"
+  default-column-width { proportion 0.5; }
+  default-window-height { proportion 0.5; }
+  open-floating true
+}
+
+// Example: block out two password managers from screen capture
+// (This example rule is commented out with a "/-" in front.)
+/-window-rule {
+  match app-id=r#"^org\.keepassxc\.KeePassXC$"#
+  match app-id=r#"^org\.gnome\.World\.Secrets$"#
+
+  block-out-from "screen-capture"
+
+  // Use this instead if you want them visible on third-party screenshot tools
+  // block-out-from "screencast"
+}
+
+// Enable rounded corners for all windows
+window-rule {
+  geometry-corner-radius 15
+  clip-to-geometry true
+}
+

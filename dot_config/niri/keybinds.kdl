@@ -1,0 +1,133 @@
+// ▗▖ ▗▖▗▄▄▄▖▗▖  ▗▖▗▄▄▖ ▗▄▄▄▖▗▖  ▗▖▗▄▄▄  ▗▄▄▖
+// ▐▌▗▞▘▐▌    ▝▚▞▘ ▐▌ ▐▌  █  ▐▛▚▖▐▌▐▌  █▐▌
+// ▐▛▚▖ ▐▛▀▀▘  ▐▌  ▐▛▀▚▖  █  ▐▌ ▝▜▌▐▌  █ ▝▀▚▖
+// ▐▌ ▐▌▐▙▄▄▖  ▐▌  ▐▙▄▞▘▗▄█▄▖▐▌  ▐▌▐▙▄▄▀▗▄▄▞▘
+
+binds {
+  Mod+C { spawn-sh "cursor"; }
+  Mod+E { spawn-sh "dolphin"; }
+  Mod+G { spawn-sh "ghostty +new-window"; }
+  Mod+Q repeat=false { close-window; }
+  Mod+Return { spawn-sh "warp-terminal"; }
+  Mod+Space { spawn-sh "vicinae toggle"; }
+  Mod+S {spawn-sh "spotify"; }
+  Mod+V { spawn-sh "code"; }
+  Mod+W { spawn-sh "helium-browser"; }
+
+  // ╔══════════════════════════════════════════════════════════════════════════════╗
+  // ║                             Noctalia Bindings                                ║
+  // ╚══════════════════════════════════════════════════════════════════════════════╝
+  Mod+X { spawn-sh "qs -c noctalia-shell ipc call sessionMenu toggle"; }
+  Mod+Alt+L { spawn-sh "qs -c noctalia-shell ipc call lockScreen lock"; }
+  Mod+Comma { spawn-sh "qs -c noctalia-shell ipc call settings toggle"; }
+
+  XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05+"; }
+  XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05-"; }
+  Mod+TouchpadScrollDown { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.02+"; }
+  Mod+TouchpadScrollUp   { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.02-"; }
+  XF86AudioMute        allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
+  XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+  XF86AudioNext allow-when-locked=true { spawn-sh "playerctl next"; }
+  XF86AudioPrev allow-when-locked=true { spawn-sh "playerctl previous"; }
+  XF86AudioPlay allow-when-locked=true { spawn-sh "playerctl play-pause"; }
+
+  XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
+  XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
+
+  // ╔══════════════════════════════════════════════════════════════════════════════╗
+  // ║                              Focus Movement                                  ║
+  // ╚══════════════════════════════════════════════════════════════════════════════╝
+
+  // Vim-style navigation: focus columns/windows and cross monitor boundaries
+  Mod+H     { focus-column-or-monitor-left; }
+  Mod+J     { focus-window-or-workspace-down; }
+  Mod+K     { focus-window-or-workspace-up; }
+  Mod+L     { focus-column-or-monitor-right; }
+
+  // Move columns within the current workspace
+  Mod+Ctrl+H     { move-column-left; }
+  Mod+Ctrl+L     { move-column-right; }
+
+  // Switch focus between monitors
+  Mod+Shift+H     { focus-monitor-left; }
+  Mod+Shift+L     { focus-monitor-right; }
+
+  // Move workspaces between monitors
+  Mod+Shift+Ctrl+H  { move-workspace-to-monitor-left; }
+  Mod+Shift+Ctrl+L  { move-workspace-to-monitor-right; }
+
+  // Move columns between monitors
+  Mod+Shift+Ctrl+Left  { move-column-to-monitor-left; }
+  Mod+Shift+Ctrl+Right { move-column-to-monitor-right; }
+
+  // Navigate and move columns between workspaces using mouse wheel (vertical)
+  Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
+  Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
+  Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
+  Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
+
+  // Navigate and move columns between columns using mouse wheel (horizontal)
+  Mod+WheelScrollRight      { focus-column-or-monitor-right; }
+  Mod+WheelScrollLeft       { focus-column-or-monitor-left; }
+  Mod+Ctrl+WheelScrollRight { move-column-right; }
+  Mod+Ctrl+WheelScrollLeft  { move-column-left; }
+
+  // Focus named workspaces by number
+  Mod+1 { focus-workspace "browser"; }
+  Mod+2 { focus-workspace "terminal"; }
+  Mod+3 { focus-workspace "code"; }
+  Mod+4 { focus-workspace "chat"; }
+  Mod+5 { focus-workspace "spotify"; }
+
+  // Move column to named workspaces
+  Mod+Shift+1 { move-column-to-workspace "browser"; }
+  Mod+Shift+2 { move-column-to-workspace "terminal"; }
+  Mod+Shift+3 { move-column-to-workspace "code"; }
+  Mod+Shift+4 { move-column-to-workspace "chat"; }
+  Mod+Shift+5 { move-column-to-workspace "spotify"; }
+
+  // Switches focus between the current and the previous workspace
+  Mod+Tab { focus-workspace-previous; }
+
+  // Cycle through preset column widths
+  Mod+R { switch-preset-column-width; }
+
+  // Maximize the current column
+  Mod+F { maximize-column; }
+
+  // Fullscreen the current window
+  Mod+Shift+F { fullscreen-window; }
+
+  // Toggle floating state of the current window
+  Mod+Shift+V { toggle-window-floating; }
+
+  // Finer width adjustments
+  Mod+Minus { set-column-width "-10%"; }
+  Mod+Equal { set-column-width "+10%"; }
+
+  // Finer height adjustments when in column with other windows
+  Mod+Shift+Minus { set-window-height "-10%"; }
+  Mod+Shift+Equal { set-window-height "+10%"; }
+
+  // Screenshot keybindings
+  Print { screenshot; }
+  Ctrl+Print { screenshot-screen; }
+  Alt+Print { screenshot-window; }
+
+  // Applications such as remote-desktop clients and software KVM switches may
+  // request that niri stops processing the keyboard shortcuts defined here
+  // so they may, for example, forward the key presses as-is to a remote machine
+  // It's a good idea to bind an escape hatch to toggle the inhibitor,
+  // so a buggy application can't hold your session hostage
+  //
+  // The allow-inhibiting=false property can be applied to other binds as well,
+  // which ensures niri always processes them, even when an inhibitor is active
+  Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+
+  // The quit action will show a confirmation dialog to avoid accidental exits
+  Mod+Shift+E { quit; }
+
+  // Powers off the monitors. To turn them back on, do any input like
+  // moving the mouse or pressing any other key
+  Mod+Shift+P { power-off-monitors; }
+}

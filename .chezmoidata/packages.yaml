@@ -105,9 +105,11 @@ packages:
       - nextcloud-client
       - ghostty
       - vesktop
-      - obs-studio-browser
+      # - obs-studio-browser
       - zed
       - cachy-update
+      - helium-browser-bin
+      - localsend
 
       # Development Tools
       - neovim
@@ -127,7 +129,6 @@ packages:
       - slack-desktop-wayland
       - vicinae-bin
       - spotify
-      - helium-browser-bin
       - postman-bin
 
       # Shell configurations

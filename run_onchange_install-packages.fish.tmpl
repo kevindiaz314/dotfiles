@@ -265,19 +265,21 @@ end
 
 # GitHub Copilot config setup (from Nextcloud)
 print_step "Setting up GitHub Copilot configuration"
-if test -d ~/Nextcloud/Documents/github-copilot
-    if test -d ~/.config/github-copilot
-        print_info "GitHub Copilot config already exists"
-        print_info "Copying apps.json file only..."
-        cp ~/Nextcloud/Documents/github-copilot/apps.json ~/.config/github-copilot/
-        print_success "GitHub Copilot apps.json updated"
-    else
-        print_info "Installing GitHub Copilot configuration..."
-        cp -r ~/Nextcloud/Documents/github-copilot ~/.config/
-        print_success "GitHub Copilot configuration installed"
-    end
-else
+set src ~/Nextcloud/Documents/github-copilot
+set dest ~/.config/github-copilot
+
+if not test -d $src
     print_warning "Skipping GitHub Copilot setup (Nextcloud not synced yet)"
+else if not test -d $dest
+    print_info "Installing GitHub Copilot configuration..."
+    cp -r $src ~/.config/
+    print_success "GitHub Copilot configuration installed"
+else if not cmp -s $src/apps.json $dest/apps.json
+    print_info "Updating apps.json file..."
+    cp $src/apps.json $dest/
+    print_success "GitHub Copilot apps.json updated"
+else
+    print_info "GitHub Copilot config already up to date"
 end
 
 #═══════════════════════════════════════════════════════════════════════════
@@ -288,7 +290,7 @@ end
 print_step "Setting up NPM global directory"
 if test ! -d ~/.npm-global
     mkdir ~/.npm-global
-    npm config set prefix '~/.npm-global'
+    npm config set prefix "$HOME/.npm-global"
     print_success "NPM global directory configured"
 else
     print_info "NPM global directory already configured"

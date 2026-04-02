@@ -2,6 +2,7 @@
 Description=Add SSH signing key to agent
 After=ssh-agent.service
 Requires=ssh-agent.service
+ConditionPathExists=/home/{{ .chezmoi.username }}/.ssh/github_key
 
 [Service]
 Type=oneshot

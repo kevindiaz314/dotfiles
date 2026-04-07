@@ -2,7 +2,6 @@ packages:
   # NPM packages (shared across all OS)
   npm:
     - "@google/gemini-cli"
-    - "opencode-ai"
     - "@github/copilot"
     - "mint"
 
@@ -95,13 +94,15 @@ packages:
       - zip
 
       # Niri compositor
-      - quickshell
+      - noctalia-qs
+      - noctalia-shell
       - niri
       - wlsunset
       - xwayland-satellite
       - xdg-desktop-portal-gnome
 
       # Applications
+      - warp-terminal
       - nextcloud-client
       - ghostty
       - vesktop
@@ -115,6 +116,7 @@ packages:
       - neovim
       - npm
       - deno
+      - opencode
 
       # Fonts (stable packages only)
       - ttf-roboto
@@ -131,8 +133,6 @@ packages:
       - spotify
       - postman-bin
 
-      # Shell configurations
-      - noctalia-shell
 
 services:
   linux:

@@ -66,8 +66,8 @@ set TOTAL_STEPS 0
 {{ if .packages.linux.pacman }}set TOTAL_STEPS (math $TOTAL_STEPS + 1){{ end }}
 {{ if .packages.linux.aur }}set TOTAL_STEPS (math $TOTAL_STEPS + 1){{ end }}
 
-# Special installations
-set TOTAL_STEPS (math $TOTAL_STEPS + 1) # Warp terminal
+# Third-party repo setup
+set TOTAL_STEPS (math $TOTAL_STEPS + 1) # Warp repo
 
 # Service configuration steps (only if services exist)  
 {{ if .services.linux.system }}set TOTAL_STEPS (math $TOTAL_STEPS + 1){{ end }}
@@ -95,6 +95,28 @@ set LOG_FILE "/tmp/chezmoi-install-$(date +%Y%m%d-%H%M%S).log"
 print_header "🚀 CachyOS Package Installation & Configuration"
 
 #═══════════════════════════════════════════════════════════════════════════
+# THIRD-PARTY REPOSITORY SETUP
+#═══════════════════════════════════════════════════════════════════════════
+
+# Add Warp terminal repo to pacman (must be done before pacman -S warp-terminal)
+print_step "Setting up Warp terminal repository"
+if not grep -q '\[warpdotdev\]' /etc/pacman.conf
+    print_info "Importing Warp PGP signing key..."
+    sudo pacman-key -r "linux-maintainers@warp.dev" --keyserver hkp://keys.openpgp.org:80
+    sudo pacman-key --lsign-key "linux-maintainers@warp.dev"
+
+    print_info "Adding Warp repository to pacman.conf..."
+    sudo sh -c 'echo "
+[warpdotdev]
+Server = https://releases.warp.dev/linux/pacman/\$repo/\$arch" >> /etc/pacman.conf'
+
+    sudo pacman -Sy
+    print_success "Warp repository configured"
+else
+    print_info "Warp repository already configured"
+end
+
+#═══════════════════════════════════════════════════════════════════════════
 # PACKAGE INSTALLATION
 #═══════════════════════════════════════════════════════════════════════════
 
@@ -111,42 +133,6 @@ print_step "Installing AUR packages"
 paru -S --needed {{ range .packages.linux.aur }} \
     {{ . }}{{ end }}
 {{ end }}
-
-#═══════════════════════════════════════════════════════════════════════════
-# SPECIAL INSTALLATIONS
-#═══════════════════════════════════════════════════════════════════════════
-
-# Install Warp terminal (requires special handling - not in official repos)
-# Warp provides their own Arch package with automated repo updates after first install
-# We extract the version from their download page and fetch the package directly
-print_step "Installing Warp terminal"
-if not pacman -Q warp-terminal >/dev/null 2>&1
-    print_info "Fetching latest Warp version..."
-    
-    # Extract version from the download page (embedded in JavaScript)
-    set warp_version (curl -s "https://app.warp.dev/get_warp?package=pacman" | grep -oP "goAppVersion = 'v[^']+'" | cut -d"'" -f2)
-    
-    if test -z "$warp_version"
-        print_error "Failed to get Warp version"
-    else
-        print_info "Found Warp version: $warp_version"
-        set temp_dir (mktemp -d)
-        set pkg_file "$temp_dir/warp-terminal.pkg.tar.zst"
-        set download_url "https://releases.warp.dev/stable/$warp_version/warp-terminal-$warp_version-1-x86_64.pkg.tar.zst"
-        
-        print_info "Downloading from: $download_url"
-        if curl -fSL "$download_url" -o "$pkg_file"
-            print_info "Installing Warp terminal package..."
-            sudo pacman -U --noconfirm "$pkg_file"
-            print_success "Warp terminal installed"
-        else
-            print_error "Failed to download Warp terminal"
-        end
-        rm -rf "$temp_dir"
-    end
-else
-    print_info "Warp terminal already installed"
-end
 
 #═══════════════════════════════════════════════════════════════════════════
 # SYSTEM SERVICE CONFIGURATION
@@ -288,8 +274,8 @@ end
 
 # NPM global directory setup
 print_step "Setting up NPM global directory"
-if test ! -d ~/.npm-global
-    mkdir ~/.npm-global
+mkdir -p ~/.npm-global
+if test (npm config get prefix) != "$HOME/.npm-global"
     npm config set prefix "$HOME/.npm-global"
     print_success "NPM global directory configured"
 else

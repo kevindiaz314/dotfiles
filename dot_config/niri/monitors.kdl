@@ -5,7 +5,7 @@
 
 output "eDP-1" {
   // You can use integer or fractional scale, for example use 1.5 for 150% scale
-  scale 1.6
+  scale 1.7
 }
 
 // Focus this output by default when niri starts

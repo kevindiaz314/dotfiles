@@ -60,8 +60,8 @@ window-rule {
 }
 
 window-rule {
-  // Open Dolphin File Picker as a floating window with custom size
-  match app-id="org.freedesktop.impl.portal.desktop.kde"
+  // Open Gnome File Picker (xdg-desktop-portal-gnome) as a floating window with custom size
+  match app-id="org.freedesktop.impl.portal.desktop.gnome"
   default-column-width { proportion 0.5; }
   default-window-height { proportion 0.5; }
   open-floating true

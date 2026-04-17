@@ -1,46 +1,46 @@
 packages:
   arch:
     pacman:
-      - atuin
-      - zoxide
-      - lazygit
-      - zellij
-      - yazi
-      - chafa
-      - satty
-      - wl-clipboard
       - 7zip
-      - resvg
-      - playerctl
-      - cava
+      - atuin
       - brightnessctl
-      - libva-utils
-      - keyd
-      - tailscale
-      - ddcutil
-      - gpu-screen-recorder
-      - zip
-      - noctalia-qs
-      - noctalia-shell
-      - niri-git
-      - wlsunset
-      - xwayland-satellite
-      - xdg-desktop-portal-gnome
-      - warp-terminal
-      - nextcloud-client
-      - ghostty
-      - vesktop
       - cachy-update
+      - cava
+      - chafa
+      - ddcutil
+      - deno
+      - ghostty
+      - gpu-screen-recorder
       - helium-browser-bin
+      - keyd
+      - lazygit
+      - libva-utils
       - localsend
       - neovim
+      - nextcloud-client
+      - niri-git
+      - noctalia-qs
+      - noctalia-shell
       - npm
-      - deno
       - opencode
+      - playerctl
+      - resvg
+      - satty
+      - tailscale
+      - vesktop
+      - warp-terminal
+      - wl-clipboard
+      - wlsunset
+      - xdg-desktop-portal-gnome
+      - xwayland-satellite
+      - yazi
+      - zellij
+      - zip
+      - zoxide
     aur:
-      - oh-my-posh-bin
-      - visual-studio-code-bin
       - cursor-bin
+      - oh-my-posh-bin
       - slack-desktop
-      - vicinae-bin
       - spotify
+      - vicinae-bin
+      - visual-studio-code-bin

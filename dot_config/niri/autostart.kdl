@@ -5,8 +5,6 @@
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 spawn-at-startup "helium-browser"
-spawn-at-startup "/usr/lib/pam_kwallet_init"
-spawn-at-startup "/usr/lib/polkit-kde-authentication-agent-1"
 // spawn-sh-at-startup "ghostty +new-window"
 spawn-at-startup "warp-terminal"
 

@@ -5,7 +5,7 @@
 
 binds {
   Mod+C { spawn-sh "cursor"; }
-  Mod+E { spawn-sh "dolphin"; }
+  Mod+E { spawn-sh "nautilus"; }
   Mod+G { spawn-sh "ghostty +new-window"; }
   Mod+Q repeat=false { close-window; }
   Mod+Return { spawn-sh "warp-terminal"; }

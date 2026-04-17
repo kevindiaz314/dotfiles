@@ -7,7 +7,7 @@ Context for any Claude session opened in this repo. Focused on the package/servi
 On `chezmoi apply`, three things happen declaratively on Linux:
 
 1. Adds the Warp pacman repo (`[warpdotdev]`) to `/etc/pacman.conf`, imports + locally signs its key, refreshes the db.
-2. Installs all packages in [.chezmoidata/packages.yaml](.chezmoidata/packages.yaml) via `paru -S --needed --noconfirm …` (pacman + AUR in one invocation).
+2. Installs all packages in [.chezmoidata/packages.yaml](.chezmoidata/packages.yaml) via `paru -S --needed …` (pacman + AUR in one invocation). `--noconfirm` is intentionally omitted so the user handles version/conflict prompts interactively.
 3. Writes `/etc/keyd/default.conf` (content embedded in the script) and restarts `keyd` if it's already running.
 4. Enables system + user systemd services from [.chezmoidata/services.yaml](.chezmoidata/services.yaml) with `systemctl enable --now`, guarded by `is-enabled`.
 

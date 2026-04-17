@@ -22,7 +22,7 @@ packages:
       - zip
       - noctalia-qs
       - noctalia-shell
-      - niri
+      - niri-git
       - wlsunset
       - xwayland-satellite
       - xdg-desktop-portal-gnome

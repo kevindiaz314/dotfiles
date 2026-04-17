@@ -115,6 +115,6 @@ For a one-shot verification of the whole automation (success or failure), paste 
 
 ## Declarative Package Management
 
-Packages are declared in [.chezmoidata/packages.yaml](.chezmoidata/packages.yaml) and installed by [run_onchange_before_20-install-packages.sh.tmpl](run_onchange_before_20-install-packages.sh.tmpl) via `paru -S --needed --noconfirm …`. The split between `pacman` and `aur` lists is organizational only — `paru` handles both. Editing either list is enough to trigger a re-install on the next `chezmoi apply` (the package names are inlined into the rendered script, so chezmoi detects the change automatically).
+Packages are declared in [.chezmoidata/packages.yaml](.chezmoidata/packages.yaml) and installed by [run_onchange_before_20-install-packages.sh.tmpl](run_onchange_before_20-install-packages.sh.tmpl) via `paru -S --needed …`. The split between `pacman` and `aur` lists is organizational only — `paru` handles both. Editing either list is enough to trigger a re-install on the next `chezmoi apply` (the package names are inlined into the rendered script, so chezmoi detects the change automatically). Note: `--noconfirm` is deliberately omitted — you'll be prompted interactively for version choices, conflict resolution, and AUR build review.
 
 Services are declared in [.chezmoidata/services.yaml](.chezmoidata/services.yaml) and enabled by [run_onchange_after_30-enable-services.sh.tmpl](run_onchange_after_30-enable-services.sh.tmpl) with `systemctl enable --now`, guarded by `is-enabled` so the script is safe to re-run.

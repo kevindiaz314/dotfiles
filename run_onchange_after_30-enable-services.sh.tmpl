@@ -1,0 +1,15 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/usr/bin/env fish
+
+for svc in{{ range .services.system }} {{ . }}{{ end }}
+    if not systemctl is-enabled --quiet $svc
+        sudo systemctl enable --now $svc
+    end
+end
+
+for svc in{{ range .services.user }} {{ . }}{{ end }}
+    if not systemctl --user is-enabled --quiet $svc
+        systemctl --user enable --now $svc
+    end
+end
+{{ end -}}

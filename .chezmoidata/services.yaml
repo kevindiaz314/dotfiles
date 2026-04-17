@@ -1,0 +1,8 @@
+services:
+  system:
+    - keyd
+    - tailscaled
+  user:
+    - ssh-agent
+    - ssh-add
+    - noctalia

@@ -1,0 +1,27 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/usr/bin/env fish
+
+set -l config '[ids]
+
+*
+
+[main]
+
+# Maps capslock to escape when pressed and control when held.
+capslock = overload(control, esc)
+
+# Remaps the escape key to capslock
+esc = capslock
+
+# Swap alt and control
+leftalt = leftcontrol
+leftcontrol = leftalt
+'
+
+sudo mkdir -p /etc/keyd
+echo $config | sudo tee /etc/keyd/default.conf >/dev/null
+
+if systemctl is-active --quiet keyd
+    sudo systemctl restart keyd
+end
+{{ end -}}

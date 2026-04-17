@@ -1,0 +1,14 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/usr/bin/env fish
+
+set -l pacman_conf /etc/pacman.conf
+
+if not grep -q '^\[warpdotdev\]' $pacman_conf
+    printf '\n[warpdotdev]\nServer = https://releases.warp.dev/linux/pacman/$repo/$arch\n' \
+        | sudo tee -a $pacman_conf >/dev/null
+end
+
+sudo pacman-key -r linux-maintainers@warp.dev
+sudo pacman-key --lsign-key linux-maintainers@warp.dev
+sudo pacman -Sy
+{{ end -}}

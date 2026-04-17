@@ -1,0 +1,5 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/usr/bin/env fish
+
+paru -S --needed --noconfirm{{ range .packages.arch.pacman }} {{ . }}{{ end }}{{ range .packages.arch.aur }} {{ . }}{{ end }}
+{{ end -}}

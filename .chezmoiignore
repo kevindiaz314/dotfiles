@@ -16,7 +16,9 @@
 # Common ignores
 LICENSE
 README.md
+CLAUDE.md
 desktop.png
+docs/**
 
 # Other ignores
 .ideavimrc

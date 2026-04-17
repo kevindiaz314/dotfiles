@@ -1,0 +1,5 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/usr/bin/env fish
+
+curl -fsSL https://claude.ai/install.sh | bash
+{{ end -}}

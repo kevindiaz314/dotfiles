@@ -35,7 +35,7 @@ window-rule {
 
 // Make all windows slightly transparent by default
 window-rule {
-  opacity 0.99
+  opacity 0.98
 }
 
 // Make certain apps open maximized by default
@@ -46,7 +46,7 @@ window-rule {
   match app-id="Slack"
   match app-id="code"
   match app-id="cursor"
-  match app-id="spotify"
+  match app-id="Spotify"
   match app-id="com.obsproject.Studio"
   open-maximized true
 }
@@ -59,16 +59,8 @@ window-rule {
   open-floating true
 }
 
-// Open Dolphin as a floating window with custom size
 window-rule {
-  match app-id="org.kde.dolphin"
-  default-column-width { proportion 0.6; }
-  default-window-height { proportion 0.7; }
-  open-floating true
-}
-
-// Open Dolphin File Picker as a floating window with custom size
-window-rule {
+  // Open Dolphin File Picker as a floating window with custom size
   match app-id="org.freedesktop.impl.portal.desktop.kde"
   default-column-width { proportion 0.5; }
   default-window-height { proportion 0.5; }

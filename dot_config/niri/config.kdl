@@ -1,0 +1,54 @@
+include "workspaces.kdl"
+include "autostart.kdl"
+include "input.kdl"
+include "monitors.kdl"
+include "window-rules.kdl"
+include "keybinds.kdl"
+
+layout {
+  // Set gaps around windows in logical pixels
+  gaps 8
+
+  focus-ring {
+    // How many logical pixels the ring extends out from the windows
+    width 2
+    active-gradient from="#7aa2f7ee" to="#f7768eff" angle=45
+    inactive-gradient from="#32344aff" to="#565f89ff" angle=45 relative-to="workspace-view"
+  }
+
+  // You can enable drop shadows for windows
+  shadow {
+    on
+    draw-behind-window true
+    softness 30
+    spread 10
+    offset x=0 y=5
+    color "#0007"
+  }
+
+  // Set the default column width of new windows
+  default-column-width { proportion 0.7; }
+
+  // Center a single column on a workspace
+  always-center-single-column
+}
+
+hotkey-overlay {
+  skip-at-startup
+}
+
+prefer-no-csd
+
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+animations {
+  slowdown 0.5
+}
+
+// These are the default values:
+// blur {
+//     passes 10
+//     offset 5
+//     noise 0.02
+//     saturation 5
+// }

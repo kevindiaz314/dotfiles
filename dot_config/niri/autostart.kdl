@@ -1,0 +1,10 @@
+//  ▗▄▖ ▗▖ ▗▖▗▄▄▄▖▗▄▖  ▗▄▄▖▗▄▄▄▖▗▄▖ ▗▄▄▖▗▄▄▄▖
+// ▐▌ ▐▌▐▌ ▐▌  █ ▐▌ ▐▌▐▌     █ ▐▌ ▐▌▐▌ ▐▌ █
+// ▐▛▀▜▌▐▌ ▐▌  █ ▐▌ ▐▌ ▝▀▚▖  █ ▐▛▀▜▌▐▛▀▚▖ █
+// ▐▌ ▐▌▝▚▄▞▘  █ ▝▚▄▞▘▗▄▄▞▘  █ ▐▌ ▐▌▐▌ ▐▌ █
+
+// To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
+spawn-at-startup "noctalia"
+spawn-at-startup "helium-browser"
+spawn-at-startup "warp-terminal"
+spawn-at-startup "vicinae" "server"

@@ -1,0 +1,132 @@
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║                            Fish Shell Configuration                          ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+
+# Set vi mode
+set -g fish_key_bindings fish_vi_key_bindings
+
+# Disable vi mode indicators
+function fish_mode_prompt
+end
+
+# Overwrite fish_greeting
+set fish_greeting ""
+
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║                         Initialization (Cross-platform)                      ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+
+if status is-interactive
+    # Initialize Oh-My-Posh and fastfetch (skip if running in VSCode or Zed)
+    # if test "$TERM_PROGRAM" != vscode; and test "$TERM_PROGRAM" != zed
+    if test "$TERM_PROGRAM" != vscode
+        oh-my-posh init fish --config ~/.config/ohmyposh/tokyo_night.toml | source
+        fastfetch
+    end
+
+    # Set up fzf key bindings
+    fzf --fish | source
+
+    # Shell plugin
+    atuin init fish | source
+
+    # Set up Zoxide
+    zoxide init fish | source
+end
+
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║                       Custom Functions (Cross-platform)                      ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+
+# Yazi shell wrapper
+function y
+    set tmp (mktemp -t "yazi-cwd.XXXXXX")
+    command yazi $argv --cwd-file="$tmp"
+    if read -z cwd <"$tmp"; and [ "$cwd" != "$PWD" ]; and test -d "$cwd"
+        builtin cd -- "$cwd"
+    end
+    command rm -f -- "$tmp"
+end
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║                           Aliases (Cross-platform)                           ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+
+alias ls="eza --oneline --all --icons" # One entry per line, all files (incl. hidden), with icons
+alias l="eza --long --header --total-size --icons --group-directories-first" # Long view: header + recursive dir sizes (no hidden)
+alias ll="eza --long --all --header --total-size --icons --group-directories-first" # Same as l, plus hidden files
+alias n="nvim"
+alias ff="fastfetch"
+alias lg="lazygit"
+alias op="opencode"
+
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║                         Theme: TokyoNight                                    ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+
+# Color Palette
+set -l foreground c0caf5
+set -l selection 283457
+set -l comment 565f89
+set -l red f7768e
+set -l orange ff9e64
+set -l yellow e0af68
+set -l green 9ece6a
+set -l purple 9d7cd8
+set -l cyan 7dcfff
+set -l pink bb9af7
+
+# Syntax Highlighting Colors
+set -g fish_color_normal $foreground
+set -g fish_color_command $cyan
+set -g fish_color_keyword $pink
+set -g fish_color_quote $yellow
+set -g fish_color_redirection $foreground
+set -g fish_color_end $orange
+set -g fish_color_option $pink
+set -g fish_color_error $red
+set -g fish_color_param $purple
+set -g fish_color_comment $comment
+set -g fish_color_selection --background=$selection
+set -g fish_color_search_match --background=$selection
+set -g fish_color_operator $green
+set -g fish_color_escape $pink
+set -g fish_color_autosuggestion $comment
+
+# Completion Pager Colors
+set -g fish_pager_color_progress $comment
+set -g fish_pager_color_prefix $cyan
+set -g fish_pager_color_completion $foreground
+set -g fish_pager_color_description $yellow
+set -g fish_pager_color_selected_background --background=$selection
+
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║                      Environment Variables (Cross-platform)                  ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+
+# Set the EDITOR, VISUAL, and SUDO_EDITOR environment variable
+set -gx EDITOR nvim
+set -gx VISUAL cursor
+set -gx SUDO_EDITOR nvim
+
+# Set terminal
+set -gx TERMINAL ghostty
+
+# ╔══════════════════════════════════════════════════════════════════════════════╗
+# ║                            OS-Specific Configurations                        ║
+# ╚══════════════════════════════════════════════════════════════════════════════╝
+
+{{ if eq .chezmoi.os "linux" -}}
+# Add local user binaries (e.g., Claude Code) to PATH
+fish_add_path ~/.local/bin
+# Add npm global bin to PATH since using sudo to install global packages is highly discouraged
+fish_add_path ~/.npm-global/bin
+# Add Bun install location to PATH
+fish_add_path ~/.bun/bin
+
+# SSH Agent environment
+if test -z "$SSH_AUTH_SOCK"
+    set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
+end
+
+{{ else if eq .chezmoi.os "darwin" -}}
+{{ end -}}

@@ -1,0 +1,81 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/usr/bin/env fish
+
+{{ template "scripts/lib.fish" . }}
+
+# `run_onchange_` means Chezmoi reruns this script when its rendered contents
+# change. Editing packages.yaml changes the rendered package arrays below.
+tn_section 'Packages · CachyOS'
+
+if not command --query pacman
+    tn_error 'pacman was not found; this Linux package setup supports CachyOS/Arch systems only.'
+    exit 1
+end
+
+# Chezmoi renders the YAML lists into Fish arrays before executing this script.
+set --local pacman_packages{{ range .packages.linux.pacman }} {{ . | quote }}{{ end }}
+set --local aur_packages{{ range .packages.linux.aur }} {{ . | quote }}{{ end }}
+set --local missing_pacman
+set --local missing_aur
+
+# Query first so Pacman receives only packages that are currently missing.
+# `--needed` provides a second idempotency check without upgrading the system.
+
+for package in $pacman_packages
+    if not pacman --query $package >/dev/null 2>&1
+        set --append missing_pacman $package
+    end
+end
+
+if test (count $missing_pacman) -gt 0
+    tn_info 'Installing missing official repository packages:'
+    tn_detail (string join ', ' -- $missing_pacman)
+    tn_warn 'Pacman remains interactive so you can review package decisions.'
+    tn_command sudo pacman -S --needed $missing_pacman
+
+    sudo pacman -S --needed $missing_pacman
+    or begin
+        tn_error 'Pacman package installation failed.'
+        exit 1
+    end
+else
+    tn_success 'All declared Pacman packages are installed.'
+end
+
+# AUR packages are recorded in Pacman's local database too, so the same query
+# works regardless of whether Paru or Yay originally installed the package.
+for package in $aur_packages
+    if not pacman --query $package >/dev/null 2>&1
+        set --append missing_aur $package
+    end
+end
+
+if test (count $missing_aur) -gt 0
+    # CachyOS installs Paru by default. Fall back to Yay for Arch-based systems
+    # where the user has chosen Yay instead; neither helper is installed here.
+    set --local aur_helper
+    if command --query paru
+        set aur_helper paru
+    else if command --query yay
+        set aur_helper yay
+    else
+        tn_error 'AUR packages are missing, but neither paru nor yay is installed.'
+        exit 1
+    end
+
+    tn_info "Using $aur_helper to install missing AUR packages:"
+    tn_detail (string join ', ' -- $missing_aur)
+    tn_warn 'Paru remains interactive so you can inspect PKGBUILDs and package decisions.'
+    tn_command $aur_helper -S --needed $missing_aur
+
+    $aur_helper -S --needed $missing_aur
+    or begin
+        tn_error 'AUR package installation failed.'
+        exit 1
+    end
+else
+    tn_success 'All declared AUR packages are installed.'
+end
+
+tn_success 'CachyOS package reconciliation finished.'
+{{ end -}}

@@ -1,27 +1,26 @@
-# This file describes the desired packages; the scripts in .chezmoiscripts
-# decide how to install them on each operating system.
+# Keep platform names explicit because package names and availability differ.
 packages:
   linux:
-    # Packages from the official CachyOS/Arch repositories.
+    # Prefer official repositories when possible.
     pacman:
       - fish
       - keyd
       - tailscale
+      - zsh
 
-    # Packages from the Arch User Repository. The installer prefers paru and
-    # falls back to yay when paru is unavailable.
+    # Paru is preferred on CachyOS; Yay is supported as a fallback.
     aur:
       - helium-browser-bin
 
   darwin:
-    # Third-party Homebrew repositories required by formulae or casks.
+    # Add taps only when a package is unavailable in Homebrew core.
     taps: []
 
-    # Command-line packages installed with `brew install`.
+    # CLI packages.
     brews:
       - fish
 
-    # macOS applications installed with `brew install --cask`.
+    # GUI applications.
     casks:
       - helium-browser
       - tailscale-app

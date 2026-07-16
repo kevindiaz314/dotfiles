@@ -1,5 +1,4 @@
-# Shared output helpers are kept in a Chezmoi template so each generated
-# script is self-contained when Chezmoi executes it from a temporary file.
+# Inline these helpers because Chezmoi runs rendered scripts from temporary files.
 
 # Tokyo Night palette. Fish's set_color accepts RGB values without a leading #.
 set --global tn_foreground c0caf5
@@ -8,8 +7,7 @@ set --global tn_cyan 7dcfff
 set --global tn_green 9ece6a
 set --global tn_yellow e0af68
 set --global tn_red f7768e
-set --global tn_magenta bb9af7
-set --global tn_comment 565f89
+set --global tn_muted 737aa2
 
 # Avoid ANSI escape sequences in redirected logs and honor the NO_COLOR
 # convention: https://no-color.org/
@@ -30,8 +28,7 @@ function tn_reset
     end
 end
 
-# The tn_* functions give every provisioning script consistent, recognizable
-# output while leaving the package managers' own output visible.
+# Keep package-manager output visible between recognizable status messages.
 function tn_rule
     set --local rule (string repeat --count 68 '━')
     printf '%s%s%s\n' (tn_paint $tn_blue) $rule (tn_reset)
@@ -62,15 +59,10 @@ function tn_error
 end
 
 function tn_detail
-    printf '%s  %s%s\n' (tn_paint $tn_comment) (string join ' ' -- $argv) (tn_reset)
+    printf '%s  %s%s\n' (tn_paint --bold $tn_muted) (string join ' ' -- $argv) (tn_reset)
 end
 
-function tn_command
-    printf '%s$%s %s\n' (tn_paint $tn_magenta) (tn_reset) (string join ' ' -- (string escape -- $argv))
-end
-
-# Homebrew is installed in different prefixes on Apple Silicon and Intel Macs.
-# Return its executable path without relying on interactive shell startup files.
+# Avoid relying on shell startup files because Homebrew uses two common prefixes.
 function tn_find_brew
     if command --query brew
         command --search brew

@@ -3,18 +3,16 @@
 
 {{ template "scripts/lib.fish" . }}
 
-# `run_onchange_` means Chezmoi reruns this script when its rendered contents
-# change. Editing packages.yaml changes the rendered arrays below.
+# Rendering package data here makes list changes invalidate Chezmoi's script hash.
 tn_section 'Packages · Homebrew'
 
-# Do not depend on Fish startup configuration: Homebrew may not yet be in PATH.
+# Homebrew may not yet be in PATH when Chezmoi runs.
 set --local brew (tn_find_brew)
 if test $status -ne 0
-    tn_error 'Homebrew was not found after the bootstrap step.'
+    tn_error 'Homebrew is required but could not be found.'
     exit 1
 end
 
-# Chezmoi renders the YAML lists into Fish arrays before execution.
 set --local taps{{ range .packages.darwin.taps }} {{ . | quote }}{{ end }}
 set --local formulae{{ range .packages.darwin.brews }} {{ . | quote }}{{ end }}
 set --local casks{{ range .packages.darwin.casks }} {{ . | quote }}{{ end }}
@@ -22,12 +20,10 @@ set --local installed_taps ($brew tap)
 set --local missing_formulae
 set --local missing_casks
 
-# Homebrew uses separate commands and inventories for taps, formulae, and
-# casks, so reconcile each category independently.
+# Homebrew tracks taps, formulae, and casks separately.
 for tap in $taps
     if not contains -- $tap $installed_taps
         tn_info "Adding Homebrew tap $tap."
-        tn_command $brew tap $tap
         $brew tap $tap
         or begin
             tn_error "Failed to add Homebrew tap $tap."
@@ -45,7 +41,6 @@ end
 if test (count $missing_formulae) -gt 0
     tn_info 'Installing missing Homebrew formulae:'
     tn_detail (string join ', ' -- $missing_formulae)
-    tn_command $brew install $missing_formulae
     $brew install $missing_formulae
     or begin
         tn_error 'Homebrew formula installation failed.'
@@ -64,7 +59,6 @@ end
 if test (count $missing_casks) -gt 0
     tn_info 'Installing missing Homebrew casks:'
     tn_detail (string join ', ' -- $missing_casks)
-    tn_command $brew install --cask $missing_casks
     $brew install --cask $missing_casks
     or begin
         tn_error 'Homebrew cask installation failed.'

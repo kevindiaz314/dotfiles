@@ -10,8 +10,6 @@ packages:
       - nodejs
       - npm
       - bun
-      # opencode is in the official extra repo; prefer it over npm.
-      - opencode
 
     # Paru comes pre-installed on CachyOS; Yay is supported as a fallback.
     aur:
@@ -26,7 +24,6 @@ packages:
       - fish
       - node
       - bun
-      - opencode
 
     # GUI applications.
     casks:
@@ -59,8 +56,9 @@ packages:
     - name: omp
       method: bun
       package: "@oh-my-pi/pi-coding-agent"
+      completions: omp completions fish
 
-    # Grok Build ships no npm package; the vendor installer is the only option.
-    - name: grok
-      method: curl
-      url: "https://x.ai/cli/install.sh"
+    # Ships a native binary, so npm vs bun makes no runtime difference here.
+    - name: opencode
+      method: npm
+      package: "opencode-ai"

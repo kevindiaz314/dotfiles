@@ -111,22 +111,28 @@ set -gx SUDO_EDITOR nvim
 # Set terminal
 set -gx TERMINAL ghostty
 
+# User-level binaries: ~/.local/bin doubles as the npm prefix bin
+# (prefix=~/.local, kept sudo-free); bun installs to ~/.bun/bin
+fish_add_path ~/.local/bin
+fish_add_path ~/.bun/bin
+
 # ╔══════════════════════════════════════════════════════════════════════════════╗
 # ║                            OS-Specific Configurations                        ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 
 {{ if eq .chezmoi.os "linux" -}}
-# Add local user binaries (e.g., Claude Code) to PATH
-fish_add_path ~/.local/bin
-# Add npm global bin to PATH since using sudo to install global packages is highly discouraged
-fish_add_path ~/.npm-global/bin
-# Add Bun install location to PATH
-fish_add_path ~/.bun/bin
-
 # SSH Agent environment
 if test -z "$SSH_AUTH_SOCK"
     set -gx SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent.socket"
 end
 
 {{ else if eq .chezmoi.os "darwin" -}}
+# Put Homebrew on PATH (Apple Silicon and Intel prefixes)
+for brew_bin in /opt/homebrew/bin/brew /usr/local/bin/brew
+    if test -x $brew_bin
+        eval ($brew_bin shellenv)
+        break
+    end
+end
+
 {{ end -}}

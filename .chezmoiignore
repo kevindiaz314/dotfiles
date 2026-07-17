@@ -16,6 +16,3 @@
 # Common ignores
 LICENSE
 desktop.png
-
-# Deployed to /etc/keyd by a run_onchange script, never into $HOME
-keyd

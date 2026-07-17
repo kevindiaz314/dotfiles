@@ -5,10 +5,10 @@
 
 # Chezmoi only manages $HOME, so /etc/keyd/default.conf is deployed here from
 # the repo copy. Embedding its hash re-triggers this script when it changes.
-# keyd config hash: {{ include "keyd/default.conf" | sha256sum }}
+# keyd config hash: {{ include ".chezmoitemplates/keyd/default.conf" | sha256sum }}
 tn_section 'System · keyd'
 
-set --local source_config {{ joinPath .chezmoi.sourceDir "keyd/default.conf" | quote }}
+set --local source_config {{ joinPath .chezmoi.sourceDir ".chezmoitemplates/keyd/default.conf" | quote }}
 set --local target_config /etc/keyd/default.conf
 
 if not command --query keyd

@@ -1,37 +1,12 @@
+# Private hosts live in ~/.ssh/config.local, which is not tracked by chezmoi
+# and must be copied to new machines manually.
+Include config.local
+
 Host github.com
     AddKeysToAgent yes
     User git
     IdentityFile ~/.ssh/github_key
     IdentitiesOnly yes
-
-Host truenas01
-    Hostname 10.21.30.50
-    User sasuke
-    IdentityFile ~/.ssh/truenas_key
-    KeepAlive yes
-
-Host truenas02
-    Hostname 10.21.30.100
-    User sasuke
-    IdentityFile ~/.ssh/truenas_key
-    KeepAlive yes
-
-Host itachi
-    Hostname 10.69.1.60
-    User sasuke
-    IdentityFile ~/.ssh/itachi_key
-    KeepAlive yes
-
-Host proxmox
-    Hostname 10.21.30.200
-    User root
-    IdentityFile ~/.ssh/proxmox_key
-    KeepAlive yes
-
-Host pangolin
-    Hostname pangolin
-    User ubuntu
-    IdentityFile ~/.ssh/pangolin_key
 
 Host aur.archlinux.org
     User kevindiaz314

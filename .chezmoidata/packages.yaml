@@ -36,12 +36,11 @@ packages:
   #   method: npm | bun | curl
   #   completions: optional command whose stdout is written to
   #                ~/.config/fish/completions/<name>.fish
-  # Vendor-native curl installers, if preferred over npm (self-updating):
-  #   claude: https://claude.ai/install.sh
   coding_agents:
+    # The vendor installer ships a self-updating standalone binary.
     - name: claude
-      method: npm
-      package: "@anthropic-ai/claude-code"
+      method: curl
+      url: "https://claude.ai/install.sh"
 
     - name: codex
       method: npm
@@ -58,7 +57,6 @@ packages:
       package: "@oh-my-pi/pi-coding-agent"
       completions: omp completions fish
 
-    # Ships a native binary, so npm vs bun makes no runtime difference here.
     - name: opencode
-      method: npm
+      method: bun
       package: "opencode-ai"

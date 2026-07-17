@@ -3,14 +3,11 @@
 // ▐▌  ▐▌▐▌ ▐▌▐▌ ▝▜▌  █    █ ▐▌ ▐▌▐▛▀▚▖ ▝▀▚▖
 // ▐▌  ▐▌▝▚▄▞▘▐▌  ▐▌▗▄█▄▖  █ ▝▚▄▞▘▐▌ ▐▌▗▄▄▞▘
 
-output "eDP-1" {
-  // You can use integer or fractional scale, for example use 1.5 for 150% scale
-  scale 1.7
-  position x=2560 y=132
-}
+// Run `niri msg outputs` to list connected outputs and their modes.
+// External outputs are left unconfigured so niri picks their mode,
+// scale and position automatically.
 
-// Focus this output by default when niri starts
-output "Samsung Electric Company S27C900P H1AK500000" {
-  focus-at-startup
-  position x=0 y=0
+// Built-in laptop display.
+output "eDP-1" {
+  scale 1.67
 }

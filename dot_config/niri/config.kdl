@@ -1,54 +1,73 @@
-include "workspaces.kdl"
+// This config is in the KDL format: https://kdl.dev
+// "/-" comments out the following node.
+// https://niri-wm.github.io/niri/Configuration:-Introduction
+
 include "autostart.kdl"
 include "input.kdl"
 include "monitors.kdl"
 include "window-rules.kdl"
 include "keybinds.kdl"
 
+// https://niri-wm.github.io/niri/Configuration:-Layout
 layout {
-  // Set gaps around windows in logical pixels
-  gaps 8
+  // Gaps around windows in logical pixels.
+  gaps 10
 
-  focus-ring {
-    // How many logical pixels the ring extends out from the windows
-    width 2
-    active-gradient from="#7aa2f7ee" to="#f7768eff" angle=45
-    inactive-gradient from="#32344aff" to="#565f89ff" angle=45 relative-to="workspace-view"
+  // Center a focused column when it doesn't fit together with the
+  // previously focused one.
+  center-focused-column "on-overflow"
+  always-center-single-column
+
+  // Widths that switch-preset-column-width (Mod+R) toggles between,
+  // as fractions of the output width.
+  preset-column-widths {
+    proportion 0.33333
+    proportion 0.5
+    proportion 0.66667
   }
 
-  // You can enable drop shadows for windows
+  // Default width of new windows.
+  default-column-width { proportion 0.5; }
+
+  focus-ring {
+    // How many logical pixels the ring extends out from the windows.
+    width 3
+    active-gradient from="#80c8ff" to="#c7ff7f" angle=45
+    // The focus ring only draws around the active window, so
+    // inactive-gradient is only visible on other monitors.
+    inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
+  }
+
+  // Always-visible border; disabled in favor of the focus ring.
+  border {
+    off
+
+    width 3
+    active-color "#ffc87f"
+    inactive-color "#505050"
+    urgent-color "#9b0000"
+  }
+
+  // Uncomment `on` to enable drop shadows.
+  // Values are in logical pixels and match the CSS box-shadow properties.
   shadow {
-    on
-    draw-behind-window true
+    // on
+
     softness 30
-    spread 10
+    spread 5
     offset x=0 y=5
     color "#0007"
   }
-
-  // Set the default column width of new windows
-  default-column-width { proportion 0.7; }
-
-  // Center a single column on a workspace
-  always-center-single-column
 }
 
 hotkey-overlay {
+  // Disable the "Important Hotkeys" pop-up at startup.
   skip-at-startup
 }
 
+// Ask clients to omit their client-side decorations. Also informs clients
+// that they are tiled, removing some client-side rounded corners.
 prefer-no-csd
 
+// The path is formatted with strftime(3).
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
-
-animations {
-  slowdown 0.5
-}
-
-// These are the default values:
-// blur {
-//     passes 10
-//     offset 5
-//     noise 0.02
-//     saturation 5
-// }

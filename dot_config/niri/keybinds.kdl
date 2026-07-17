@@ -3,131 +3,176 @@
 // ▐▛▚▖ ▐▛▀▀▘  ▐▌  ▐▛▀▚▖  █  ▐▌ ▝▜▌▐▌  █ ▝▀▚▖
 // ▐▌ ▐▌▐▙▄▄▖  ▐▌  ▐▙▄▞▘▗▄█▄▖▐▌  ▐▌▐▙▄▄▀▗▄▄▞▘
 
+// Keys are modifiers separated by + signs followed by an XKB key name;
+// find key names with a program like wev.
+// Most actions can also be invoked with `niri msg action do-something`.
 binds {
-  Mod+C { spawn-sh "cursor"; }
-  Mod+E { spawn-sh "nautilus"; }
-  Mod+G { spawn-sh "ghostty +new-window"; }
-  Mod+Q repeat=false { close-window; }
-  Mod+Return { spawn-sh "warp-terminal"; }
-  Mod+Space { spawn-sh "vicinae toggle"; }
-  Mod+S { spawn-sh "env -u DISPLAY spotify"; }
-  Mod+T { spawn-sh "todoist"; }
-  Mod+V { spawn-sh "code"; }
-  Mod+W { spawn-sh "helium-browser"; }
+  // Mod-Shift-/ (usually the same as Mod-?) shows a list of important hotkeys.
+  Mod+Shift+Slash { show-hotkey-overlay; }
 
   // ╔══════════════════════════════════════════════════════════════════════════════╗
-  // ║                             Noctalia Bindings                                ║
+  // ║                            Application Launchers                             ║
   // ╚══════════════════════════════════════════════════════════════════════════════╝
-  Mod+X { spawn-sh "noctalia msg panel-toggle session"; }
-  Mod+Comma { spawn-sh "noctalia msg settings-toggle"; }
+  Mod+Return hotkey-overlay-title="Open a Terminal: ghostty" { spawn "ghostty" "+new-window"; }
+  Mod+Comma hotkey-overlay-title="Open Noctalia Settings" { spawn-sh "noctalia msg settings-toggle"; }
+  Mod+X hotkey-overlay-title="Open Noctalia Session Manager" { spawn-sh "noctalia msg panel-toggle session"; }
+  Mod+E hotkey-overlay-title="Open the File Manager: dolphin" { spawn "dolphin"; }
+  Mod+C hotkey-overlay-title="Open the IDE: cursor" { spawn "cursor"; }
+  Mod+W hotkey-overlay-title="Open the Web Browser: helium" { spawn "helium-browser"; }
+  Mod+Space hotkey-overlay-title="Run an Application: vicinae" { spawn "vicinae" "toggle"; }
+  Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
+  Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
 
-  XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05+"; }
-  XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05-"; }
-  Mod+TouchpadScrollDown { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.02+"; }
-  Mod+TouchpadScrollUp   { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.02-"; }
+  // Toggle the screen reader.
+  Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
+
+  // ╔══════════════════════════════════════════════════════════════════════════════╗
+  // ║                             Media and Hardware                               ║
+  // ╚══════════════════════════════════════════════════════════════════════════════╝
+  // allow-when-locked=true makes these work even when the session is locked.
+  XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0"; }
+  XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
   XF86AudioMute        allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
   XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
-  XF86AudioNext allow-when-locked=true { spawn-sh "playerctl next"; }
-  XF86AudioPrev allow-when-locked=true { spawn-sh "playerctl previous"; }
-  XF86AudioPlay allow-when-locked=true { spawn-sh "playerctl play-pause"; }
+
+  XF86AudioPlay        allow-when-locked=true { spawn-sh "playerctl play-pause"; }
+  XF86AudioPause       allow-when-locked=true { spawn-sh "playerctl play-pause"; }
+  XF86AudioStop        allow-when-locked=true { spawn-sh "playerctl stop"; }
+  XF86AudioPrev        allow-when-locked=true { spawn-sh "playerctl previous"; }
+  XF86AudioNext        allow-when-locked=true { spawn-sh "playerctl next"; }
 
   XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
   XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
 
   // ╔══════════════════════════════════════════════════════════════════════════════╗
-  // ║                              Focus Movement                                  ║
+  // ║                          Focus and Window Movement                           ║
   // ╚══════════════════════════════════════════════════════════════════════════════╝
+  // Open/close the Overview: a zoomed-out view of workspaces and windows.
+  Mod+O repeat=false { toggle-overview; }
 
-  // Vim-style navigation: focus columns/windows and cross monitor boundaries
-  Mod+H     { focus-column-or-monitor-left; }
-  Mod+J     { focus-window-or-workspace-down; }
-  Mod+K     { focus-window-or-workspace-up; }
-  Mod+L     { focus-column-or-monitor-right; }
+  Mod+Q repeat=false { close-window; }
 
-  // Move columns within the current workspace
+  Mod+H     { focus-column-left; }
+  Mod+J     { focus-window-down; }
+  Mod+K     { focus-window-up; }
+  Mod+L     { focus-column-right; }
+
   Mod+Ctrl+H     { move-column-left; }
+  Mod+Ctrl+J     { move-window-down; }
+  Mod+Ctrl+K     { move-window-up; }
   Mod+Ctrl+L     { move-column-right; }
 
-  // Switch focus between monitors
+  Mod+Home { focus-column-first; }
+  Mod+End  { focus-column-last; }
+  Mod+Ctrl+Home { move-column-to-first; }
+  Mod+Ctrl+End  { move-column-to-last; }
+
   Mod+Shift+H     { focus-monitor-left; }
+  Mod+Shift+J     { focus-monitor-down; }
+  Mod+Shift+K     { focus-monitor-up; }
   Mod+Shift+L     { focus-monitor-right; }
 
-  // Move workspaces between monitors
-  Mod+Shift+Ctrl+H  { move-workspace-to-monitor-left; }
-  Mod+Shift+Ctrl+L  { move-workspace-to-monitor-right; }
+  Mod+Shift+Ctrl+H     { move-column-to-monitor-left; }
+  Mod+Shift+Ctrl+J     { move-column-to-monitor-down; }
+  Mod+Shift+Ctrl+K     { move-column-to-monitor-up; }
+  Mod+Shift+Ctrl+L     { move-column-to-monitor-right; }
 
-  // Move columns between monitors
-  Mod+Shift+Ctrl+Left  { move-column-to-monitor-left; }
-  Mod+Shift+Ctrl+Right { move-column-to-monitor-right; }
+  Mod+Shift+O  { move-workspace-to-monitor-next; }
 
-  // Navigate and move columns between workspaces using mouse wheel (vertical)
+  Mod+U              { focus-workspace-down; }
+  Mod+I              { focus-workspace-up; }
+  Mod+Ctrl+U         { move-column-to-workspace-down; }
+  Mod+Ctrl+I         { move-column-to-workspace-up; }
+
+  Mod+Shift+Page_Down { move-workspace-down; }
+  Mod+Shift+Page_Up   { move-workspace-up; }
+  Mod+Shift+U         { move-workspace-down; }
+  Mod+Shift+I         { move-workspace-up; }
+
+  // Wheel binds change direction based on the natural-scroll setting;
+  // cooldown-ms rate-limits them to avoid flying through workspaces.
   Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
   Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
   Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
   Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
 
-  // Navigate and move columns between columns using mouse wheel (horizontal)
-  Mod+WheelScrollRight      { focus-column-or-monitor-right; }
-  Mod+WheelScrollLeft       { focus-column-or-monitor-left; }
+  Mod+WheelScrollRight      { focus-column-right; }
+  Mod+WheelScrollLeft       { focus-column-left; }
   Mod+Ctrl+WheelScrollRight { move-column-right; }
   Mod+Ctrl+WheelScrollLeft  { move-column-left; }
 
-  // Focus named workspaces by number
-  Mod+1 { focus-workspace "browser"; }
-  Mod+2 { focus-workspace "terminal"; }
-  Mod+3 { focus-workspace "code"; }
-  Mod+4 { focus-workspace "chat"; }
-  Mod+5 { focus-workspace "spotify"; }
+  // Scrolling with Shift usually means horizontal scrolling in applications;
+  // these binds replicate that.
+  Mod+Shift+WheelScrollDown      { focus-column-right; }
+  Mod+Shift+WheelScrollUp        { focus-column-left; }
+  Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
+  Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
 
-  // Move column to named workspaces
-  Mod+Shift+1 { move-column-to-workspace "browser"; }
-  Mod+Shift+2 { move-column-to-workspace "terminal"; }
-  Mod+Shift+3 { move-column-to-workspace "code"; }
-  Mod+Shift+4 { move-column-to-workspace "chat"; }
-  Mod+Shift+5 { move-column-to-workspace "spotify"; }
+  // Workspaces are dynamic: an index beyond the current workspace count
+  // refers to the bottommost (empty) workspace.
+  Mod+1 { focus-workspace 1; }
+  Mod+2 { focus-workspace 2; }
+  Mod+3 { focus-workspace 3; }
+  Mod+4 { focus-workspace 4; }
+  Mod+5 { focus-workspace 5; }
+  Mod+6 { focus-workspace 6; }
+  Mod+7 { focus-workspace 7; }
+  Mod+8 { focus-workspace 8; }
+  Mod+9 { focus-workspace 9; }
+  Mod+Ctrl+1 { move-column-to-workspace 1; }
+  Mod+Ctrl+2 { move-column-to-workspace 2; }
+  Mod+Ctrl+3 { move-column-to-workspace 3; }
+  Mod+Ctrl+4 { move-column-to-workspace 4; }
+  Mod+Ctrl+5 { move-column-to-workspace 5; }
+  Mod+Ctrl+6 { move-column-to-workspace 6; }
+  Mod+Ctrl+7 { move-column-to-workspace 7; }
+  Mod+Ctrl+8 { move-column-to-workspace 8; }
+  Mod+Ctrl+9 { move-column-to-workspace 9; }
 
-  // Switches focus between the current and the previous workspace
+  // Switch focus between the current and the previous workspace.
   Mod+Tab { focus-workspace-previous; }
 
-  // Cycle through preset column widths
+  // Consume the window into the nearby column, or expel it out of its column.
+  Mod+BracketLeft  { consume-or-expel-window-left; }
+  Mod+BracketRight { consume-or-expel-window-right; }
+
+  // ╔══════════════════════════════════════════════════════════════════════════════╗
+  // ║                              Column Sizing                                   ║
+  // ╚══════════════════════════════════════════════════════════════════════════════╝
   Mod+R { switch-preset-column-width; }
+  Mod+Shift+R { switch-preset-column-width-back; }
+  Mod+Ctrl+Shift+R { switch-preset-window-height; }
+  Mod+Ctrl+R { reset-window-height; }
 
-  // Maximize the current column
   Mod+F { maximize-column; }
-
-  // Fullscreen the current window
   Mod+Shift+F { fullscreen-window; }
 
-  // Toggle floating state of the current window
-  Mod+Shift+V { toggle-window-floating; }
+  // Expands the window to the screen edges, like normal window maximizing;
+  // maximize-column leaves gaps and borders around the window.
+  Mod+M { maximize-window-to-edges; }
 
-  // Finer width adjustments
-  Mod+Minus { set-column-width "-10%"; }
-  Mod+Equal { set-column-width "+10%"; }
+  // Expand the focused column to space not taken up by other fully visible columns.
+  Mod+Ctrl+F { expand-column-to-available-width; }
 
-  // Finer height adjustments when in column with other windows
-  Mod+Shift+Minus { set-window-height "-10%"; }
-  Mod+Shift+Equal { set-window-height "+10%"; }
+  // Mod+W launches the web browser above; tabbed display moved off its default bind.
+  // Mod+W { toggle-column-tabbed-display; }
 
-  // Screenshot keybindings
+  // ╔══════════════════════════════════════════════════════════════════════════════╗
+  // ║                            Screenshots and Session                           ║
+  // ╚══════════════════════════════════════════════════════════════════════════════╝
   Print { screenshot; }
   Ctrl+Print { screenshot-screen; }
   Alt+Print { screenshot-window; }
 
-  // Applications such as remote-desktop clients and software KVM switches may
-  // request that niri stops processing the keyboard shortcuts defined here
-  // so they may, for example, forward the key presses as-is to a remote machine
-  // It's a good idea to bind an escape hatch to toggle the inhibitor,
-  // so a buggy application can't hold your session hostage
-  //
-  // The allow-inhibiting=false property can be applied to other binds as well,
-  // which ensures niri always processes them, even when an inhibitor is active
+  // Escape hatch for keyboard-shortcut inhibitors (remote-desktop clients,
+  // software KVM switches), so a buggy application can't hold the session
+  // hostage. allow-inhibiting=false means niri always processes this bind.
   Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
 
-  // The quit action will show a confirmation dialog to avoid accidental exits
+  // The quit action shows a confirmation dialog to avoid accidental exits.
   Mod+Shift+E { quit; }
+  Ctrl+Alt+Delete { quit; }
 
-  // Powers off the monitors. To turn them back on, do any input like
-  // moving the mouse or pressing any other key
+  // Powers off the monitors; any input turns them back on.
   Mod+Shift+P { power-off-monitors; }
 }

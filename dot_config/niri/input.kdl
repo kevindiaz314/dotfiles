@@ -3,9 +3,17 @@
 //   █  ▐▌ ▝▜▌▐▛▀▘ ▐▌ ▐▌  █
 // ▗▄█▄▖▐▌  ▐▌▐▌   ▝▚▄▞▘  █
 
+// https://niri-wm.github.io/niri/Configuration:-Input
 input {
   keyboard {
-    // Key delay in millisecond and repeat rate in characters per second
+    // An empty xkb section makes niri fetch settings from
+    // org.freedesktop.locale1 (controlled with localectl).
+    xkb {
+    }
+
+    // Enable numlock on startup; omitting this setting disables it.
+    numlock
+
     repeat-delay 200
     repeat-rate 55
   }
@@ -13,17 +21,13 @@ input {
   touchpad {
     tap
     natural-scroll
-    accel-speed 0.5
+    accel-speed 0.6
   }
 
   mouse {
-    accel-speed 1.0
+    accel-speed 0.6
   }
 
-  warp-mouse-to-focus mode="center-xy-always"
-
-  // Focus windows and outputs automatically when moving the mouse into them
-  // Setting max-scroll-amount="0%" makes it work only on windows already fully on screen
-  focus-follows-mouse max-scroll-amount="0%"
+  // Focus windows and outputs automatically when moving the mouse into them.
+  focus-follows-mouse
 }
-

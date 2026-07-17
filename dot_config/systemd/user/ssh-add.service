@@ -2,12 +2,12 @@
 Description=Add SSH signing key to agent
 After=ssh-agent.service
 Requires=ssh-agent.service
-ConditionPathExists=/home/{{ .chezmoi.username }}/.ssh/github_key
+ConditionPathExists=%h/.ssh/github_key
 
 [Service]
 Type=oneshot
 Environment="SSH_AUTH_SOCK=%t/ssh-agent.socket"
-ExecStart=/usr/bin/ssh-add /home/{{ .chezmoi.username }}/.ssh/github_key
+ExecStart=/usr/bin/ssh-add %h/.ssh/github_key
 
 [Install]
 WantedBy=default.target

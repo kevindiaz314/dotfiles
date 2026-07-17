@@ -1,0 +1,24 @@
+#!/usr/bin/env fish
+
+{{ template "scripts/lib.fish" . }}
+
+# chezmoi init clones over HTTPS, but pushing uses SSH keys. This runs on
+# every apply and rewrites the origin remote once a GitHub HTTPS URL appears;
+# it stays silent when there is no remote or the remote already uses SSH.
+
+set --local source_dir {{ .chezmoi.sourceDir | quote }}
+
+set --local url (git -C $source_dir remote get-url origin 2>/dev/null)
+or exit 0
+
+if string match --quiet 'https://github.com/*' $url
+    set --local ssh_url (string replace 'https://github.com/' 'git@github.com:' $url)
+    tn_section 'Git · chezmoi remote'
+    tn_info "Switching origin from HTTPS to SSH."
+    git -C $source_dir remote set-url origin $ssh_url
+    or begin
+        tn_error 'Failed to switch the origin remote.'
+        exit 1
+    end
+    tn_success "origin is now $ssh_url"
+end

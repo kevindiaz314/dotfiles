@@ -1,0 +1,49 @@
+#!/usr/bin/env fish
+
+{{ template "scripts/lib.fish" . }}
+
+# MonoLisa is licensed, so it syncs via Nextcloud instead of living in this
+# repo. Nextcloud is only set up after the first apply, so this runs on every
+# apply, retries until the fonts appear, and stays silent once they are
+# installed.
+
+set --local source_dir $HOME/Nextcloud/Documents/MonoLisa
+{{ if eq .chezmoi.os "darwin" -}}
+set --local target_dir $HOME/Library/Fonts
+{{ else -}}
+set --local target_dir $HOME/.local/share/fonts
+{{ end -}}
+
+set --local source_fonts $source_dir/*.ttf
+if test (count $source_fonts) -eq 0
+    tn_warn "MonoLisa fonts not found in $source_dir."
+    tn_warn 'Set up the Nextcloud client, let it sync, then rerun: chezmoi apply'
+    exit 0
+end
+
+set --local copied 0
+mkdir -p $target_dir
+for font in $source_fonts
+    set --local target $target_dir/(path basename $font)
+    if not cmp --silent $font $target
+        cp $font $target
+        or begin
+            tn_error "Failed to copy $font."
+            exit 1
+        end
+        set copied (math $copied + 1)
+    end
+end
+
+if test $copied -eq 0
+    exit 0
+end
+
+tn_section 'Fonts · MonoLisa'
+tn_success "Installed $copied MonoLisa font file(s) to $target_dir."
+{{ if eq .chezmoi.os "linux" -}}
+if command --query fc-cache
+    fc-cache --force $target_dir >/dev/null
+    tn_info 'Font cache refreshed.'
+end
+{{ end -}}

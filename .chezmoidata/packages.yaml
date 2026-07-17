@@ -6,6 +6,12 @@ packages:
       - keyd
       - tailscale
       - noctalia
+      # Runtimes required by the coding-agent script (npm and bun methods).
+      - nodejs
+      - npm
+      - bun
+      # opencode is in the official extra repo; prefer it over npm.
+      - opencode
 
     # Paru comes pre-installed on CachyOS; Yay is supported as a fallback.
     aur:
@@ -18,8 +24,43 @@ packages:
     # CLI packages.
     brews:
       - fish
+      - node
+      - bun
+      - opencode
 
     # GUI applications.
     casks:
       - helium-browser
       - tailscale-app
+
+  # Installed by run_onchange_after_50-install-coding-agents. Agents already
+  # on PATH are never touched, so switching an agent's method only affects
+  # fresh machines.
+  #   method: npm | bun | curl
+  #   completions: optional command whose stdout is written to
+  #                ~/.config/fish/completions/<name>.fish
+  # Vendor-native curl installers, if preferred over npm (self-updating):
+  #   claude: https://claude.ai/install.sh
+  coding_agents:
+    - name: claude
+      method: npm
+      package: "@anthropic-ai/claude-code"
+
+    - name: codex
+      method: npm
+      package: "@openai/codex"
+      completions: codex completion fish
+
+    - name: pi
+      method: npm
+      package: "@earendil-works/pi-coding-agent"
+
+    # Upstream supports the Bun runtime only (bun >= 1.3.14).
+    - name: omp
+      method: bun
+      package: "@oh-my-pi/pi-coding-agent"
+
+    # Grok Build ships no npm package; the vendor installer is the only option.
+    - name: grok
+      method: curl
+      url: "https://x.ai/cli/install.sh"

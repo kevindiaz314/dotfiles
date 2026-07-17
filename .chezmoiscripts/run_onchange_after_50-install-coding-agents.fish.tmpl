@@ -1,0 +1,89 @@
+#!/usr/bin/env fish
+
+{{ template "scripts/lib.fish" . }}
+
+# Rendering agent data here makes list changes invalidate Chezmoi's script hash.
+tn_section 'Tools · Coding agents'
+
+# Global npm packages live under the npm prefix; keep it inside $HOME so
+# installs and self-updates never need sudo. ~/.local/bin is already in PATH.
+if command --query npm
+    set --local npm_prefix (npm config get prefix)
+    if not string match --quiet "$HOME/*" $npm_prefix
+        tn_info "Moving the npm prefix to ~/.local (was $npm_prefix)."
+        npm config set prefix $HOME/.local
+    end
+end
+
+function install_agent --argument-names name method package url
+    if command --query $name
+        tn_success "$name is already installed."
+        return 0
+    end
+
+    switch $method
+        case npm
+            if not command --query npm
+                tn_warn "Skipping $name: npm is not installed."
+                return 0
+            end
+            tn_info "Installing $name via npm ($package)."
+            npm install --global $package
+        case bun
+            if not command --query bun
+                tn_warn "Skipping $name: bun is not installed."
+                return 0
+            end
+            tn_info "Installing $name via bun ($package)."
+            bun install --global $package
+        case curl
+            tn_info "Installing $name via its vendor installer ($url)."
+            curl -fsSL $url | bash
+        case '*'
+            tn_error "Unknown install method '$method' for $name."
+            return 1
+    end
+    set --local install_status $status
+
+    if test $install_status -ne 0
+        tn_error "Failed to install $name."
+        return 1
+    end
+    tn_success "$name installed."
+end
+
+# Completions regenerate whenever this script re-runs (agent list or unit
+# edits); fish falls back to man-page completions for everything else.
+function generate_completions --argument-names name
+    set --local command_line $argv[2..]
+    if not command --query $name
+        return 0
+    end
+
+    set --local completions_dir $HOME/.config/fish/completions
+    mkdir -p $completions_dir
+    tn_info "Generating fish completions for $name."
+    eval $command_line >$completions_dir/$name.fish
+    or begin
+        tn_error "Failed to generate completions for $name."
+        return 1
+    end
+end
+
+set --global failures 0
+{{ range .packages.coding_agents -}}
+install_agent {{ .name | quote }} {{ .method | quote }} {{ get . "package" | default "" | quote }} {{ get . "url" | default "" | quote }}
+or set failures (math $failures + 1)
+{{ end -}}
+{{ range .packages.coding_agents -}}
+{{ if hasKey . "completions" -}}
+generate_completions {{ .name | quote }} {{ .completions | quote }}
+or set failures (math $failures + 1)
+{{ end -}}
+{{ end }}
+if test $failures -gt 0
+    tn_error "$failures coding-agent step(s) failed."
+    exit 1
+end
+
+tn_success 'Coding-agent reconciliation finished.'

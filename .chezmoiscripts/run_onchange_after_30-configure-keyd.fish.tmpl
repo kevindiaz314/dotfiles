@@ -1,0 +1,50 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/usr/bin/env fish
+
+{{ template "scripts/lib.fish" . }}
+
+# Chezmoi only manages $HOME, so /etc/keyd/default.conf is deployed here from
+# the repo copy. Embedding its hash re-triggers this script when it changes.
+# keyd config hash: {{ include "keyd/default.conf" | sha256sum }}
+tn_section 'System · keyd'
+
+set --local source_config {{ joinPath .chezmoi.sourceDir "keyd/default.conf" | quote }}
+set --local target_config /etc/keyd/default.conf
+
+if not command --query keyd
+    tn_error 'keyd is not installed; the package script should have installed it.'
+    exit 1
+end
+
+set --local config_changed false
+if cmp --silent $source_config $target_config
+    tn_success "$target_config already matches the repository copy."
+else
+    set config_changed true
+    tn_info "Installing keyd configuration to $target_config (requires sudo)."
+    sudo install -D -m 644 $source_config $target_config
+    or begin
+        tn_error 'Failed to install the keyd configuration.'
+        exit 1
+    end
+end
+
+# is-enabled/is-active work unprivileged, so sudo only runs when needed.
+if not systemctl --quiet is-enabled keyd; or not systemctl --quiet is-active keyd
+    tn_info 'Enabling and starting the keyd service (requires sudo).'
+    sudo systemctl enable --now keyd
+    or begin
+        tn_error 'Failed to enable the keyd service.'
+        exit 1
+    end
+else if $config_changed
+    tn_info 'Reloading keyd (requires sudo).'
+    sudo keyd reload
+    or begin
+        tn_error 'Failed to reload keyd.'
+        exit 1
+    end
+end
+
+tn_success 'keyd is configured and running.'
+{{ end -}}

@@ -1,0 +1,60 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/usr/bin/env fish
+
+{{ template "scripts/lib.fish" . }}
+
+# Re-run when the deployed user unit changes.
+# ssh-add.service hash: {{ include "dot_config/systemd/user/ssh-add.service" | sha256sum }}
+tn_section 'System · Services'
+
+# --- User services ------------------------------------------------------
+
+systemctl --user daemon-reload
+
+# ssh-agent.socket ships with openssh and provides $SSH_AUTH_SOCK on demand;
+# ssh-add.service is deployed by chezmoi and loads the GitHub key at login.
+# No --now for ssh-add: it runs at the next login, once the key file exists.
+if systemctl --user --quiet is-enabled ssh-agent.socket 2>/dev/null
+    tn_success 'ssh-agent.socket is already enabled.'
+else
+    tn_info 'Enabling ssh-agent.socket.'
+    systemctl --user enable --now ssh-agent.socket
+    or begin
+        tn_error 'Failed to enable ssh-agent.socket.'
+        exit 1
+    end
+end
+
+if systemctl --user --quiet is-enabled ssh-add.service 2>/dev/null
+    tn_success 'ssh-add.service is already enabled.'
+else
+    tn_info 'Enabling ssh-add.service.'
+    systemctl --user enable ssh-add.service
+    or begin
+        tn_error 'Failed to enable ssh-add.service.'
+        exit 1
+    end
+end
+
+# --- System services ----------------------------------------------------
+
+if systemctl --quiet is-enabled tailscaled 2>/dev/null
+    tn_success 'tailscaled is already enabled.'
+else
+    tn_info 'Enabling and starting tailscaled (requires sudo).'
+    sudo systemctl enable --now tailscaled
+    or begin
+        tn_error 'Failed to enable tailscaled.'
+        exit 1
+    end
+end
+
+# tailscale up needs interactive browser authentication, so only hint at it.
+if tailscale status >/dev/null 2>&1
+    tn_success 'Tailscale is logged in.'
+else
+    tn_warn 'Tailscale is not logged in yet; run: sudo tailscale up'
+end
+
+tn_success 'Service reconciliation finished.'
+{{ end -}}

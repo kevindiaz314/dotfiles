@@ -1,14 +1,13 @@
 # Keep platform names explicit because package names and availability differ.
 packages:
   linux:
-    # Prefer official repositories when possible.
     pacman:
       - fish
       - keyd
       - tailscale
-      - zsh
+      - noctalia
 
-    # Paru is preferred on CachyOS; Yay is supported as a fallback.
+    # Paru comes pre-installed on CachyOS; Yay is supported as a fallback.
     aur:
       - helium-browser-bin
 

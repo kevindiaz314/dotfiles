@@ -29,37 +29,40 @@ function tn_reset
 end
 
 # Keep package-manager output visible between recognizable status messages.
+# Quote the tn_paint/tn_reset substitutions: when colors are disabled they
+# print nothing, and an unquoted empty command substitution expands to zero
+# printf arguments, shifting the message into the wrong %s slot.
 function tn_rule
     set --local rule (string repeat --count 68 '━')
-    printf '%s%s%s\n' (tn_paint $tn_blue) $rule (tn_reset)
+    printf '%s%s%s\n' "$(tn_paint $tn_blue)" $rule "$(tn_reset)"
 end
 
 function tn_section --argument-names title
     echo
     tn_rule
-    printf '%s  %s%s\n' (tn_paint --bold $tn_cyan) $title (tn_reset)
+    printf '%s  %s%s\n' "$(tn_paint --bold $tn_cyan)" $title "$(tn_reset)"
     tn_rule
     echo
 end
 
 function tn_info
-    printf '%s→%s %s\n' (tn_paint $tn_blue) (tn_reset) (string join ' ' -- $argv)
+    printf '%s→%s %s\n' "$(tn_paint $tn_blue)" "$(tn_reset)" (string join ' ' -- $argv)
 end
 
 function tn_success
-    printf '%s✓%s %s\n' (tn_paint $tn_green) (tn_reset) (string join ' ' -- $argv)
+    printf '%s✓%s %s\n' "$(tn_paint $tn_green)" "$(tn_reset)" (string join ' ' -- $argv)
 end
 
 function tn_warn
-    printf '%s!%s %s\n' (tn_paint $tn_yellow) (tn_reset) (string join ' ' -- $argv)
+    printf '%s!%s %s\n' "$(tn_paint $tn_yellow)" "$(tn_reset)" (string join ' ' -- $argv)
 end
 
 function tn_error
-    printf '%s✗%s %s\n' (tn_paint $tn_red) (tn_reset) (string join ' ' -- $argv) >&2
+    printf '%s✗%s %s\n' "$(tn_paint $tn_red)" "$(tn_reset)" (string join ' ' -- $argv) >&2
 end
 
 function tn_detail
-    printf '%s  %s%s\n' (tn_paint --bold $tn_muted) (string join ' ' -- $argv) (tn_reset)
+    printf '%s  %s%s\n' "$(tn_paint --bold $tn_muted)" (string join ' ' -- $argv) "$(tn_reset)"
 end
 
 # Avoid relying on shell startup files because Homebrew uses two common prefixes.
@@ -70,7 +73,7 @@ function tn_find_brew
     end
 
     for candidate in /opt/homebrew/bin/brew /usr/local/bin/brew
-        if test --executable $candidate
+        if test -x $candidate
             echo $candidate
             return 0
         end

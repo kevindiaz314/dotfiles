@@ -10,12 +10,17 @@ tn_section 'System · Services'
 # --- User services ------------------------------------------------------
 
 systemctl --user daemon-reload
+or begin
+    tn_error 'Failed to reload the systemd user manager.'
+    exit 1
+end
 
 # ssh-agent.socket ships with openssh and provides $SSH_AUTH_SOCK on demand;
 # ssh-add.service is deployed by chezmoi and loads the GitHub key at login.
 # No --now for ssh-add: it runs at the next login, once the key file exists.
 if systemctl --user --quiet is-enabled ssh-agent.socket 2>/dev/null
-    tn_success 'ssh-agent.socket is already enabled.'
+    and systemctl --user --quiet is-active ssh-agent.socket 2>/dev/null
+    tn_success 'ssh-agent.socket is already enabled and listening.'
 else
     tn_info 'Enabling ssh-agent.socket.'
     systemctl --user enable --now ssh-agent.socket
@@ -39,7 +44,8 @@ end
 # --- System services ----------------------------------------------------
 
 if systemctl --quiet is-enabled tailscaled 2>/dev/null
-    tn_success 'tailscaled is already enabled.'
+    and systemctl --quiet is-active tailscaled 2>/dev/null
+    tn_success 'tailscaled is already enabled and running.'
 else
     tn_info 'Enabling and starting tailscaled (requires sudo).'
     sudo systemctl enable --now tailscaled

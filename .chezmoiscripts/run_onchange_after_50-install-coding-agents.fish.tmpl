@@ -12,6 +12,10 @@ if command --query npm
     if not string match --quiet "$HOME/*" $npm_prefix
         tn_info "Moving the npm prefix to ~/.local (was $npm_prefix)."
         npm config set prefix $HOME/.local
+        or begin
+            tn_error 'Failed to set the npm prefix.'
+            exit 1
+        end
     end
 end
 
@@ -24,21 +28,28 @@ function install_agent --argument-names name method package url
     switch $method
         case npm
             if not command --query npm
-                tn_warn "Skipping $name: npm is not installed."
-                return 0
+                tn_error "Cannot install $name: npm is not installed."
+                return 1
             end
             tn_info "Installing $name via npm ($package)."
             npm install --global $package
         case bun
             if not command --query bun
-                tn_warn "Skipping $name: bun is not installed."
-                return 0
+                tn_error "Cannot install $name: bun is not installed."
+                return 1
             end
             tn_info "Installing $name via bun ($package)."
             bun install --global $package
         case curl
             tn_info "Installing $name via its vendor installer ($url)."
-            curl -fsSL $url | bash
+            # Download before executing: piping curl into a shell reports only
+            # the shell's status, so a failed download would look like success.
+            set --local installer (mktemp)
+            curl -fsSL $url -o $installer
+            and bash $installer
+            set --local installer_status $status
+            rm -f $installer
+            test $installer_status -eq 0
         case '*'
             tn_error "Unknown install method '$method' for $name."
             return 1
@@ -63,8 +74,13 @@ function generate_completions --argument-names name
     set --local completions_dir $HOME/.config/fish/completions
     mkdir -p $completions_dir
     tn_info "Generating fish completions for $name."
-    eval $command_line >$completions_dir/$name.fish
+    # Stage in a temporary file so a failing generator cannot truncate a
+    # previously valid completions file.
+    set --local staging (mktemp)
+    eval $command_line >$staging
+    and mv $staging $completions_dir/$name.fish
     or begin
+        rm -f $staging
         tn_error "Failed to generate completions for $name."
         return 1
     end

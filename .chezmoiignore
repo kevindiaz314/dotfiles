@@ -2,7 +2,9 @@
 
 # Ignore Linux-specific files when on macOS
 {{ if eq .chezmoi.os "darwin" }}
+.config/btop
 .config/environment.d
+.config/helium-browser-flags.conf
 .config/hypr
 .config/niri
 .config/systemd

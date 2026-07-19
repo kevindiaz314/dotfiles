@@ -3,14 +3,12 @@
 # Ignore Linux-specific files when on macOS
 {{ if eq .chezmoi.os "darwin" }}
 .config/environment.d
+.config/hypr
 .config/niri
 .config/systemd
+.config/vicinae
 .config/xdg-desktop-portal
-{{ end }}
-
-# Ignore macOS-specific files when on Linux
-{{ if eq .chezmoi.os "linux" }}
-.config/leader-key
+.local/state/noctalia
 {{ end }}
 
 # Common ignores

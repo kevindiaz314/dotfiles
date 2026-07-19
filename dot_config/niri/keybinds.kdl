@@ -13,18 +13,14 @@ binds {
   // ╔══════════════════════════════════════════════════════════════════════════════╗
   // ║                            Application Launchers                             ║
   // ╚══════════════════════════════════════════════════════════════════════════════╝
-  Mod+Return hotkey-overlay-title="Open a Terminal: ghostty" { spawn "ghostty" "+new-window"; }
+  Mod+Return hotkey-overlay-title="Open a Terminal: Ghostty" { spawn-sh "ghostty +new-window"; }
   Mod+Comma hotkey-overlay-title="Open Noctalia Settings" { spawn-sh "noctalia msg settings-toggle"; }
   Mod+X hotkey-overlay-title="Open Noctalia Session Manager" { spawn-sh "noctalia msg panel-toggle session"; }
-  Mod+E hotkey-overlay-title="Open the File Manager: dolphin" { spawn "dolphin"; }
-  Mod+C hotkey-overlay-title="Open the IDE: cursor" { spawn "cursor"; }
-  Mod+W hotkey-overlay-title="Open the Web Browser: helium" { spawn "helium-browser"; }
-  Mod+Space hotkey-overlay-title="Run an Application: vicinae" { spawn "vicinae" "toggle"; }
-  Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
-  Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
-
-  // Toggle the screen reader.
-  Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
+  Mod+E hotkey-overlay-title="Open the File Manager: Dolphin" { spawn "dolphin"; }
+  Mod+C hotkey-overlay-title="Open the IDE: Cursor" { spawn "cursor"; }
+  Mod+Z hotkey-overlay-title="Open the IDE: Zed" { spawn "zeditor"; }
+  Mod+B hotkey-overlay-title="Open the Web Browser: Helium" { spawn "helium-browser"; }
+  Mod+Space hotkey-overlay-title="Run an Application: Vicinae" { spawn "vicinae" "toggle"; }
 
   // ╔══════════════════════════════════════════════════════════════════════════════╗
   // ║                             Media and Hardware                               ║
@@ -47,10 +43,13 @@ binds {
   // ╔══════════════════════════════════════════════════════════════════════════════╗
   // ║                          Focus and Window Movement                           ║
   // ╚══════════════════════════════════════════════════════════════════════════════╝
+
   // Open/close the Overview: a zoomed-out view of workspaces and windows.
   Mod+O repeat=false { toggle-overview; }
 
   Mod+Q repeat=false { close-window; }
+
+  Mod+T repeat=false { toggle-window-floating; }
 
   Mod+H     { focus-column-left; }
   Mod+J     { focus-window-down; }
@@ -84,8 +83,6 @@ binds {
   Mod+Ctrl+U         { move-column-to-workspace-down; }
   Mod+Ctrl+I         { move-column-to-workspace-up; }
 
-  Mod+Shift+Page_Down { move-workspace-down; }
-  Mod+Shift+Page_Up   { move-workspace-up; }
   Mod+Shift+U         { move-workspace-down; }
   Mod+Shift+I         { move-workspace-up; }
 
@@ -107,27 +104,6 @@ binds {
   Mod+Shift+WheelScrollUp        { focus-column-left; }
   Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
   Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
-
-  // Workspaces are dynamic: an index beyond the current workspace count
-  // refers to the bottommost (empty) workspace.
-  Mod+1 { focus-workspace 1; }
-  Mod+2 { focus-workspace 2; }
-  Mod+3 { focus-workspace 3; }
-  Mod+4 { focus-workspace 4; }
-  Mod+5 { focus-workspace 5; }
-  Mod+6 { focus-workspace 6; }
-  Mod+7 { focus-workspace 7; }
-  Mod+8 { focus-workspace 8; }
-  Mod+9 { focus-workspace 9; }
-  Mod+Ctrl+1 { move-column-to-workspace 1; }
-  Mod+Ctrl+2 { move-column-to-workspace 2; }
-  Mod+Ctrl+3 { move-column-to-workspace 3; }
-  Mod+Ctrl+4 { move-column-to-workspace 4; }
-  Mod+Ctrl+5 { move-column-to-workspace 5; }
-  Mod+Ctrl+6 { move-column-to-workspace 6; }
-  Mod+Ctrl+7 { move-column-to-workspace 7; }
-  Mod+Ctrl+8 { move-column-to-workspace 8; }
-  Mod+Ctrl+9 { move-column-to-workspace 9; }
 
   // Switch focus between the current and the previous workspace.
   Mod+Tab { focus-workspace-previous; }
@@ -151,11 +127,8 @@ binds {
   // maximize-column leaves gaps and borders around the window.
   Mod+M { maximize-window-to-edges; }
 
-  // Expand the focused column to space not taken up by other fully visible columns.
-  Mod+Ctrl+F { expand-column-to-available-width; }
-
-  // Mod+W launches the web browser above; tabbed display moved off its default bind.
-  // Mod+W { toggle-column-tabbed-display; }
+  // Toggle the tabbed display of the current column.
+  Mod+W { toggle-column-tabbed-display; }
 
   // ╔══════════════════════════════════════════════════════════════════════════════╗
   // ║                            Screenshots and Session                           ║
@@ -171,8 +144,11 @@ binds {
 
   // The quit action shows a confirmation dialog to avoid accidental exits.
   Mod+Shift+E { quit; }
-  Ctrl+Alt+Delete { quit; }
 
   // Powers off the monitors; any input turns them back on.
   Mod+Shift+P { power-off-monitors; }
+}
+
+switch-events {
+  lid-close { spawn "noctalia" "msg" "session" "lock-and-suspend"; }
 }

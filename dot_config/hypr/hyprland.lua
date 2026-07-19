@@ -1,5 +1,3 @@
--- HyprMod entry point; each concern lives in its own module in this directory.
-
 require("monitors")
 require("autostart")
 require("input")
@@ -10,7 +8,6 @@ require("window-rules")
 ---- LOOK AND FEEL ----
 -----------------------
 
--- Refer to https://wiki.hypr.land/Configuring/Basics/Variables/
 hl.config({
 	general = {
 		gaps_in = 3,
@@ -26,7 +23,6 @@ hl.config({
 		-- Set to true to enable resizing windows by clicking and dragging on borders and gaps
 		resize_on_border = false,
 
-		-- Please see https://wiki.hypr.land/Configuring/Advanced-and-Cool/Tearing/ before you turn this on
 		allow_tearing = false,
 
 		layout = "scrolling",

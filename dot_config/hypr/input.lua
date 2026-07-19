@@ -1,6 +1,7 @@
----------------
----- INPUT ----
----------------
+-- ▗▄▄▄▖▗▖  ▗▖▗▄▄▖ ▗▖ ▗▖▗▄▄▄▖
+--   █  ▐▛▚▖▐▌▐▌ ▐▌▐▌ ▐▌  █
+--   █  ▐▌ ▝▜▌▐▛▀▘ ▐▌ ▐▌  █
+-- ▗▄█▄▖▐▌  ▐▌▐▌   ▝▚▄▞▘  █
 
 hl.config({
 	input = {
@@ -28,13 +29,6 @@ hl.gesture({
 	fingers = 3,
 	direction = "up",
 	action = "close",
-})
-
--- Four-finger swipe up to toggle the workspace overview
-hl.gesture({
-	fingers = 4,
-	direction = "swipe",
-	action = "move",
 })
 
 -- MoErgo's go60 mouse

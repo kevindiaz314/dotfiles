@@ -3,23 +3,20 @@
 // ▐▌ ▐▌  █  ▐▌ ▝▜▌▐▌  █▐▌ ▐▌▐▌ ▐▌   ▐▛▀▚▖▐▌ ▐▌▐▌   ▐▛▀▀▘ ▝▀▚▖
 // ▐▙█▟▌▗▄█▄▖▐▌  ▐▌▐▙▄▄▀▝▚▄▞▘▐▙█▟▌   ▐▌ ▐▌▝▚▄▞▘▐▙▄▄▖▐▙▄▄▖▗▄▄▞▘
 
-// https://niri-wm.github.io/niri/Configuration:-Window-Rules
-
-// Work around WezTerm's initial configure bug
-// by setting an empty default-column-width.
-window-rule {
-  match app-id=r#"^org\.wezfurlong\.wezterm$"#
-  default-column-width {}
-}
-
-// Open the Firefox picture-in-picture player as floating by default.
-window-rule {
-  match app-id=r#"firefox$"# title="^Picture-in-Picture$"
-  open-floating true
-}
-
 // Rounded corners for all windows.
 window-rule {
   geometry-corner-radius 12
   clip-to-geometry true
+}
+
+// Open primary apps maximized (full column width) instead of the 0.5 default.
+// Multiple match lines in one rule are OR'd.
+window-rule {
+  match app-id="helium"
+  match app-id="cursor"
+  match app-id="code"
+  match app-id="dev.zed.Zed"
+  match app-id="com.anthropic.Claude"
+
+  open-maximized true
 }

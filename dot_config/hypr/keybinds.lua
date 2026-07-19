@@ -1,10 +1,9 @@
----------------------
----- KEYBINDINGS ----
----------------------
+-- ▗▖ ▗▖▗▄▄▄▖▗▖  ▗▖▗▄▄▖ ▗▄▄▄▖▗▖  ▗▖▗▄▄▄  ▗▄▄▖
+-- ▐▌▗▞▘▐▌    ▝▚▞▘ ▐▌ ▐▌  █  ▐▛▚▖▐▌▐▌  █▐▌
+-- ▐▛▚▖ ▐▛▀▀▘  ▐▌  ▐▛▀▚▖  █  ▐▌ ▝▜▌▐▌  █ ▝▀▚▖
+-- ▐▌ ▐▌▐▙▄▄▖  ▐▌  ▐▙▄▞▘▗▄█▄▖▐▌  ▐▌▐▙▄▄▀▗▄▄▞▘
 
--- See https://wiki.hypr.land/Configuring/Basics/Binds/
-
-local terminal = "warp-terminal"
+local terminal = "ghostty"
 local fileManager = "dolphin"
 local menu = "vicinae toggle"
 local webBrowser = "helium-browser"

@@ -12,7 +12,6 @@ spawn-at-startup "vicinae" "server"
 
 // Environment variables for processes spawned by niri.
 environment {
-  XCURSOR_SIZE "24"
   QT_QPA_PLATFORMTHEME "kde"
   // KDE apps (notably Dolphin's "Open With") need Plasma's menu prefix
   // to find the application menu/services correctly outside a Plasma session.

@@ -1,20 +1,14 @@
-// This config is in the KDL format: https://kdl.dev
-// "/-" comments out the following node.
-// https://niri-wm.github.io/niri/Configuration:-Introduction
-
 include "autostart.kdl"
 include "input.kdl"
 include "monitors.kdl"
 include "window-rules.kdl"
 include "keybinds.kdl"
 
-// https://niri-wm.github.io/niri/Configuration:-Layout
 layout {
   // Gaps around windows in logical pixels.
-  gaps 10
+  gaps 8
 
-  // Center a focused column when it doesn't fit together with the
-  // previously focused one.
+  // Center a focused column when it doesn't fit together with the previously focused one.
   center-focused-column "on-overflow"
   always-center-single-column
 
@@ -38,20 +32,10 @@ layout {
     inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
   }
 
-  // Always-visible border; disabled in favor of the focus ring.
-  border {
-    off
-
-    width 3
-    active-color "#ffc87f"
-    inactive-color "#505050"
-    urgent-color "#9b0000"
-  }
-
-  // Uncomment `on` to enable drop shadows.
+  // Enables drop shadows.
   // Values are in logical pixels and match the CSS box-shadow properties.
   shadow {
-    // on
+    on
 
     softness 30
     spread 5

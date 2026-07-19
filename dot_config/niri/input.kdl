@@ -3,17 +3,8 @@
 //   █  ▐▌ ▝▜▌▐▛▀▘ ▐▌ ▐▌  █
 // ▗▄█▄▖▐▌  ▐▌▐▌   ▝▚▄▞▘  █
 
-// https://niri-wm.github.io/niri/Configuration:-Input
 input {
   keyboard {
-    // An empty xkb section makes niri fetch settings from
-    // org.freedesktop.locale1 (controlled with localectl).
-    xkb {
-    }
-
-    // Enable numlock on startup; omitting this setting disables it.
-    numlock
-
     repeat-delay 200
     repeat-rate 55
   }
@@ -28,6 +19,5 @@ input {
     accel-speed 0.6
   }
 
-  // Focus windows and outputs automatically when moving the mouse into them.
   focus-follows-mouse
 }

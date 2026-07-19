@@ -1,4 +1,3 @@
-# Keep platform names explicit because package names and availability differ.
 packages:
   linux:
     pacman:
@@ -6,7 +5,6 @@ packages:
       - keyd
       - tailscale
       - noctalia
-      # Runtimes required by the coding-agent script (npm and bun methods).
       - nodejs
       - npm
       - bun
@@ -16,16 +14,13 @@ packages:
       - helium-browser-bin
 
   darwin:
-    # Add taps only when a package is unavailable in Homebrew core.
     taps: []
 
-    # CLI packages.
     brews:
       - fish
       - node
       - bun
 
-    # GUI applications.
     casks:
       - helium-browser
       - tailscale-app
@@ -51,7 +46,7 @@ packages:
       method: npm
       package: "@earendil-works/pi-coding-agent"
 
-    # Upstream supports the Bun runtime only (bun >= 1.3.14).
+    # Upstream supports the Bun runtime only.
     - name: omp
       method: bun
       package: "@oh-my-pi/pi-coding-agent"

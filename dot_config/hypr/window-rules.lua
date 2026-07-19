@@ -1,9 +1,7 @@
-----------------------
----- WINDOW RULES ----
-----------------------
-
--- See https://wiki.hypr.land/Configuring/Basics/Window-Rules/
--- and https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
+-- ▗▖ ▗▖▗▄▄▄▖▗▖  ▗▖▗▄▄▄  ▗▄▖ ▗▖ ▗▖   ▗▄▄▖ ▗▖ ▗▖▗▖   ▗▄▄▄▖ ▗▄▄▖
+-- ▐▌ ▐▌  █  ▐▛▚▖▐▌▐▌  █▐▌ ▐▌▐▌ ▐▌   ▐▌ ▐▌▐▌ ▐▌▐▌   ▐▌   ▐▌
+-- ▐▌ ▐▌  █  ▐▌ ▝▜▌▐▌  █▐▌ ▐▌▐▌ ▐▌   ▐▛▀▚▖▐▌ ▐▌▐▌   ▐▛▀▀▘ ▝▀▚▖
+-- ▐▙█▟▌▗▄█▄▖▐▌  ▐▌▐▙▄▄▀▝▚▄▞▘▐▙█▟▌   ▐▌ ▐▌▝▚▄▞▘▐▙▄▄▖▐▙▄▄▖▗▄▄▞▘
 
 -- Ignore maximize requests from all apps
 hl.window_rule({

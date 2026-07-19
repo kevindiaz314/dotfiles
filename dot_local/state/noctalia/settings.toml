@@ -80,7 +80,7 @@ temperature_night = 5700
 setup_wizard_completed = true
 
 [shell]
-avatar_path = "/home/kevin/Pictures/profile.jpg"
+avatar_path = "~/Pictures/profile.jpg"
 clipboard_enabled = false
 password_style = "random"
 polkit_agent = true
@@ -91,20 +91,20 @@ telemetry_enabled = true
 builtin = "Tokyo-Night"
 
 [wallpaper]
-directory = "/home/kevin/Pictures/Wallpapers"
+directory = "~/Pictures/Wallpapers"
 enabled = true
 
     [wallpaper.default]
-    path = "/home/kevin/Pictures/Wallpapers/earthset.jpg"
+    path = "~/Pictures/Wallpapers/earthset.jpg"
 
     [wallpaper.last]
-    path = "/home/kevin/Pictures/Wallpapers/earthset.jpg"
+    path = "~/Pictures/Wallpapers/earthset.jpg"
 
     [wallpaper.monitors.DP-1]
-    path = "/home/kevin/Pictures/Wallpapers/earthset.jpg"
+    path = "~/Pictures/Wallpapers/earthset.jpg"
 
     [wallpaper.monitors.eDP-1]
-    path = "/home/kevin/Pictures/Wallpapers/earthset.jpg"
+    path = "~/Pictures/Wallpapers/earthset.jpg"
 
 [weather]
 enabled = false

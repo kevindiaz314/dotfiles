@@ -9,6 +9,10 @@ tn_section 'Tools · Coding agents'
 # installs and self-updates never need sudo. ~/.local/bin is already in PATH.
 if command --query npm
     set --local npm_prefix (npm config get prefix)
+    or begin
+        tn_error 'Failed to read the npm prefix.'
+        exit 1
+    end
     if not string match --quiet "$HOME/*" $npm_prefix
         tn_info "Moving the npm prefix to ~/.local (was $npm_prefix)."
         npm config set prefix $HOME/.local
@@ -41,10 +45,17 @@ function install_agent --argument-names name method package url
             tn_info "Installing $name via bun ($package)."
             bun install --global $package
         case curl
+            if not command --query curl; or not command --query bash
+                tn_error "Cannot install $name: curl and bash are required."
+                return 1
+            end
             tn_info "Installing $name via its vendor installer ($url)."
-            # Download before executing: piping curl into a shell reports only
-            # the shell's status, so a failed download would look like success.
+            # Download before executing so download failures are reported.
             set --local installer (mktemp)
+            or begin
+                tn_error "Failed to create a temporary file for $name."
+                return 1
+            end
             curl -fsSL $url -o $installer
             and bash $installer
             set --local installer_status $status
@@ -60,11 +71,14 @@ function install_agent --argument-names name method package url
         tn_error "Failed to install $name."
         return 1
     end
+    if not command --query $name
+        tn_error "$name installed but is not available on PATH."
+        return 1
+    end
     tn_success "$name installed."
 end
 
-# Completions regenerate whenever this script re-runs (agent list or unit
-# edits); fish falls back to man-page completions for everything else.
+# Regenerate declared completions whenever this script changes.
 function generate_completions --argument-names name
     set --local command_line $argv[2..]
     if not command --query $name
@@ -77,7 +91,11 @@ function generate_completions --argument-names name
     # Stage in a temporary file so a failing generator cannot truncate a
     # previously valid completions file.
     set --local staging (mktemp)
-    eval $command_line >$staging
+    or begin
+        tn_error "Failed to create a temporary completions file for $name."
+        return 1
+    end
+    command $command_line >$staging
     and mv $staging $completions_dir/$name.fish
     or begin
         rm -f $staging
@@ -93,7 +111,7 @@ or set failures (math $failures + 1)
 {{ end -}}
 {{ range .packages.coding_agents -}}
 {{ if hasKey . "completions" -}}
-generate_completions {{ .name | quote }} {{ .completions | quote }}
+generate_completions {{ .name | quote }}{{ range .completions }} {{ . | quote }}{{ end }}
 or set failures (math $failures + 1)
 {{ end -}}
 {{ end }}

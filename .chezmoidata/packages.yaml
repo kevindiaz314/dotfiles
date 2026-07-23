@@ -2,16 +2,17 @@ packages:
   linux:
     pacman:
       - fish
+      - openssh
       - keyd
       - tailscale
       - noctalia
       - nodejs
       - npm
       - bun
+      - helium-browser-bin
 
     # Paru comes pre-installed on CachyOS; Yay is supported as a fallback.
-    aur:
-      - helium-browser-bin
+    aur: []
 
   darwin:
     taps: []
@@ -29,7 +30,7 @@ packages:
   # on PATH are never touched, so switching an agent's method only affects
   # fresh machines.
   #   method: npm | bun | curl
-  #   completions: optional command whose stdout is written to
+  #   completions: optional argument list whose stdout is written to
   #                ~/.config/fish/completions/<name>.fish
   coding_agents:
     # The vendor installer ships a self-updating standalone binary.
@@ -40,7 +41,7 @@ packages:
     - name: codex
       method: npm
       package: "@openai/codex"
-      completions: codex completion fish
+      completions: [codex, completion, fish]
 
     - name: pi
       method: npm
@@ -50,7 +51,7 @@ packages:
     - name: omp
       method: bun
       package: "@oh-my-pi/pi-coding-agent"
-      completions: omp completions fish
+      completions: [omp, completions, fish]
 
     - name: opencode
       method: bun

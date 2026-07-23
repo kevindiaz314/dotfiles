@@ -17,7 +17,6 @@ set --local missing_pacman
 set --local missing_aur
 
 # Avoid invoking Pacman when everything is already installed.
-
 for package in $pacman_packages
     if not pacman --query $package >/dev/null 2>&1
         set --append missing_pacman $package
@@ -27,10 +26,9 @@ end
 if test (count $missing_pacman) -gt 0
     tn_info 'Installing missing official repository packages:'
     tn_detail (string join ', ' -- $missing_pacman)
-    tn_warn 'Pacman remains interactive so you can review package decisions.'
+    tn_warn 'Pacman will perform a full upgrade and remain interactive.'
 
-
-    sudo pacman -S --needed $missing_pacman
+    sudo pacman -Syu --needed $missing_pacman
     or begin
         tn_error 'Pacman package installation failed.'
         exit 1
@@ -61,7 +59,6 @@ if test (count $missing_aur) -gt 0
     tn_info "Using $aur_helper to install missing AUR packages:"
     tn_detail (string join ', ' -- $missing_aur)
     tn_warn "$aur_helper remains interactive so you can inspect PKGBUILDs and package decisions."
-
 
     $aur_helper -S --needed $missing_aur
     or begin

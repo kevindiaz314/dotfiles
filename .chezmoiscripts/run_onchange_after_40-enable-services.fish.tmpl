@@ -15,9 +15,9 @@ or begin
     exit 1
 end
 
-# ssh-agent.socket ships with openssh and provides $SSH_AUTH_SOCK on demand;
-# ssh-add.service is deployed by chezmoi and loads the GitHub key at login.
-# No --now for ssh-add: it runs at the next login, once the key file exists.
+# ssh-agent.socket activates OpenSSH's agent on demand. ssh-add.service loads
+# ~/.ssh/github_key at login when the private key exists.
+# Do not start ssh-add now; the private key is restored separately.
 if systemctl --user --quiet is-enabled ssh-agent.socket 2>/dev/null
     and systemctl --user --quiet is-active ssh-agent.socket 2>/dev/null
     tn_success 'ssh-agent.socket is already enabled and listening.'

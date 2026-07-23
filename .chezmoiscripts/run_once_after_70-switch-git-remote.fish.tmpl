@@ -2,9 +2,7 @@
 
 {{ template "scripts/lib.fish" . }}
 
-# chezmoi init clones over HTTPS, but pushing uses SSH keys. This runs on
-# every apply and rewrites the origin remote once a GitHub HTTPS URL appears;
-# it stays silent when there is no remote or the remote already uses SSH.
+# Switch the initial public HTTPS clone to SSH for future Git operations.
 
 set --local source_dir {{ .chezmoi.sourceDir | quote }}
 

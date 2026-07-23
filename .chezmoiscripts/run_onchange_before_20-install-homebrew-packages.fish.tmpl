@@ -17,6 +17,10 @@ set --local taps{{ range .packages.darwin.taps }} {{ . | quote }}{{ end }}
 set --local formulae{{ range .packages.darwin.brews }} {{ . | quote }}{{ end }}
 set --local casks{{ range .packages.darwin.casks }} {{ . | quote }}{{ end }}
 set --local installed_taps ($brew tap)
+or begin
+    tn_error 'Failed to list installed Homebrew taps.'
+    exit 1
+end
 set --local missing_formulae
 set --local missing_casks
 

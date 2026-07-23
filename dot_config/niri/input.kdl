@@ -19,5 +19,6 @@ input {
     accel-speed 0.6
   }
 
+  warp-mouse-to-focus
   focus-follows-mouse
 }

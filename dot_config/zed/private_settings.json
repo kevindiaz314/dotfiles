@@ -7,7 +7,17 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "buffer_line_height": {
+    "custom": 1.2999999523162842
+  },
+  "relative_line_numbers": "enabled",
+  "buffer_font_weight": 400.0,
+  "buffer_font_family": "MonoLisaVariable Nerd Font",
+  "buffer_font_size": 14.0,
   "diff_view_style": "split",
+  "file_types": {
+    "Fish": ["*.fish.tmpl"]
+  },
   "vim": {
     "use_system_clipboard": "never"
   },
@@ -29,7 +39,7 @@
     "provider": "zed"
   },
   "agent": {
-    "play_sound_when_agent_done": "always",
+    "play_sound_when_agent_done": "when_hidden",
     "single_file_review": true,
     "dock": "left",
     "default_model": {
@@ -69,13 +79,13 @@
       "type": "registry"
     }
   },
-  "base_keymap": "VSCode",
+  "base_keymap": "Cursor",
   "icon_theme": {
     "mode": "dark",
     "light": "Zed (Default)",
     "dark": "VSCode Icons for Zed (Dark Official Icons)"
   },
-  "ui_font_size": 16,
+  "ui_font_size": 16.0,
   "theme": {
     "mode": "dark",
     "light": "Tokyo Night Light",

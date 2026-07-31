@@ -43,10 +43,6 @@ packages:
       package: "@openai/codex"
       completions: [codex, completion, fish]
 
-    - name: pi
-      method: npm
-      package: "@earendil-works/pi-coding-agent"
-
     # Upstream supports the Bun runtime only.
     - name: omp
       method: bun

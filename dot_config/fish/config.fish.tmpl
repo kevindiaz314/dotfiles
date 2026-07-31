@@ -2,13 +2,6 @@
 # ║                            Fish Shell Configuration                          ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 
-# Set vi mode
-set -g fish_key_bindings fish_vi_key_bindings
-
-# Disable vi mode indicators
-function fish_mode_prompt
-end
-
 # Overwrite fish_greeting
 set fish_greeting ""
 
@@ -58,7 +51,6 @@ alias ll="eza --long --all --header --total-size --icons --group-directories-fir
 alias n="nvim"
 alias ff="fastfetch"
 alias lg="lazygit"
-alias op="opencode"
 
 # ╔══════════════════════════════════════════════════════════════════════════════╗
 # ║                         Theme: TokyoNight                                    ║

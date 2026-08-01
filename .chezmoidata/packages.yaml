@@ -15,18 +15,40 @@ packages:
     aur: []
 
   darwin:
-    taps: []
+    taps:
+      - barutsrb/tap
 
     brews:
-      - fish
-      - node
+      - atuin
+      - bat
       - bun
+      - chezmoi
       - eza
+      - fastfetch
+      - fish
+      - fzf
       - lazygit
+      - neovim
+      - node
+      - oh-my-posh
       - ripgrep
+      - superfile
+      - yazi
+      - zoxide
 
     casks:
+      - atuin-desktop
+      - cursor
+      - discord
+      - ghostty
+      - localsend
+      - logi-options+
+      - nextcloud
+      - omniwm
+      - spotify
       - tailscale-app
+      - thebrowsercompany-dia
+      - warp
 
   # Installed by run_onchange_after_50-install-coding-agents. Agents already
   # on PATH are never touched, so switching an agent's method only affects

@@ -21,9 +21,11 @@ packages:
       - fish
       - node
       - bun
+      - eza
+      - lazygit
+      - ripgrep
 
     casks:
-      - helium-browser
       - tailscale-app
 
   # Installed by run_onchange_after_50-install-coding-agents. Agents already

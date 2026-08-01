@@ -23,7 +23,7 @@ if command --query npm
     end
 end
 
-function install_agent --argument-names name method package url
+function install_agent --argument-names name method package url trust
     if command --query $name
         tn_success "$name is already installed."
         return 0
@@ -43,7 +43,11 @@ function install_agent --argument-names name method package url
                 return 1
             end
             tn_info "Installing $name via bun ($package)."
-            bun install --global $package
+            if test "$trust" = true
+                bun install --global --trust $package
+            else
+                bun install --global $package
+            end
         case curl
             if not command --query curl; or not command --query bash
                 tn_error "Cannot install $name: curl and bash are required."
@@ -106,7 +110,7 @@ end
 
 set --global failures 0
 {{ range .packages.coding_agents -}}
-install_agent {{ .name | quote }} {{ .method | quote }} {{ get . "package" | default "" | quote }} {{ get . "url" | default "" | quote }}
+install_agent {{ .name | quote }} {{ .method | quote }} {{ get . "package" | default "" | quote }} {{ get . "url" | default "" | quote }} {{ get . "trust" | default false | quote }}
 or set failures (math $failures + 1)
 {{ end -}}
 {{ range .packages.coding_agents -}}

@@ -180,7 +180,7 @@ history_filter = [
   "^copilot$",
   "^cursor ",
   "^gemini$",
-  "^op$",      # opencode
+  "^opencode2$",
   "^omp$",
 
   # Listing (eza aliases)

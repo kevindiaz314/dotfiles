@@ -51,6 +51,9 @@ packages:
       package: "@oh-my-pi/pi-coding-agent"
       completions: [omp, completions, fish]
 
-    - name: opencode
+    # OpenCode 2 is currently published on the next channel and requires its
+    # postinstall script to select the native binary for this platform.
+    - name: opencode2
       method: bun
-      package: "opencode-ai"
+      package: "@opencode-ai/cli@next"
+      trust: true
